@@ -1,0 +1,120 @@
+Microsoft (R) Macro Assembler Version 6.15.8803		    09/12/05 14:28:23
+ast2.asm						     Page 1 - 1
+
+
+				;   Jacob Truman Section 02
+				;   Assignment 2
+
+
+				.model medium
+				.486
+
+
+				; ----------------------------------------------
+				          
+ 0000				.data
+ 0000 0019				nm1		dw	25
+ 0002 000D				nm2		dw	13
+ 0004 0000				re1		dw	?
+ 0006 0000				re2		dw	?
+ 0008 0000				re3		dw	?
+ 000A 40F40000				fl1		dd	7.625
+ 000E 4048F5C3				fl2		dd	3.14
+ 0012 45 64 20 4A 6F 72			iname	db	"Ed Jorgensen"
+       67 65 6E 73 65 6E
+ 001E 4A 61 63 6F 62 20			mynam	db	"Jacob Truman"
+       54 72 75 6D 61 6E
+
+				; ----------------------------------------------
+
+				.stack
+
+ 0000				.code
+
+ 0000				main proc far
+ 0000  B8 ---- R			mov  ax, @data
+ 0003  8E D8				mov  ds, ax
+
+				; -----
+				;	Example addition.
+				;	Calculate:   re1 = nm1 + nm2
+
+ 0005  A1 0000 R			mov	ax, nm1
+ 0008  03 06 0002 R			add	ax, nm2
+ 000C  A3 0004 R			mov	re1, ax
+
+				; -----
+				;	Example subtraction.
+				;	Calculate:   re2 = nm2 - nm1
+
+ 000F  A1 0002 R			mov	ax, nm2
+ 0012  2B 06 0000 R			sub	ax, nm1
+ 0016  A3 0006 R			mov	re2, ax
+
+				; -----
+				;	Example subtraction.
+				;	Calculate:   re3 = nm1 - nm2
+
+ 0019  A1 0000 R			mov	ax, nm1
+ 001C  2B 06 0002 R			sub	ax, nm2
+ 0020  A3 0008 R			mov	re3, ax
+
+				; -----
+				;	Done, terminate program.
+
+ 0023				last:
+ 0023  B4 4C				mov  ah, 4ch
+ 0025  CD 21				int  21h
+ 0027				main endp
+
+				end main
+
+Microsoft (R) Macro Assembler Version 6.15.8803		    09/12/05 14:28:23
+ast2.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+AST2_TEXT  . . . . . . . . . . .	16 Bit	 0027	  Word	  Public  'CODE'	
+DGROUP . . . . . . . . . . . . .	GROUP
+_DATA  . . . . . . . . . . . . .	16 Bit	 002A	  Word	  Public  'DATA'	
+STACK  . . . . . . . . . . . . .	16 Bit	 0400	  Para	  Stack	  'STACK'	 
+
+
+Procedures,  parameters and locals:
+
+                N a m e                 Type     Value    Attr
+
+main . . . . . . . . . . . . . .	P Far	 0000	  AST2_TEXT	Length= 0027 Public
+  last . . . . . . . . . . . . .	L Near	 0023	  AST2_TEXT	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 0001h	 
+@DataSize  . . . . . . . . . . .	Number	 0000h	 
+@Interface . . . . . . . . . . .	Number	 0000h	 
+@Model . . . . . . . . . . . . .	Number	 0004h	 
+@code  . . . . . . . . . . . . .	Text   	 AST2_TEXT
+@data  . . . . . . . . . . . . .	Text   	 DGROUP
+@fardata?  . . . . . . . . . . .	Text   	 FAR_BSS
+@fardata . . . . . . . . . . . .	Text   	 FAR_DATA
+@stack . . . . . . . . . . . . .	Text   	 DGROUP
+fl1  . . . . . . . . . . . . . .	DWord	 000A	  _DATA	
+fl2  . . . . . . . . . . . . . .	DWord	 000E	  _DATA	
+iname  . . . . . . . . . . . . .	Byte	 0012	  _DATA	
+mynam  . . . . . . . . . . . . .	Byte	 001E	  _DATA	
+nm1  . . . . . . . . . . . . . .	Word	 0000	  _DATA	
+nm2  . . . . . . . . . . . . . .	Word	 0002	  _DATA	
+re1  . . . . . . . . . . . . . .	Word	 0004	  _DATA	
+re2  . . . . . . . . . . . . . .	Word	 0006	  _DATA	
+re3  . . . . . . . . . . . . . .	Word	 0008	  _DATA	
+
+	   0 Warnings
+	   0 Errors

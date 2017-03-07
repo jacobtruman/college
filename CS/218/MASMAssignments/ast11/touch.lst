@@ -1,0 +1,147 @@
+Microsoft (R) Macro Assembler Version 6.15.8803		    10/25/05 12:08:59
+touch.asm						     Page 1 - 1
+
+
+				;  CSC218
+				;  Assignmnet #11 - Provided Main
+
+				;  Program will read a command line option (/v or /s) and
+				;  file specification from the command line and update all
+				;  the files meeting that specification to the current date.
+
+				;  The program should display the file name and, based on the
+				;  option, the file date (before updating) for all files
+				;  matching the specification from the command line.
+
+
+				; ----------------------------------------------
+
+				.model small
+				.486
+
+				; ----------------------------------------------
+
+ 0000				.data
+
+				; -----
+				; Constants.
+
+ = 000D				CR		equ	13
+ = 000A				LF		equ	10
+ = 0024				END_STR		equ	"$"
+
+
+				; -----
+				;  Variables for main routine.
+
+ 0000 43 53 43 32 31 38		hdr		db	"CSC218 Touch Utility, v1.0"
+       20 54 6F 75 63 68
+       20 55 74 69 6C 69
+       74 79 2C 20 76 31
+       2E 30
+ 001A  0D 0A 0D 0A 24				db	CR, LF, CR, LF, END_STR
+
+ 001F  0080 [			f_spec		db	128 dup (0)
+        00
+       ]
+ 009F 00			c_option	db	?				; v or s
+
+
+				; ----------------------------------------------
+
+				.stack
+ 0000				.code
+
+				extrn	get_cli:near
+				extrn	disp_files:near
+
+
+				; ----------------------------------------------
+				; Main routine...
+
+ 0000				main   proc	far
+ 0000  B8 ---- R			mov	ax, @data
+ 0003  8E D8				mov	ds, ax
+
+				; -----
+				;  Print header.
+
+ 0005  B4 09				mov	ah, 09h
+ 0007  8D 16 0000 R			lea	dx, hdr
+ 000B  CD 21				int	21h
+
+				; -----
+				;  Get command line information.
+
+ 000D  8D 06 001F R			lea	ax, f_spec
+ 0011  50				push	ax
+ 0012  8D 06 009F R			lea	ax, c_option
+ 0016  50				push	ax
+ 0017  E8 0000 E			call	get_cli
+
+				; -----
+				;  Get, display, and set file dates.
+
+ 001A  8D 06 001F R			lea	ax, f_spec
+ 001E  50				push	ax
+ 001F  A0 009F R			mov	al, c_option
+ 0022  50				push	ax
+ 0023  E8 0000 E			call	disp_files
+
+				; -----
+				;  Done, terminate program.
+
+ 0026				last:
+ 0026  B4 4C				mov	ah, 4ch
+ 0028  CD 21				int	21h
+ 002A				main	endp
+
+				end	main
+Microsoft (R) Macro Assembler Version 6.15.8803		    10/25/05 12:08:59
+touch.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+DGROUP . . . . . . . . . . . . .	GROUP
+_DATA  . . . . . . . . . . . . .	16 Bit	 00A0	  Word	  Public  'DATA'	
+STACK  . . . . . . . . . . . . .	16 Bit	 0400	  Para	  Stack	  'STACK'	 
+_TEXT  . . . . . . . . . . . . .	16 Bit	 002A	  Word	  Public  'CODE'	
+
+
+Procedures,  parameters and locals:
+
+                N a m e                 Type     Value    Attr
+
+main . . . . . . . . . . . . . .	P Far	 0000	  _TEXT	Length= 002A Public
+  last . . . . . . . . . . . . .	L Near	 0026	  _TEXT	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 0000h	 
+@DataSize  . . . . . . . . . . .	Number	 0000h	 
+@Interface . . . . . . . . . . .	Number	 0000h	 
+@Model . . . . . . . . . . . . .	Number	 0002h	 
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 DGROUP
+@fardata?  . . . . . . . . . . .	Text   	 FAR_BSS
+@fardata . . . . . . . . . . . .	Text   	 FAR_DATA
+@stack . . . . . . . . . . . . .	Text   	 DGROUP
+CR . . . . . . . . . . . . . . .	Number	 000Dh	 
+END_STR  . . . . . . . . . . . .	Number	 0024h	 
+LF . . . . . . . . . . . . . . .	Number	 000Ah	 
+c_option . . . . . . . . . . . .	Byte	 009F	  _DATA	
+disp_files . . . . . . . . . . .	L Near	 0000	  _TEXT	External
+f_spec . . . . . . . . . . . . .	Byte	 001F	  _DATA	
+get_cli  . . . . . . . . . . . .	L Near	 0000	  _TEXT	External
+hdr  . . . . . . . . . . . . . .	Byte	 0000	  _DATA	
+
+	   0 Warnings
+	   0 Errors

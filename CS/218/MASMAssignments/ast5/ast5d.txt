@@ -1,0 +1,44 @@
+mdb a_side1 l10
+mdb b_side1 l10
+mdb areas1 l10
+mdi r_pnt1 l10
+mdi asum1 l1
+mdb aave1 l1
+mdi rsum1 l1
+mdi rave1 l1
+
+mdb a_side2 l16
+mdb b_side2 l16
+mdb areas2 l16
+mdi r_pnt2 l16
+mdi asum2 l1
+mdb aave2 l1
+mdi rsum2 l1
+mdi rave2 l1
+
+mdb a_side3 l19
+mdb b_side3 l19
+mdb areas3 l19
+mdi r_pnt3 l19
+mdi asum3 l1
+mdb aave3 l1
+mdi rsum3 l1
+mdi rave3 l1
+
+mdb a_side4 l20
+mdb b_side4 l20
+mdb areas4 l20
+mdi r_pnt4 l20
+mdi asum4 l1
+mdb aave4 l1
+mdi rsum4 l1
+mdi rave4 l1
+
+mdb a_side5 l25
+mdb b_side5 l25
+mdb areas5 l25
+mdi r_pnt5 l25
+mdi asum5 l1
+mdb aave5 l1
+mdi rsum5 l1
+mdi rave5 l1

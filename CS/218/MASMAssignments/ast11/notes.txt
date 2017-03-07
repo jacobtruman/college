@@ -1,0 +1,128 @@
+c:\> touch /v file*.txt
+c:\> touch /s file*.txt
+
+*skip spaces
+no slash - error
+v or s, else error
+one space, else error
+*skip spaces
+copy one char at a time, ret to main
+
+
+DTA
+;*********************************
+mydta  db 21 dup(?)
+f_att  db ?
+f_time dw ?
+f_date dw ?
+f_size dd ?
+f_name db 13 dup(?)
+       db 0 
+f_hand dw ?
+
+mov ah, 1ah
+lea dx, mydta
+int 21h
+
+mov ah, len
+mov cx, 0
+; dx = addr of file space string
+mov dx, word ptr ?[bp]
+int 21h
+jc err_on_pp
+
+; yr = 15 - 9 (-1980)
+; mon = 8 - 9
+; date = 4 - 0
+;     yr    mon  date
+;  00000000 0000 00000
+; 15------9 8765 43210
+
+; get month
+mov ax, f_date
+and ax, 0000000111100000b
+shr ax, 5   ; shift right 9 places
+
+; get date
+mov ax, f_date
+and ax, 0000000000011111b
+
+; get year
+mov ax, f_date
+and ax, 1111111000000000b
+shr ax, 9    ; shift right 9 places
+add ax, 1980
+
+;----------------------------------
+; open file
+mov ah, 3dh
+mov al, 2
+lea dx, f_name
+int 21h
+jc err_on_open
+mov f_hand, ax   ; file handle
+
+;----------------------------------
+; get today
+mov ah, 2ah
+int 21h
+
+; cx = yr
+; dh = mon
+; dl = day
+; yr = 15 - 9 (-1980)
+; mon = 8 - 9
+; date = 4 - 0
+;     yr    mon  date
+;  00000000 0000 00000
+; 15------9 8765 43210
+
+mov ax, 0
+sub cx, 1980
+shl cx, 9   ; shift left 9 places
+or  ax, cx
+
+mov cx, 0
+mov cl, dh
+shl cx, 5   ; shift left 5 places
+or  ax, cx
+mov dh, 0
+or  ax, dx
+
+mov dx, ax
+mov ah, 57h
+mov al, 1
+mov bx, f_hand
+mov cx, f_time
+int 21h
+jc err_on_open
+
+mov ah, 3eh   ; close file
+mov bx, f_hand
+int 21h
+
+;----------------------------------
+; find next
+mov ah, 4fh
+int 21h
+jc f_done
+
+jmp get_next
+
+;**********************************
+
+find first
+lp:
+
+print file name
+print spaces
+print file date
+print CR, LF
+
+open file
+get today
+set file date/time
+close file
+
+find next
+loop lp

@@ -1,0 +1,9 @@
+mdi bx l300
+
+mdi imin l1
+
+mdi imax l1
+
+mdi iavg l1
+
+mdi imed l1

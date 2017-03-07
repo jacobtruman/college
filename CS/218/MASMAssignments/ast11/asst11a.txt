@@ -1,0 +1,112 @@
+CSC 218, Section 01, 02
+Homework,  Asst. #11
+
+Purpose:   Become familiar with the MS-DOS system services.
+Due:       Wednesday   (10/26)
+Points:    125   (90 for program, 35 for documentation)
+
+
+Assignment:
+Write a program that will read a file specification from the command
+line and update all the files meeting that specification to the
+current date.  The program should allow a command line option of "/s"
+or an "/v" before the file name specification. The "/v" (verbose) means
+the that the file name and file date (before the update) should be
+printed as per the example.  The "/s" (short) means that only the
+file name (not the date) should be displayed.
+
+Additionally, the program should print a header
+message:  CSC218 Touch Utility, v1.0 
+Refer to the example executions for samples of the expected output
+formatting.
+
+The program must perform basic error checking.  If no command line input
+was entered or no files matching the specification an appropriate message
+should be generated.  After an error message is printed, the program
+should be terminated.  If the program is unable to update a file, a
+message should be printed, and the program continue to the next file (if any).
+
+You must use the provided main program (which must not be altered).
+All procedures must be in a separate file.
+
+Refer to Chapter 13 of the on-line text for additional information of the
+various system services required to find the files, open the files, get
+the current date, and set a new file date.
+
+
+
+
+Submission:
+When complete, submit a copy of the source file via the class web page
+(assignment submission link) before Wednesday 4:00pm on October  26, 2005.
+Assignments received after 4:00pm will not  be accepted!
+Do not submit a hardcopy.
+
+
+
+
+
+Example Executions:
+
+Example #1:  For example (assuming the executable is named  "touch.exe")
+
+      C:\temp> touch /v file?.txt
+      CSC218 Touch Utility, v1.0
+      
+      FILE1.TXT           03/02/2005
+      FILE2.TXT           03/02/2005
+      FILE0.TXT           03/02/2005
+      
+      C:\temp>
+
+would read the option ("/v"), the file specification ("file?.txt") and
+then find all files matching that specification.  The files, "file1.txt",
+"file2.txt", and "file0.txt" are listed along with the original file
+dates.  After displaying the file name/date, the file dates will be
+updated to 10/12/05.
+
+
+Example #2:  For example (assuming the executable is named  "touch.exe")
+
+      C:\temp> touch /v   file?.*
+      CSC218 Touch Utility, v1.0
+      
+      FILE1.TXT           10/02/2005
+      FILE2.TXT           10/02/2005
+      FILE3.LST           10/02/2005
+      FILE0.TXT           10/02/2005
+      
+      C:\temp>
+
+Example #3:  For example (assuming the executable is named  "touch.exe")
+
+      C:\temp> touch    /s  file?.*
+      CSC218 Touch Utility, v1.0
+      
+      FILE1.TXT
+      FILE2.TXT
+      FILE3.LST
+      FILE0.TXT
+      
+      C:\temp>
+
+Example #4:  For example (assuming the executable is named  "touch.exe")
+
+      C:\temp> touch   /v   file?.asm
+      CSC218 Touch Utility, v1.0
+      
+      No files match provided specification.
+      
+      C:\temp>
+
+Example #5:  For example (assuming the executable is named  "touch.exe")
+
+      C:\temp> touch   /f   file?.asm
+      CSC218 Touch Utility, v1.0
+      
+      Error, invalid command line option.
+      
+      C:\temp>
+
+
+

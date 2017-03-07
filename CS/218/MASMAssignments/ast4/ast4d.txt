@@ -1,0 +1,15 @@
+mdi list l100
+mdi lst_len l1
+
+mdi lst_min l1
+mdi lst_max l1
+mdi lst_sum l1
+mdi lst_ave l1
+
+mdi odd_cnt l1
+mdi odd_sum l1
+mdi odd_ave l1
+
+mdi ten_cnt l1
+mdi ten_sum l1
+mdi ten_ave l1

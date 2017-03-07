@@ -1,0 +1,158 @@
+Microsoft (R) Macro Assembler Version 6.15.8803		    09/13/05 11:12:05
+ast3.asm						     Page 1 - 1
+
+
+				;   Jacob Truman Section 02
+				;   Assignment 3
+
+
+				.model medium
+				.486
+
+
+				; ----------------------------------------------
+				;	   
+ 0000				.data
+ 0000 0015				nm1	dw	21
+ 0002 000C				nm2	dw	12
+ 0004 0008				nm3	dw	8
+ 0006 000D				nm4	dw	13
+ 0008 0000				an1	dw	?
+ 000A 0000				an2	dw	?
+ 000C 0000				an3	dw	?
+ 000E 0000				an4	dw	?
+ 0010 0000				an5	dw	?
+ 0012 0000				an6	dw	?
+ 0014 0000				an7	dw	?
+ 0016 0000				an8	dw	?
+
+				; ----------------------------------------------
+
+				.stack
+
+ 0000				.code
+
+ 0000				main proc far
+ 0000  B8 ---- R			mov  ax, @data
+ 0003  8E D8				mov  ds, ax
+
+				; -----
+				;	an1 = nm1 + nm3
+
+ 0005  A1 0000 R			mov	ax, nm1
+ 0008  03 06 0004 R			add	ax, nm3
+ 000C  A3 0008 R			mov	an1, ax
+
+				; -----
+				;	an2 = nm2 + nm4
+
+ 000F  A1 0002 R			mov	ax, nm2
+ 0012  03 06 0006 R			add	ax, nm4
+ 0016  A3 000A R			mov	an2, ax
+
+				; -----
+				;	an3 = nm1 - nm3
+
+ 0019  A1 0000 R			mov	ax, nm1
+ 001C  2B 06 0004 R			sub	ax, nm3
+ 0020  A3 000C R			mov	an3, ax
+
+				; -----
+				;	an4 = nm2 - nm4
+
+ 0023  A1 0002 R			mov	ax, nm2
+ 0026  2B 06 0006 R			sub	ax, nm4
+ 002A  A3 000E R			mov	an4, ax
+
+				; -----
+				;	an5 = nm1 * nm3
+
+ 002D  A1 0000 R			mov	ax, nm1
+ 0030  F7 2E 0004 R			imul	nm3
+ 0034  A3 0010 R			mov	an5, ax
+
+				; -----
+				;	an6 = nm2 * nm4
+
+ 0037  A1 0002 R			mov	ax, nm2
+ 003A  F7 2E 0006 R			imul	nm4
+ 003E  A3 0012 R			mov	an6, ax
+
+				; -----
+				;	an7 = nm1 / nm4
+
+ 0041  A1 0000 R			mov	ax, nm1
+ 0044  99				cwd
+ 0045  F7 3E 0006 R			idiv	nm4
+ 0049  A3 0014 R			mov	an7, ax
+
+				; -----
+				;	an8 = nm4 / nm3
+
+ 004C  A1 0006 R			mov	ax, nm4
+ 004F  99				cwd
+ 0050  F7 3E 0004 R			idiv	nm3
+ 0054  A3 0016 R			mov	an8, ax
+
+				; -----
+				;	Done, terminate program.
+
+ 0057				last:
+ 0057  B4 4C				mov  ah, 4ch
+ 0059  CD 21				int  21h
+ 005B				main endp
+
+				end main
+
+Microsoft (R) Macro Assembler Version 6.15.8803		    09/13/05 11:12:05
+ast3.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+AST3_TEXT  . . . . . . . . . . .	16 Bit	 005B	  Word	  Public  'CODE'	
+DGROUP . . . . . . . . . . . . .	GROUP
+_DATA  . . . . . . . . . . . . .	16 Bit	 0018	  Word	  Public  'DATA'	
+STACK  . . . . . . . . . . . . .	16 Bit	 0400	  Para	  Stack	  'STACK'	 
+
+
+Procedures,  parameters and locals:
+
+                N a m e                 Type     Value    Attr
+
+main . . . . . . . . . . . . . .	P Far	 0000	  AST3_TEXT	Length= 005B Public
+  last . . . . . . . . . . . . .	L Near	 0057	  AST3_TEXT	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 0001h	 
+@DataSize  . . . . . . . . . . .	Number	 0000h	 
+@Interface . . . . . . . . . . .	Number	 0000h	 
+@Model . . . . . . . . . . . . .	Number	 0004h	 
+@code  . . . . . . . . . . . . .	Text   	 AST3_TEXT
+@data  . . . . . . . . . . . . .	Text   	 DGROUP
+@fardata?  . . . . . . . . . . .	Text   	 FAR_BSS
+@fardata . . . . . . . . . . . .	Text   	 FAR_DATA
+@stack . . . . . . . . . . . . .	Text   	 DGROUP
+an1  . . . . . . . . . . . . . .	Word	 0008	  _DATA	
+an2  . . . . . . . . . . . . . .	Word	 000A	  _DATA	
+an3  . . . . . . . . . . . . . .	Word	 000C	  _DATA	
+an4  . . . . . . . . . . . . . .	Word	 000E	  _DATA	
+an5  . . . . . . . . . . . . . .	Word	 0010	  _DATA	
+an6  . . . . . . . . . . . . . .	Word	 0012	  _DATA	
+an7  . . . . . . . . . . . . . .	Word	 0014	  _DATA	
+an8  . . . . . . . . . . . . . .	Word	 0016	  _DATA	
+nm1  . . . . . . . . . . . . . .	Word	 0000	  _DATA	
+nm2  . . . . . . . . . . . . . .	Word	 0002	  _DATA	
+nm3  . . . . . . . . . . . . . .	Word	 0004	  _DATA	
+nm4  . . . . . . . . . . . . . .	Word	 0006	  _DATA	
+
+	   0 Warnings
+	   0 Errors

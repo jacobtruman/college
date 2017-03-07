@@ -1,0 +1,205 @@
+;---------------------------------------------------
+;  CSC218 - Example demonstrating the usage
+;   of the 10h Interrupt
+
+;  The 10h interrupt allows additional capabilities
+;   for screen output including charater outout with
+;   attributes (color, etc.), direct cursor positioning,
+
+;  This example outputs "Hello World", bold, reverse video
+;   with a double line above and below it.
+
+
+.model	small
+.486
+
+;---------------------------------------------------
+
+.data
+
+CR		equ	13
+LF		equ	10
+EOS		equ	"$"
+
+V_LINE		equ	186			; ext ascii vert line
+H_LINE		equ	205			; ext ascii horiz line
+L_T_CORNER	equ	201			; ext ascci right top corner
+R_T_CORNER	equ	187			; ext ascci left top corner
+L_B_CORNER	equ	200			; ext ascci right bot corner
+R_B_CORNER	equ	188			; ext ascci left bot corner
+
+INIT_ROW	equ	3			; starting position
+INIT_COL	equ	40
+
+BELL		equ	07h			; ascii for bell
+
+dis_page	db	0
+
+old_row		db	0
+old_col		db	0
+
+message		db	"Hello World"
+
+mess_len	dw	11
+
+scr_buff	dw	33 dup (0)		; 11 cols x 3 rows
+
+
+;---------------------------------------------------
+
+.code
+
+main	proc	far
+	mov	ax, @data
+	mov	ds, ax
+
+; -----
+;  Get video parameters and save the current display page.
+
+	mov	ah, 0fh
+	int	10h
+	mov	dis_page, bh
+
+; -----
+;  Get current cursor position and save.
+
+	mov	ah, 03h
+	mov	bh, dis_page
+	int	10h
+	mov	old_row, dh
+	mov	old_col, dl
+
+; -----
+;  Read Save the characters and attributes where the
+;   message and lines will be printed.
+;   These could be used to restore the screen
+;   after the message is printed.
+
+	mov	dh, INIT_ROW
+	mov	dl, INIT_COL
+	mov	bh, dis_page
+	mov	di, offset scr_buff
+
+	mov	cx, 3
+sv_col:
+	push	cx
+	mov	cx, 3
+sv_row:
+	mov	ah, 02h				; set cursor pos
+	int	10h
+
+	inc	dl				; set to next column
+
+	mov	ah, 08h				; get char/attr from screen
+	int	10h
+
+	mov	word ptr [di], ax		; save char & attr
+	add	di, 2
+
+	loop	sv_row
+
+	pop	cx
+	inc	dh				; set to next row
+	mov	dl, INIT_COL			; reset to initial col
+	loop	sv_col
+
+; -----
+;  Set new cursor position to initial values.
+
+	mov	ah, 02h
+	mov	dh, INIT_ROW
+	mov	dl, INIT_COL
+	mov	bh, dis_page
+	int	10h
+
+; -----
+;  Draw a line across top.
+
+	mov	cx, mess_len
+line1_lp:
+	mov	ah, 0eh
+	mov	al, H_LINE
+	mov	bh, dis_page
+	int	10h
+
+	mov	ah, 02h
+	add	dl, 1
+	mov	bh, dis_page
+	int	10h
+
+	loop	line1_lp
+
+; -----
+;  Output the message, one line down.
+
+	mov	ax, ds
+	mov	es, ax
+	mov	bp, offset message
+	mov	ah, 13h
+	mov	al, 1
+	mov	bh, dis_page
+	mov	bl, 0f0h
+	mov	cx, mess_len
+	mov	dh, INIT_ROW
+	add	dh, 1
+	mov	dl, INIT_COL
+	int	10h
+
+; -----
+;  Reset cursor position, 2 lines down.
+
+	mov	ah, 02h
+	mov	dh, INIT_ROW
+	add	dh, 2
+	mov	dl, INIT_COL
+	mov	bh, dis_page
+	int	10h
+
+; -----
+;  Draw a line across bottom.
+
+	mov	cx, mess_len
+line2_lp:
+	mov	ah, 0eh
+	mov	al, H_LINE
+	mov	bh, dis_page
+	int	10h
+
+	mov	ah, 02h
+	add	dl, 1
+	mov	bh, dis_page
+	int	10h
+
+	loop	line2_lp
+
+; -----
+;  Make the "bell" sound to indicate done.
+
+	mov	ah, 0eh
+	mov	al, BELL
+	mov	bh, dis_page
+	int	10h
+
+; -----
+;  Could re-store the original characters that
+;   were over-written by the lines and message.
+
+
+; -----
+;  Restore old cursor position.
+
+	mov	ah, 02h
+	mov	dh, old_row
+	mov	dl, old_col
+	mov	bh, dis_page
+	int	10h
+
+; -----
+;  Done, terminate program.
+
+	mov	ah, 4ch
+	int	21h
+
+main	endp
+
+end	main

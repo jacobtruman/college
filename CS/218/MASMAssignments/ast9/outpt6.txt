@@ -1,0 +1,15 @@
+
+**************************************
+CSC218 - Race Time Calculation Program
+
+ Enter Race Name: First Race
+ Enter Race Start Day (Su/Mo/Tu/We/Th/Fr/Sa): Sa
+ Enter Race Start Time (hh:mm:ss): 09:00:00
+ Enter Race Length (hh:mm:ss): 96:00:00
+
+------------------------------------
+Race Information:
+
+ Race Name       : First Race
+ Race Start Time : Saturday, 09:00:00am
+ Race End Time   : Wednesday, 09:00:00am

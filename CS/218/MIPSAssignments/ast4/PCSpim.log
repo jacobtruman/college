@@ -1,0 +1,846 @@
+Messages
+=========================
+SPIM Version Version 7.1 of January 2, 2005
+Copyright 1990-2004 by James R. Larus (larus@cs.wisc.edu).
+All Rights Reserved.
+DOS and Windows ports by David A. Carley (dac@cs.wisc.edu).
+Copyright 1997 by Morgan Kaufmann Publishers, Inc.
+See the file README for a full copyright notice.
+Loaded: C:\Program Files\PCSpim\exceptions.s
+SPIM Version Version 7.1 of January 2, 2005
+Copyright 1990-2004 by James R. Larus (larus@cs.wisc.edu).
+All Rights Reserved.
+DOS and Windows ports by David A. Carley (dac@cs.wisc.edu).
+Copyright 1997 by Morgan Kaufmann Publishers, Inc.
+See the file README for a full copyright notice.
+Loaded: C:\Program Files\PCSpim\exceptions.s
+Memory and registers cleared and the simulator reinitialized.
+
+C:\donotmove\CS218\MIPSAssignments\ast4\mips4m.asm successfully loaded
+
+
+Registers
+=========================
+ PC      = 00000000   EPC     = 00000000   Cause   = 00000000   BadVAddr= 00000000
+ Status  = 3000ff10   HI      = 00000000   LO      = 000000c4
+                                 General Registers
+R0  (r0) = 00000000  R8  (t0) = 00000005  R16 (s0) = 00000007  R24 (t8) = 00000000
+R1  (at) = 00000000  R9  (t1) = 00000000  R17 (s1) = 1001064c  R25 (t9) = 00000000
+R2  (v0) = 0000000a  R10 (t2) = 10010710  R18 (s2) = 00000000  R26 (k0) = 00000000
+R3  (v1) = 00000000  R11 (t3) = 00000020  R19 (s3) = 00000000  R27 (k1) = 00000000
+R4  (a0) = 10010764  R12 (t4) = 00000000  R20 (s4) = 00000000  R28 (gp) = 10008000
+R5  (a1) = 10010751  R13 (t5) = 10010710  R21 (s5) = 10010584  R29 (sp) = 7fffef80
+R6  (a2) = 0000000a  R14 (t6) = 00000000  R22 (s6) = 00000000  R30 (s8) = 00000000
+R7  (a3) = 00000005  R15 (t7) = 00000000  R23 (s7) = 00000000  R31 (ra) = 00400490
+
+ FIR    = 00009800    FCSR    = 00000000    FCCR   = 00000000   FEXR    = 00000000
+ FENR   = 00000000
+                              Double Floating Point Registers
+FP0  = 0.000000      FP8  = 0.000000      FP16 = 0.000000      FP24 = 0.000000     
+FP2  = 0.000000      FP10 = 0.000000      FP18 = 0.000000      FP26 = 0.000000     
+FP4  = 0.000000      FP12 = 0.000000      FP20 = 0.000000      FP28 = 0.000000     
+FP6  = 0.000000      FP14 = 0.000000      FP22 = 0.000000      FP30 = 0.000000     
+                              Single Floating Point Registers
+FP0  = 0.000000      FP8  = 0.000000      FP16 = 0.000000      FP24 = 0.000000     
+FP1  = 0.000000      FP9  = 0.000000      FP17 = 0.000000      FP25 = 0.000000     
+FP2  = 0.000000      FP10 = 0.000000      FP18 = 0.000000      FP26 = 0.000000     
+FP3  = 0.000000      FP11 = 0.000000      FP19 = 0.000000      FP27 = 0.000000     
+FP4  = 0.000000      FP12 = 0.000000      FP20 = 0.000000      FP28 = 0.000000     
+FP5  = 0.000000      FP13 = 0.000000      FP21 = 0.000000      FP29 = 0.000000     
+FP6  = 0.000000      FP14 = 0.000000      FP22 = 0.000000      FP30 = 0.000000     
+FP7  = 0.000000      FP15 = 0.000000      FP23 = 0.000000      FP31 = 0.000000     
+
+
+Console
+=========================
+
+Program to transpose a matrix . 
+
+
+----------------------------------------
+Matrix #0
+
+
+Matrix
+
+  |     10    20    30    40  | 
+  |     50    60    70    80  | 
+
+Matrix Transposed
+
+  |     10    50  | 
+  |     20    60  | 
+  |     30    70  | 
+  |     40    80  | 
+
+----------------------------------------
+Matrix #1
+
+
+Matrix
+
+  |     10    20  | 
+  |     30    40  | 
+  |     50    60  | 
+  |     70    80  | 
+
+Matrix Transposed
+
+  |     10    30    50    70  | 
+  |     20    40    60    80  | 
+
+----------------------------------------
+Matrix #2
+
+
+Matrix
+
+  |     10    20  | 
+  |     30    40  | 
+  |     50    60  | 
+  |     70    80  | 
+  |     90   100  | 
+  |    110   120  | 
+
+Matrix Transposed
+
+  |     10    30    50    70    90   110  | 
+  |     20    40    60    80   100   120  | 
+
+----------------------------------------
+Matrix #3
+
+
+Matrix
+
+  |     10    20    30    40    50  | 
+  |     12    22    32    42    52  | 
+  |     14    24    34    44    54  | 
+  |     16    26    36    46    56  | 
+  |     18    28    38    48    58  | 
+  |     20    30    40    50    60  | 
+
+Matrix Transposed
+
+  |     10    12    14    16    18    20  | 
+  |     20    22    24    26    28    30  | 
+  |     30    32    34    36    38    40  | 
+  |     40    42    44    46    48    50  | 
+  |     50    52    54    56    58    60  | 
+
+----------------------------------------
+Matrix #4
+
+
+Matrix
+
+  |      1     2     3     4     5     6     7     8  | 
+  |      9    10    11    12    13    14    15    16  | 
+  |     17    18    19    20    21    22    23    24  | 
+
+Matrix Transposed
+
+  |      1     9    17  | 
+  |      2    10    18  | 
+  |      3    11    19  | 
+  |      4    12    20  | 
+  |      5    13    21  | 
+  |      6    14    22  | 
+  |      7    15    23  | 
+  |      8    16    24  | 
+
+----------------------------------------
+Matrix #5
+
+
+Matrix
+
+  |    110   120   130   140  | 
+  |    150   160   170   180  | 
+  |    190   200   210   220  | 
+  |    230   240   250   260  | 
+  |    300   310   320   330  | 
+  |    340   350   360   370  | 
+  |    380   390   400   410  | 
+  |    420   430   440   450  | 
+
+Matrix Transposed
+
+  |    110   150   190   230   300   340   380   420  | 
+  |    120   160   200   240   310   350   390   430  | 
+  |    130   170   210   250   320   360   400   440  | 
+  |    140   180   220   260   330   370   410   450  | 
+
+----------------------------------------
+Matrix #6
+
+
+Matrix
+
+  |     10    23    45    52    60    12    23    45    32    20  | 
+  |     14    58    28    54    77    24    31    51    54    41  | 
+  |     27    72    31    41    82    32    48    67    76    60  | 
+  |     48    59    75    98    88    49    36    53    63    46  | 
+  |     50    63    82    16    91    53    12    13    37    21  | 
+
+Matrix Transposed
+
+  |     10    14    27    48    50  | 
+  |     23    58    72    59    63  | 
+  |     45    28    31    75    82  | 
+  |     52    54    41    98    16  | 
+  |     60    77    82    88    91  | 
+  |     12    24    32    49    53  | 
+  |     23    31    48    36    12  | 
+  |     45    51    67    53    13  | 
+  |     32    54    76    63    37  | 
+  |     20    41    60    46    21  | 
+
+----------------------------------------
+Matrix #7
+
+
+Matrix
+
+  |     72     9    92     6    68  | 
+  |     89     4    65     7    77  | 
+  |    820   221     9    34   123  | 
+  |      1   183   833    52   687  | 
+  |     62   723     4   922     5  | 
+  |    213   130    16   167    15  | 
+  |    190   123   983    12   431  | 
+  |    112    13    31    56     3  | 
+  |    114   425    66    43    54  | 
+  |    916   527   738   792    32  | 
+
+Matrix Transposed
+
+  |     72    89   820     1    62   213   190   112   114   916  | 
+  |      9     4   221   183   723   130   123    13   425   527  | 
+  |     92    65     9   833     4    16   983    31    66   738  | 
+  |      6     7    34    52   922   167    12    56    43   792  | 
+  |     68    77   123   687     5    15   431     3    54    32  | 
+
+
+Text Segment
+=========================
+[0x00400000]        0x8fa40000  lw $4, 0($29)                   ; 174: lw $a0 0($sp)                # argc
+[0x00400004]        0x27a50004  addiu $5, $29, 4                ; 175: addiu $a1 $sp 4                # argv
+[0x00400008]        0x24a60004  addiu $6, $5, 4                 ; 176: addiu $a2 $a1 4                # envp
+[0x0040000c]        0x00041080  sll $2, $4, 2                   ; 177: sll $v0 $a0 2
+[0x00400010]        0x00c23021  addu $6, $6, $2                 ; 178: addu $a2 $a2 $v0
+[0x00400014]        0x0c100009  jal 0x00400024 [main]           ; 179: jal main
+[0x00400018]        0x00000000  nop                             ; 180: nop
+[0x0040001c]        0x3402000a  ori $2, $0, 10                  ; 182: li $v0 10
+[0x00400020]        0x0000000c  syscall                         ; 183: syscall                        # syscall 10 (exit)
+[0x00400024]        0x3c041001  lui $4, 4097 [hdr]              ; 201: la        $a0, hdr
+[0x00400028]        0x34020004  ori $2, $0, 4                   ; 202: li        $v0, 4
+[0x0040002c]        0x0000000c  syscall                         ; 203: syscall                                        # print header
+[0x00400030]        0x34100000  ori $16, $0, 0                  ; 208: li        $s0, 0
+[0x00400034]        0x3c011001  lui $1, 4097 [mhdr]             ; 214: la        $a0, mhdr
+[0x00400038]        0x34240714  ori $4, $1, 1812 [mhdr]
+[0x0040003c]        0x34020004  ori $2, $0, 4                   ; 215: li        $v0, 4
+[0x00400040]        0x0000000c  syscall                         ; 216: syscall
+[0x00400044]        0x00102021  addu $4, $0, $16                ; 217: move        $a0, $s0
+[0x00400048]        0x34020001  ori $2, $0, 1                   ; 218: li        $v0, 1
+[0x0040004c]        0x0000000c  syscall                         ; 219: syscall
+[0x00400050]        0x3c011001  lui $1, 4097 [matrix0]          ; 221: la        $a0, matrix0                        # matrix(x,y)
+[0x00400054]        0x3424002c  ori $4, $1, 44 [matrix0]
+[0x00400058]        0x3c011001  lui $1, 4097 [hdr_a]            ; 222: la        $a1, hdr_a                        # header string
+[0x0040005c]        0x34250747  ori $5, $1, 1863 [hdr_a]
+[0x00400060]        0x3c011001  lui $1, 4097                    ; 223: lw        $a2, xdim0                        # x dimension
+[0x00400064]        0x8c260024  lw $6, 36($1)
+[0x00400068]        0x3c011001  lui $1, 4097                    ; 224: lw        $a3, ydim0                        # y dimension
+[0x0040006c]        0x8c270028  lw $7, 40($1)
+[0x00400070]        0x0c10013d  jal 0x004004f4 [matrix_prt]     ; 225: jal        matrix_prt
+[0x00400074]        0x3c011001  lui $1, 4097 [matrix0]          ; 227: la        $a0, matrix0
+[0x00400078]        0x3424002c  ori $4, $1, 44 [matrix0]
+[0x0040007c]        0x3c011001  lui $1, 4097                    ; 228: lw        $a1, xdim0
+[0x00400080]        0x8c250024  lw $5, 36($1)
+[0x00400084]        0x3c011001  lui $1, 4097                    ; 229: lw        $a2, ydim0
+[0x00400088]        0x8c260028  lw $6, 40($1)
+[0x0040008c]        0x3c011001  lui $1, 4097 [matrix0t]         ; 230: la        $a3, matrix0t
+[0x00400090]        0x3427004c  ori $7, $1, 76 [matrix0t]
+[0x00400094]        0x0c100126  jal 0x00400498 [matrix_trans]   ; 231: jal        matrix_trans
+[0x00400098]        0x3c011001  lui $1, 4097 [matrix0t]         ; 233: la        $a0, matrix0t                        # matrix(y,x)
+[0x0040009c]        0x3424004c  ori $4, $1, 76 [matrix0t]
+[0x004000a0]        0x3c011001  lui $1, 4097 [hdr_at]           ; 234: la        $a1, hdr_at                        # header string
+[0x004000a4]        0x34250751  ori $5, $1, 1873 [hdr_at]
+[0x004000a8]        0x3c011001  lui $1, 4097                    ; 235: lw        $a2, ydim0                        # x dimension
+[0x004000ac]        0x8c260028  lw $6, 40($1)
+[0x004000b0]        0x3c011001  lui $1, 4097                    ; 236: lw        $a3, xdim0                        # y dimension
+[0x004000b4]        0x8c270024  lw $7, 36($1)
+[0x004000b8]        0x0c10013d  jal 0x004004f4 [matrix_prt]     ; 237: jal        matrix_prt
+[0x004000bc]        0x22100001  addi $16, $16, 1                ; 243: add        $s0, $s0, 1
+[0x004000c0]        0x3c011001  lui $1, 4097 [mhdr]             ; 245: la        $a0, mhdr
+[0x004000c4]        0x34240714  ori $4, $1, 1812 [mhdr]
+[0x004000c8]        0x34020004  ori $2, $0, 4                   ; 246: li        $v0, 4
+[0x004000cc]        0x0000000c  syscall                         ; 247: syscall
+[0x004000d0]        0x00102021  addu $4, $0, $16                ; 248: move        $a0, $s0
+[0x004000d4]        0x34020001  ori $2, $0, 1                   ; 249: li        $v0, 1
+[0x004000d8]        0x0000000c  syscall                         ; 250: syscall
+[0x004000dc]        0x3c011001  lui $1, 4097 [matrix1]          ; 252: la        $a0, matrix1                        # matrix(x,y)
+[0x004000e0]        0x34240074  ori $4, $1, 116 [matrix1]
+[0x004000e4]        0x3c011001  lui $1, 4097 [hdr_a]            ; 253: la        $a1, hdr_a                        # header string
+[0x004000e8]        0x34250747  ori $5, $1, 1863 [hdr_a]
+[0x004000ec]        0x3c011001  lui $1, 4097                    ; 254: lw        $a2, xdim1                        # x dimension
+[0x004000f0]        0x8c26006c  lw $6, 108($1)
+[0x004000f4]        0x3c011001  lui $1, 4097                    ; 255: lw        $a3, ydim1                        # y dimension
+[0x004000f8]        0x8c270070  lw $7, 112($1)
+[0x004000fc]        0x0c10013d  jal 0x004004f4 [matrix_prt]     ; 256: jal        matrix_prt
+[0x00400100]        0x3c011001  lui $1, 4097 [matrix1]          ; 258: la        $a0, matrix1
+[0x00400104]        0x34240074  ori $4, $1, 116 [matrix1]
+[0x00400108]        0x3c011001  lui $1, 4097                    ; 259: lw        $a1, xdim1
+[0x0040010c]        0x8c25006c  lw $5, 108($1)
+[0x00400110]        0x3c011001  lui $1, 4097                    ; 260: lw        $a2, ydim1
+[0x00400114]        0x8c260070  lw $6, 112($1)
+[0x00400118]        0x3c011001  lui $1, 4097 [matrix1t]         ; 261: la        $a3, matrix1t
+[0x0040011c]        0x34270094  ori $7, $1, 148 [matrix1t]
+[0x00400120]        0x0c100126  jal 0x00400498 [matrix_trans]   ; 262: jal        matrix_trans
+[0x00400124]        0x3c011001  lui $1, 4097 [matrix1t]         ; 264: la        $a0, matrix1t                        # matrix(y,x)
+[0x00400128]        0x34240094  ori $4, $1, 148 [matrix1t]
+[0x0040012c]        0x3c011001  lui $1, 4097 [hdr_at]           ; 265: la        $a1, hdr_at                        # header string
+[0x00400130]        0x34250751  ori $5, $1, 1873 [hdr_at]
+[0x00400134]        0x3c011001  lui $1, 4097                    ; 266: lw        $a2, ydim1                        # x dimension
+[0x00400138]        0x8c260070  lw $6, 112($1)
+[0x0040013c]        0x3c011001  lui $1, 4097                    ; 267: lw        $a3, xdim1                        # y dimension
+[0x00400140]        0x8c27006c  lw $7, 108($1)
+[0x00400144]        0x0c10013d  jal 0x004004f4 [matrix_prt]     ; 268: jal        matrix_prt
+[0x00400148]        0x22100001  addi $16, $16, 1                ; 274: add        $s0, $s0, 1
+[0x0040014c]        0x3c011001  lui $1, 4097 [mhdr]             ; 276: la        $a0, mhdr
+[0x00400150]        0x34240714  ori $4, $1, 1812 [mhdr]
+[0x00400154]        0x34020004  ori $2, $0, 4                   ; 277: li        $v0, 4
+[0x00400158]        0x0000000c  syscall                         ; 278: syscall
+[0x0040015c]        0x00102021  addu $4, $0, $16                ; 279: move        $a0, $s0
+[0x00400160]        0x34020001  ori $2, $0, 1                   ; 280: li        $v0, 1
+[0x00400164]        0x0000000c  syscall                         ; 281: syscall
+[0x00400168]        0x3c011001  lui $1, 4097 [matrix2]          ; 283: la        $a0, matrix2                        # matrix(x,y)
+[0x0040016c]        0x342400bc  ori $4, $1, 188 [matrix2]
+[0x00400170]        0x3c011001  lui $1, 4097 [hdr_a]            ; 284: la        $a1, hdr_a                        # header string
+[0x00400174]        0x34250747  ori $5, $1, 1863 [hdr_a]
+[0x00400178]        0x3c011001  lui $1, 4097                    ; 285: lw        $a2, xdim2                        # x dimension
+[0x0040017c]        0x8c2600b4  lw $6, 180($1)
+[0x00400180]        0x3c011001  lui $1, 4097                    ; 286: lw        $a3, ydim2                        # y dimension
+[0x00400184]        0x8c2700b8  lw $7, 184($1)
+[0x00400188]        0x0c10013d  jal 0x004004f4 [matrix_prt]     ; 287: jal        matrix_prt
+[0x0040018c]        0x3c011001  lui $1, 4097 [matrix2]          ; 289: la        $a0, matrix2
+[0x00400190]        0x342400bc  ori $4, $1, 188 [matrix2]
+[0x00400194]        0x3c011001  lui $1, 4097                    ; 290: lw        $a1, xdim2
+[0x00400198]        0x8c2500b4  lw $5, 180($1)
+[0x0040019c]        0x3c011001  lui $1, 4097                    ; 291: lw        $a2, ydim2
+[0x004001a0]        0x8c2600b8  lw $6, 184($1)
+[0x004001a4]        0x3c011001  lui $1, 4097 [matrix2t]         ; 292: la        $a3, matrix2t
+[0x004001a8]        0x342700ec  ori $7, $1, 236 [matrix2t]
+[0x004001ac]        0x0c100126  jal 0x00400498 [matrix_trans]   ; 293: jal        matrix_trans
+[0x004001b0]        0x3c011001  lui $1, 4097 [matrix2t]         ; 295: la        $a0, matrix2t                        # matrix(y,x)
+[0x004001b4]        0x342400ec  ori $4, $1, 236 [matrix2t]
+[0x004001b8]        0x3c011001  lui $1, 4097 [hdr_at]           ; 296: la        $a1, hdr_at                        # header string
+[0x004001bc]        0x34250751  ori $5, $1, 1873 [hdr_at]
+[0x004001c0]        0x3c011001  lui $1, 4097                    ; 297: lw        $a2, ydim2                        # x dimension
+[0x004001c4]        0x8c2600b8  lw $6, 184($1)
+[0x004001c8]        0x3c011001  lui $1, 4097                    ; 298: lw        $a3, xdim2                        # y dimension
+[0x004001cc]        0x8c2700b4  lw $7, 180($1)
+[0x004001d0]        0x0c10013d  jal 0x004004f4 [matrix_prt]     ; 299: jal        matrix_prt
+[0x004001d4]        0x22100001  addi $16, $16, 1                ; 305: add        $s0, $s0, 1
+[0x004001d8]        0x3c011001  lui $1, 4097 [mhdr]             ; 307: la        $a0, mhdr
+[0x004001dc]        0x34240714  ori $4, $1, 1812 [mhdr]
+[0x004001e0]        0x34020004  ori $2, $0, 4                   ; 308: li        $v0, 4
+[0x004001e4]        0x0000000c  syscall                         ; 309: syscall
+[0x004001e8]        0x00102021  addu $4, $0, $16                ; 310: move        $a0, $s0
+[0x004001ec]        0x34020001  ori $2, $0, 1                   ; 311: li        $v0, 1
+[0x004001f0]        0x0000000c  syscall                         ; 312: syscall
+[0x004001f4]        0x3c011001  lui $1, 4097 [matrix3]          ; 314: la        $a0, matrix3                        # matrix(x,y)
+[0x004001f8]        0x34240124  ori $4, $1, 292 [matrix3]
+[0x004001fc]        0x3c011001  lui $1, 4097 [hdr_a]            ; 315: la        $a1, hdr_a                        # header string
+[0x00400200]        0x34250747  ori $5, $1, 1863 [hdr_a]
+[0x00400204]        0x3c011001  lui $1, 4097                    ; 316: lw        $a2, xdim3                        # x dimension
+[0x00400208]        0x8c26011c  lw $6, 284($1)
+[0x0040020c]        0x3c011001  lui $1, 4097                    ; 317: lw        $a3, ydim3                        # y dimension
+[0x00400210]        0x8c270120  lw $7, 288($1)
+[0x00400214]        0x0c10013d  jal 0x004004f4 [matrix_prt]     ; 318: jal        matrix_prt
+[0x00400218]        0x3c011001  lui $1, 4097 [matrix3]          ; 320: la        $a0, matrix3
+[0x0040021c]        0x34240124  ori $4, $1, 292 [matrix3]
+[0x00400220]        0x3c011001  lui $1, 4097                    ; 321: lw        $a1, xdim3
+[0x00400224]        0x8c25011c  lw $5, 284($1)
+[0x00400228]        0x3c011001  lui $1, 4097                    ; 322: lw        $a2, ydim3
+[0x0040022c]        0x8c260120  lw $6, 288($1)
+[0x00400230]        0x3c011001  lui $1, 4097 [matrix3t]         ; 323: la        $a3, matrix3t
+[0x00400234]        0x3427019c  ori $7, $1, 412 [matrix3t]
+[0x00400238]        0x0c100126  jal 0x00400498 [matrix_trans]   ; 324: jal        matrix_trans
+[0x0040023c]        0x3c011001  lui $1, 4097 [matrix3t]         ; 326: la        $a0, matrix3t                        # matrix(y,x)
+[0x00400240]        0x3424019c  ori $4, $1, 412 [matrix3t]
+[0x00400244]        0x3c011001  lui $1, 4097 [hdr_at]           ; 327: la        $a1, hdr_at                        # header string
+[0x00400248]        0x34250751  ori $5, $1, 1873 [hdr_at]
+[0x0040024c]        0x3c011001  lui $1, 4097                    ; 328: lw        $a2, ydim3                        # x dimension
+[0x00400250]        0x8c260120  lw $6, 288($1)
+[0x00400254]        0x3c011001  lui $1, 4097                    ; 329: lw        $a3, xdim3                        # y dimension
+[0x00400258]        0x8c27011c  lw $7, 284($1)
+[0x0040025c]        0x0c10013d  jal 0x004004f4 [matrix_prt]     ; 330: jal        matrix_prt
+[0x00400260]        0x22100001  addi $16, $16, 1                ; 336: add        $s0, $s0, 1
+[0x00400264]        0x3c011001  lui $1, 4097 [mhdr]             ; 338: la        $a0, mhdr
+[0x00400268]        0x34240714  ori $4, $1, 1812 [mhdr]
+[0x0040026c]        0x34020004  ori $2, $0, 4                   ; 339: li        $v0, 4
+[0x00400270]        0x0000000c  syscall                         ; 340: syscall
+[0x00400274]        0x00102021  addu $4, $0, $16                ; 341: move        $a0, $s0
+[0x00400278]        0x34020001  ori $2, $0, 1                   ; 342: li        $v0, 1
+[0x0040027c]        0x0000000c  syscall                         ; 343: syscall
+[0x00400280]        0x3c011001  lui $1, 4097 [matrix4]          ; 345: la        $a0, matrix4                        # matrix(x,y)
+[0x00400284]        0x3424021c  ori $4, $1, 540 [matrix4]
+[0x00400288]        0x3c011001  lui $1, 4097 [hdr_a]            ; 346: la        $a1, hdr_a                        # header string
+[0x0040028c]        0x34250747  ori $5, $1, 1863 [hdr_a]
+[0x00400290]        0x3c011001  lui $1, 4097                    ; 347: lw        $a2, xdim4                        # x dimension
+[0x00400294]        0x8c260214  lw $6, 532($1)
+[0x00400298]        0x3c011001  lui $1, 4097                    ; 348: lw        $a3, ydim4                        # y dimension
+[0x0040029c]        0x8c270218  lw $7, 536($1)
+[0x004002a0]        0x0c10013d  jal 0x004004f4 [matrix_prt]     ; 349: jal        matrix_prt
+[0x004002a4]        0x3c011001  lui $1, 4097 [matrix4]          ; 351: la        $a0, matrix4
+[0x004002a8]        0x3424021c  ori $4, $1, 540 [matrix4]
+[0x004002ac]        0x3c011001  lui $1, 4097                    ; 352: lw        $a1, xdim4
+[0x004002b0]        0x8c250214  lw $5, 532($1)
+[0x004002b4]        0x3c011001  lui $1, 4097                    ; 353: lw        $a2, ydim4
+[0x004002b8]        0x8c260218  lw $6, 536($1)
+[0x004002bc]        0x3c011001  lui $1, 4097 [matrix4t]         ; 354: la        $a3, matrix4t
+[0x004002c0]        0x3427027c  ori $7, $1, 636 [matrix4t]
+[0x004002c4]        0x0c100126  jal 0x00400498 [matrix_trans]   ; 355: jal        matrix_trans
+[0x004002c8]        0x3c011001  lui $1, 4097 [matrix4t]         ; 357: la        $a0, matrix4t                        # matrix(y,x)
+[0x004002cc]        0x3424027c  ori $4, $1, 636 [matrix4t]
+[0x004002d0]        0x3c011001  lui $1, 4097 [hdr_at]           ; 358: la        $a1, hdr_at                        # header string
+[0x004002d4]        0x34250751  ori $5, $1, 1873 [hdr_at]
+[0x004002d8]        0x3c011001  lui $1, 4097                    ; 359: lw        $a2, ydim4                        # x dimension
+[0x004002dc]        0x8c260218  lw $6, 536($1)
+[0x004002e0]        0x3c011001  lui $1, 4097                    ; 360: lw        $a3, xdim4                        # y dimension
+[0x004002e4]        0x8c270214  lw $7, 532($1)
+[0x004002e8]        0x0c10013d  jal 0x004004f4 [matrix_prt]     ; 361: jal        matrix_prt
+[0x004002ec]        0x22100001  addi $16, $16, 1                ; 367: add        $s0, $s0, 1
+[0x004002f0]        0x3c011001  lui $1, 4097 [mhdr]             ; 369: la        $a0, mhdr
+[0x004002f4]        0x34240714  ori $4, $1, 1812 [mhdr]
+[0x004002f8]        0x34020004  ori $2, $0, 4                   ; 370: li        $v0, 4
+[0x004002fc]        0x0000000c  syscall                         ; 371: syscall
+[0x00400300]        0x00102021  addu $4, $0, $16                ; 372: move        $a0, $s0
+[0x00400304]        0x34020001  ori $2, $0, 1                   ; 373: li        $v0, 1
+[0x00400308]        0x0000000c  syscall                         ; 374: syscall
+[0x0040030c]        0x3c011001  lui $1, 4097 [matrix5]          ; 376: la        $a0, matrix5                        # matrix(x,y)
+[0x00400310]        0x342402e4  ori $4, $1, 740 [matrix5]
+[0x00400314]        0x3c011001  lui $1, 4097 [hdr_a]            ; 377: la        $a1, hdr_a                        # header string
+[0x00400318]        0x34250747  ori $5, $1, 1863 [hdr_a]
+[0x0040031c]        0x3c011001  lui $1, 4097                    ; 378: lw        $a2, xdim5                        # x dimension
+[0x00400320]        0x8c2602dc  lw $6, 732($1)
+[0x00400324]        0x3c011001  lui $1, 4097                    ; 379: lw        $a3, ydim5                        # y dimension
+[0x00400328]        0x8c2702e0  lw $7, 736($1)
+[0x0040032c]        0x0c10013d  jal 0x004004f4 [matrix_prt]     ; 380: jal        matrix_prt
+[0x00400330]        0x3c011001  lui $1, 4097 [matrix5]          ; 382: la        $a0, matrix5
+[0x00400334]        0x342402e4  ori $4, $1, 740 [matrix5]
+[0x00400338]        0x3c011001  lui $1, 4097                    ; 383: lw        $a1, xdim5
+[0x0040033c]        0x8c2502dc  lw $5, 732($1)
+[0x00400340]        0x3c011001  lui $1, 4097                    ; 384: lw        $a2, ydim5
+[0x00400344]        0x8c2602e0  lw $6, 736($1)
+[0x00400348]        0x3c011001  lui $1, 4097 [matrix5t]         ; 385: la        $a3, matrix5t
+[0x0040034c]        0x34270364  ori $7, $1, 868 [matrix5t]
+[0x00400350]        0x0c100126  jal 0x00400498 [matrix_trans]   ; 386: jal        matrix_trans
+[0x00400354]        0x3c011001  lui $1, 4097 [matrix5t]         ; 388: la        $a0, matrix5t                        # matrix(y,x)
+[0x00400358]        0x34240364  ori $4, $1, 868 [matrix5t]
+[0x0040035c]        0x3c011001  lui $1, 4097 [hdr_at]           ; 389: la        $a1, hdr_at                        # header string
+[0x00400360]        0x34250751  ori $5, $1, 1873 [hdr_at]
+[0x00400364]        0x3c011001  lui $1, 4097                    ; 390: lw        $a2, ydim5                        # x dimension
+[0x00400368]        0x8c2602e0  lw $6, 736($1)
+[0x0040036c]        0x3c011001  lui $1, 4097                    ; 391: lw        $a3, xdim5                        # y dimension
+[0x00400370]        0x8c2702dc  lw $7, 732($1)
+[0x00400374]        0x0c10013d  jal 0x004004f4 [matrix_prt]     ; 392: jal        matrix_prt
+[0x00400378]        0x22100001  addi $16, $16, 1                ; 398: add        $s0, $s0, 1
+[0x0040037c]        0x3c011001  lui $1, 4097 [mhdr]             ; 400: la        $a0, mhdr
+[0x00400380]        0x34240714  ori $4, $1, 1812 [mhdr]
+[0x00400384]        0x34020004  ori $2, $0, 4                   ; 401: li        $v0, 4
+[0x00400388]        0x0000000c  syscall                         ; 402: syscall
+[0x0040038c]        0x00102021  addu $4, $0, $16                ; 403: move        $a0, $s0
+[0x00400390]        0x34020001  ori $2, $0, 1                   ; 404: li        $v0, 1
+[0x00400394]        0x0000000c  syscall                         ; 405: syscall
+[0x00400398]        0x3c011001  lui $1, 4097 [matrix6]          ; 407: la        $a0, matrix6                        # matrix(x,y)
+[0x0040039c]        0x342403ec  ori $4, $1, 1004 [matrix6]
+[0x004003a0]        0x3c011001  lui $1, 4097 [hdr_a]            ; 408: la        $a1, hdr_a                        # header string
+[0x004003a4]        0x34250747  ori $5, $1, 1863 [hdr_a]
+[0x004003a8]        0x3c011001  lui $1, 4097                    ; 409: lw        $a2, xdim6                        # x dimension
+[0x004003ac]        0x8c2603e4  lw $6, 996($1)
+[0x004003b0]        0x3c011001  lui $1, 4097                    ; 410: lw        $a3, ydim6                        # y dimension
+[0x004003b4]        0x8c2703e8  lw $7, 1000($1)
+[0x004003b8]        0x0c10013d  jal 0x004004f4 [matrix_prt]     ; 411: jal        matrix_prt
+[0x004003bc]        0x3c011001  lui $1, 4097 [matrix6]          ; 413: la        $a0, matrix6
+[0x004003c0]        0x342403ec  ori $4, $1, 1004 [matrix6]
+[0x004003c4]        0x3c011001  lui $1, 4097                    ; 414: lw        $a1, xdim6
+[0x004003c8]        0x8c2503e4  lw $5, 996($1)
+[0x004003cc]        0x3c011001  lui $1, 4097                    ; 415: lw        $a2, ydim6
+[0x004003d0]        0x8c2603e8  lw $6, 1000($1)
+[0x004003d4]        0x3c011001  lui $1, 4097 [matrix6t]         ; 416: la        $a3, matrix6t
+[0x004003d8]        0x342704b4  ori $7, $1, 1204 [matrix6t]
+[0x004003dc]        0x0c100126  jal 0x00400498 [matrix_trans]   ; 417: jal        matrix_trans
+[0x004003e0]        0x3c011001  lui $1, 4097 [matrix6t]         ; 419: la        $a0, matrix6t                        # matrix(y,x)
+[0x004003e4]        0x342404b4  ori $4, $1, 1204 [matrix6t]
+[0x004003e8]        0x3c011001  lui $1, 4097 [hdr_at]           ; 420: la        $a1, hdr_at                        # header string
+[0x004003ec]        0x34250751  ori $5, $1, 1873 [hdr_at]
+[0x004003f0]        0x3c011001  lui $1, 4097                    ; 421: lw        $a2, ydim6                        # x dimension
+[0x004003f4]        0x8c2603e8  lw $6, 1000($1)
+[0x004003f8]        0x3c011001  lui $1, 4097                    ; 422: lw        $a3, xdim6                        # y dimension
+[0x004003fc]        0x8c2703e4  lw $7, 996($1)
+[0x00400400]        0x0c10013d  jal 0x004004f4 [matrix_prt]     ; 423: jal        matrix_prt
+[0x00400404]        0x22100001  addi $16, $16, 1                ; 429: add        $s0, $s0, 1
+[0x00400408]        0x3c011001  lui $1, 4097 [mhdr]             ; 431: la        $a0, mhdr
+[0x0040040c]        0x34240714  ori $4, $1, 1812 [mhdr]
+[0x00400410]        0x34020004  ori $2, $0, 4                   ; 432: li        $v0, 4
+[0x00400414]        0x0000000c  syscall                         ; 433: syscall
+[0x00400418]        0x00102021  addu $4, $0, $16                ; 434: move        $a0, $s0
+[0x0040041c]        0x34020001  ori $2, $0, 1                   ; 435: li        $v0, 1
+[0x00400420]        0x0000000c  syscall                         ; 436: syscall
+[0x00400424]        0x3c011001  lui $1, 4097 [matrix7]          ; 438: la        $a0, matrix7                        # matrix(x,y)
+[0x00400428]        0x34240584  ori $4, $1, 1412 [matrix7]
+[0x0040042c]        0x3c011001  lui $1, 4097 [hdr_a]            ; 439: la        $a1, hdr_a                        # header string
+[0x00400430]        0x34250747  ori $5, $1, 1863 [hdr_a]
+[0x00400434]        0x3c011001  lui $1, 4097                    ; 440: lw        $a2, xdim7                        # x dimension
+[0x00400438]        0x8c26057c  lw $6, 1404($1)
+[0x0040043c]        0x3c011001  lui $1, 4097                    ; 441: lw        $a3, ydim7        
+[0x00400440]        0x8c270580  lw $7, 1408($1)
+[0x00400444]        0x0c10013d  jal 0x004004f4 [matrix_prt]     ; 442: jal        matrix_prt
+[0x00400448]        0x3c011001  lui $1, 4097 [matrix7]          ; 444: la        $a0, matrix7
+[0x0040044c]        0x34240584  ori $4, $1, 1412 [matrix7]
+[0x00400450]        0x3c011001  lui $1, 4097                    ; 445: lw        $a1, xdim7
+[0x00400454]        0x8c25057c  lw $5, 1404($1)
+[0x00400458]        0x3c011001  lui $1, 4097                    ; 446: lw        $a2, ydim7
+[0x0040045c]        0x8c260580  lw $6, 1408($1)
+[0x00400460]        0x3c011001  lui $1, 4097 [matrix7t]         ; 447: la        $a3, matrix7t
+[0x00400464]        0x3427064c  ori $7, $1, 1612 [matrix7t]
+[0x00400468]        0x0c100126  jal 0x00400498 [matrix_trans]   ; 448: jal        matrix_trans
+[0x0040046c]        0x3c011001  lui $1, 4097 [matrix7t]         ; 450: la        $a0, matrix7t                        # matrix(y,x)
+[0x00400470]        0x3424064c  ori $4, $1, 1612 [matrix7t]
+[0x00400474]        0x3c011001  lui $1, 4097 [hdr_at]           ; 451: la        $a1, hdr_at                        # header string
+[0x00400478]        0x34250751  ori $5, $1, 1873 [hdr_at]
+[0x0040047c]        0x3c011001  lui $1, 4097                    ; 452: lw        $a2, ydim7                        # x dimension
+[0x00400480]        0x8c260580  lw $6, 1408($1)
+[0x00400484]        0x3c011001  lui $1, 4097                    ; 453: lw        $a3, xdim7                        # y dimension
+[0x00400488]        0x8c27057c  lw $7, 1404($1)
+[0x0040048c]        0x0c10013d  jal 0x004004f4 [matrix_prt]     ; 454: jal        matrix_prt
+[0x00400490]        0x3402000a  ori $2, $0, 10                  ; 459: li        $v0, 10
+[0x00400494]        0x0000000c  syscall                         ; 460: syscall
+[0x00400498]        0x34080000  ori $8, $0, 0                   ; 511: li   $t0, 0
+[0x0040049c]        0x34090000  ori $9, $0, 0                   ; 512: li   $t1, 0
+[0x004004a0]        0x0004a821  addu $21, $0, $4                ; 514: move $s5, $a0
+[0x004004a4]        0x71055002  mul $10, $8, $5                 ; 518: mul  $t2, $t0, $a1
+[0x004004a8]        0x01495021  addu $10, $10, $9               ; 519: addu $t2, $t2, $t1
+[0x004004ac]        0x34010004  ori $1, $0, 4                   ; 520: mul  $t2, $t2, 4
+[0x004004b0]        0x71415002  mul $10, $10, $1
+[0x004004b4]        0x01555021  addu $10, $10, $21              ; 521: addu $t2, $t2, $s5
+[0x004004b8]        0x8d4b0000  lw $11, 0($10)                  ; 522: lw   $t3, ($t2)
+[0x004004bc]        0x71266802  mul $13, $9, $6                 ; 524: mul  $t5, $t1, $a2
+[0x004004c0]        0x01a86821  addu $13, $13, $8               ; 525: addu $t5, $t5, $t0
+[0x004004c4]        0x34010004  ori $1, $0, 4                   ; 526: mul  $t5, $t5, 4
+[0x004004c8]        0x71a16802  mul $13, $13, $1
+[0x004004cc]        0x01a76821  addu $13, $13, $7               ; 527: addu $t5, $t5, $a3
+[0x004004d0]        0xadab0000  sw $11, 0($13)                  ; 528: sw   $t3, ($t5)
+[0x004004d4]        0x21290001  addi $9, $9, 1                  ; 530: add  $t1, $t1, 1
+[0x004004d8]        0x0125082a  slt $1, $9, $5                  ; 531: blt  $t1, $a1, trns_lp
+[0x004004dc]        0x1420fff2  bne $1, $0, -56 [trns_lp-0x004004dc]
+[0x004004e0]        0x34090000  ori $9, $0, 0                   ; 533: li   $t1, 0
+[0x004004e4]        0x21080001  addi $8, $8, 1                  ; 534: add  $t0, $t0, 1
+[0x004004e8]        0x0106082a  slt $1, $8, $6                  ; 535: blt  $t0, $a2, trns_lp
+[0x004004ec]        0x1420ffee  bne $1, $0, -72 [trns_lp-0x004004ec]
+[0x004004f0]        0x03e00008  jr $31                          ; 540: jr        $ra
+[0x004004f4]        0x00048821  addu $17, $0, $4                ; 564: move $s1, $a0        # addr of matrix
+[0x004004f8]        0x34080000  ori $8, $0, 0                   ; 574: li   $t0, 0
+[0x004004fc]        0x34090000  ori $9, $0, 0                   ; 575: li   $t1, 0
+[0x00400500]        0x3c011001  lui $1, 4097 [new_ln]           ; 577: la   $a0, new_ln                # print a newline
+[0x00400504]        0x34240764  ori $4, $1, 1892 [new_ln]
+[0x00400508]        0x34020004  ori $2, $0, 4                   ; 578: li   $v0, 4
+[0x0040050c]        0x0000000c  syscall                         ; 579: syscall
+[0x00400510]        0x00052021  addu $4, $0, $5                 ; 581: move $a0, $a1                # print header
+[0x00400514]        0x34020004  ori $2, $0, 4                   ; 582: li   $v0, 4
+[0x00400518]        0x0000000c  syscall                         ; 583: syscall
+[0x0040051c]        0x3c011001  lui $1, 4097 [new_ln]           ; 585: la   $a0, new_ln                # print a newline
+[0x00400520]        0x34240764  ori $4, $1, 1892 [new_ln]
+[0x00400524]        0x34020004  ori $2, $0, 4                   ; 586: li   $v0, 4
+[0x00400528]        0x0000000c  syscall                         ; 587: syscall
+[0x0040052c]        0x15200005  bne $9, $0, 20 [no_pp-0x0040052c]; 594: bnez $t1, no_pp        
+[0x00400530]        0x3c011001  lui $1, 4097 [pipe]             ; 595: la        $a0, pipe                # print a "|"
+[0x00400534]        0x34240766  ori $4, $1, 1894 [pipe]
+[0x00400538]        0x34020004  ori $2, $0, 4                   ; 596: li        $v0, 4
+[0x0040053c]        0x0000000c  syscall                         ; 597: syscall
+[0x00400540]        0x71065002  mul $10, $8, $6                 ; 601: mul  $t2, $t0, $a2
+[0x00400544]        0x01495021  addu $10, $10, $9               ; 602: addu $t2, $t2, $t1
+[0x00400548]        0x34010004  ori $1, $0, 4                   ; 603: mul  $t2, $t2, 4
+[0x0040054c]        0x71415002  mul $10, $10, $1
+[0x00400550]        0x01515021  addu $10, $10, $17              ; 604: addu $t2, $t2, $s1
+[0x00400554]        0x8d4b0000  lw $11, 0($10)                  ; 605: lw   $t3, ($t2)
+[0x00400558]        0x2961000a  slti $1, $11, 10                ; 607: blt $t3, 10, five_ln
+[0x0040055c]        0x1420000b  bne $1, $0, 44 [five_ln-0x0040055c]
+[0x00400560]        0x29610064  slti $1, $11, 100               ; 608: blt $t3, 100, four_ln
+[0x00400564]        0x1420000d  bne $1, $0, 52 [four_ln-0x00400564]
+[0x00400568]        0x296103e8  slti $1, $11, 1000              ; 609: blt $t3, 1000, three_ln
+[0x0040056c]        0x1420000f  bne $1, $0, 60 [three_ln-0x0040056c]
+[0x00400570]        0x29612710  slti $1, $11, 10000             ; 610: blt $t3, 10000, two_ln
+[0x00400574]        0x14200011  bne $1, $0, 68 [two_ln-0x00400574]
+[0x00400578]        0x3c010001  lui $1, 1                       ; 611: blt $t3, 100000, one_ln
+[0x0040057c]        0x342186a0  ori $1, $1, -31072
+[0x00400580]        0x0161082a  slt $1, $11, $1
+[0x00400584]        0x14200011  bne $1, $0, 68 [one_ln-0x00400584]
+[0x00400588]        0x3c011001  lui $1, 4097 [blnk1]            ; 614: la        $a0, blnk1                # print blank 5
+[0x0040058c]        0x3424076b  ori $4, $1, 1899 [blnk1]
+[0x00400590]        0x34020004  ori $2, $0, 4                   ; 615: li        $v0, 4
+[0x00400594]        0x0000000c  syscall                         ; 616: syscall
+[0x00400598]        0x3c011001  lui $1, 4097 [blnk1]            ; 618: la        $a0, blnk1                # print blank 4
+[0x0040059c]        0x3424076b  ori $4, $1, 1899 [blnk1]
+[0x004005a0]        0x34020004  ori $2, $0, 4                   ; 619: li        $v0, 4
+[0x004005a4]        0x0000000c  syscall                         ; 620: syscall
+[0x004005a8]        0x3c011001  lui $1, 4097 [blnk1]            ; 622: la        $a0, blnk1                # print blank 3
+[0x004005ac]        0x3424076b  ori $4, $1, 1899 [blnk1]
+[0x004005b0]        0x34020004  ori $2, $0, 4                   ; 623: li        $v0, 4
+[0x004005b4]        0x0000000c  syscall                         ; 624: syscall
+[0x004005b8]        0x3c011001  lui $1, 4097 [blnk1]            ; 626: la        $a0, blnk1                # print blank 2
+[0x004005bc]        0x3424076b  ori $4, $1, 1899 [blnk1]
+[0x004005c0]        0x34020004  ori $2, $0, 4                   ; 627: li        $v0, 4
+[0x004005c4]        0x0000000c  syscall                         ; 628: syscall
+[0x004005c8]        0x3c011001  lui $1, 4097 [blnk1]            ; 630: la        $a0, blnk1                # print blank 1
+[0x004005cc]        0x3424076b  ori $4, $1, 1899 [blnk1]
+[0x004005d0]        0x34020004  ori $2, $0, 4                   ; 631: li        $v0, 4
+[0x004005d4]        0x0000000c  syscall                         ; 632: syscall
+[0x004005d8]        0x000b2021  addu $4, $0, $11                ; 634: move $a0, $t3                # print num
+[0x004005dc]        0x34020001  ori $2, $0, 1                   ; 635: li        $v0, 1
+[0x004005e0]        0x0000000c  syscall                         ; 636: syscall
+[0x004005e4]        0x21290001  addi $9, $9, 1                  ; 638: add  $t1, $t1, 1
+[0x004005e8]        0x0126082a  slt $1, $9, $6                  ; 639: blt  $t1, $a2, prnt_lp
+[0x004005ec]        0x1420ffd0  bne $1, $0, -192 [prnt_lp-0x004005ec]
+[0x004005f0]        0x3c011001  lui $1, 4097 [pipe]             ; 641: la        $a0, pipe                # print a "|"
+[0x004005f4]        0x34240766  ori $4, $1, 1894 [pipe]
+[0x004005f8]        0x34020004  ori $2, $0, 4                   ; 642: li        $v0, 4
+[0x004005fc]        0x0000000c  syscall                         ; 643: syscall
+[0x00400600]        0x3c011001  lui $1, 4097 [new_ln]           ; 645: la        $a0, new_ln                # print a newline
+[0x00400604]        0x34240764  ori $4, $1, 1892 [new_ln]
+[0x00400608]        0x34020004  ori $2, $0, 4                   ; 646: li        $v0, 4
+[0x0040060c]        0x0000000c  syscall                         ; 647: syscall
+[0x00400610]        0x34090000  ori $9, $0, 0                   ; 649: li   $t1, 0
+[0x00400614]        0x21080001  addi $8, $8, 1                  ; 650: add  $t0, $t0, 1
+[0x00400618]        0x0107082a  slt $1, $8, $7                  ; 652: blt  $t0, $a3, prnt_lp
+[0x0040061c]        0x1420ffc4  bne $1, $0, -240 [prnt_lp-0x0040061c]
+[0x00400620]        0x03e00008  jr $31                          ; 661: jr        $ra
+
+        KERNEL
+[0x80000180]        0x0001d821  addu $27, $0, $1                ; 82: move $k1 $at                # Save $at
+[0x80000184]        0x3c019000  lui $1, -28672                  ; 84: sw $v0 s1                # Not re-entrant and we can't trust $sp
+[0x80000188]        0xac220200  sw $2, 512($1)
+[0x8000018c]        0x3c019000  lui $1, -28672                  ; 85: sw $a0 s2                # But we need to use these registers
+[0x80000190]        0xac240204  sw $4, 516($1)
+[0x80000194]        0x401a6800  mfc0 $26, $13                   ; 87: mfc0 $k0 $13                # Cause register
+[0x80000198]        0x001a2082  srl $4, $26, 2                  ; 88: srl $a0 $k0 2                # Extract ExcCode Field
+[0x8000019c]        0x3084001f  andi $4, $4, 31                 ; 89: andi $a0 $a0 0x1f
+[0x800001a0]        0x34020004  ori $2, $0, 4                   ; 93: li $v0 4                # syscall 4 (print_str)
+[0x800001a4]        0x3c049000  lui $4, -28672 [__m1_]          ; 94: la $a0 __m1_
+[0x800001a8]        0x0000000c  syscall                         ; 95: syscall
+[0x800001ac]        0x34020001  ori $2, $0, 1                   ; 97: li $v0 1                # syscall 1 (print_int)
+[0x800001b0]        0x001a2082  srl $4, $26, 2                  ; 98: srl $a0 $k0 2                # Extract ExcCode Field
+[0x800001b4]        0x3084001f  andi $4, $4, 31                 ; 99: andi $a0 $a0 0x1f
+[0x800001b8]        0x0000000c  syscall                         ; 100: syscall
+[0x800001bc]        0x34020004  ori $2, $0, 4                   ; 102: li $v0 4                # syscall 4 (print_str)
+[0x800001c0]        0x3344003c  andi $4, $26, 60                ; 103: andi $a0 $k0 0x3c
+[0x800001c4]        0x3c019000  lui $1, -28672                  ; 104: lw $a0 __excp($a0)
+[0x800001c8]        0x00240821  addu $1, $1, $4
+[0x800001cc]        0x8c240180  lw $4, 384($1)
+[0x800001d0]        0x00000000  nop                             ; 105: nop
+[0x800001d4]        0x0000000c  syscall                         ; 106: syscall
+[0x800001d8]        0x34010018  ori $1, $0, 24                  ; 108: bne $k0 0x18 ok_pc        # Bad PC exception requires special checks
+[0x800001dc]        0x143a0008  bne $1, $26, 32 [ok_pc-0x800001dc]
+[0x800001e0]        0x00000000  nop                             ; 109: nop
+[0x800001e4]        0x40047000  mfc0 $4, $14                    ; 111: mfc0 $a0 $14                # EPC
+[0x800001e8]        0x30840003  andi $4, $4, 3                  ; 112: andi $a0 $a0 0x3        # Is EPC word-aligned?
+[0x800001ec]        0x10040004  beq $0, $4, 16 [ok_pc-0x800001ec]; 113: beq $a0 0 ok_pc
+[0x800001f0]        0x00000000  nop                             ; 114: nop
+[0x800001f4]        0x3402000a  ori $2, $0, 10                  ; 116: li $v0 10                # Exit on really bad PC
+[0x800001f8]        0x0000000c  syscall                         ; 117: syscall
+[0x800001fc]        0x34020004  ori $2, $0, 4                   ; 120: li $v0 4                # syscall 4 (print_str)
+[0x80000200]        0x3c019000  lui $1, -28672 [__m2_]          ; 121: la $a0 __m2_
+[0x80000204]        0x3424000d  ori $4, $1, 13 [__m2_]
+[0x80000208]        0x0000000c  syscall                         ; 122: syscall
+[0x8000020c]        0x001a2082  srl $4, $26, 2                  ; 124: srl $a0 $k0 2                # Extract ExcCode Field
+[0x80000210]        0x3084001f  andi $4, $4, 31                 ; 125: andi $a0 $a0 0x1f
+[0x80000214]        0x14040002  bne $0, $4, 8 [ret-0x80000214]  ; 126: bne $a0 0 ret                # 0 means exception was an interrupt
+[0x80000218]        0x00000000  nop                             ; 127: nop
+[0x8000021c]        0x401a7000  mfc0 $26, $14                   ; 137: mfc0 $k0 $14                # Bump EPC register
+[0x80000220]        0x275a0004  addiu $26, $26, 4               ; 138: addiu $k0 $k0 4                # Skip faulting instruction
+[0x80000224]        0x409a7000  mtc0 $26, $14                   ; 140: mtc0 $k0 $14
+[0x80000228]        0x001b0821  addu $1, $0, $27                ; 146: move $at $k1                # Restore $at
+[0x8000022c]        0x3c019000  lui $1, -28672                  ; 148: lw $v0 s1                # Restore other registers
+[0x80000230]        0x8c220200  lw $2, 512($1)
+[0x80000234]        0x3c019000  lui $1, -28672                  ; 149: lw $a0 s2
+[0x80000238]        0x8c240204  lw $4, 516($1)
+[0x8000023c]        0x40806800  mtc0 $0, $13                    ; 151: mtc0 $0 $13                # Clear Cause register
+[0x80000240]        0x401a6000  mfc0 $26, $12                   ; 153: mfc0 $k0 $12                # Set Status register
+[0x80000244]        0x375a0001  ori $26, $26, 1                 ; 154: ori  $k0 0x1                # Interrupts enabled
+[0x80000248]        0x409a6000  mtc0 $26, $12                   ; 155: mtc0 $k0 $12
+[0x8000024c]        0x42000018  eret                            ; 158: eret
+
+
+Data Segment
+=========================
+        DATA
+[0x10000000]...[0x10010000]        0x00000000
+[0x10010000]                        0x6f72500a  0x6d617267  0x206f7420  0x6e617274
+[0x10010010]                        0x736f7073  0x20612065  0x7274616d  0x2e207869
+[0x10010020]                        0x000a0a20  0x00000004  0x00000002  0x0000000a
+[0x10010030]                        0x00000014  0x0000001e  0x00000028  0x00000032
+[0x10010040]                        0x0000003c  0x00000046  0x00000050  0x0000000a
+[0x10010050]                        0x00000032  0x00000014  0x0000003c  0x0000001e
+[0x10010060]                        0x00000046  0x00000028  0x00000050  0x00000002
+[0x10010070]                        0x00000004  0x0000000a  0x00000014  0x0000001e
+[0x10010080]                        0x00000028  0x00000032  0x0000003c  0x00000046
+[0x10010090]                        0x00000050  0x0000000a  0x0000001e  0x00000032
+[0x100100a0]                        0x00000046  0x00000014  0x00000028  0x0000003c
+[0x100100b0]                        0x00000050  0x00000002  0x00000006  0x0000000a
+[0x100100c0]                        0x00000014  0x0000001e  0x00000028  0x00000032
+[0x100100d0]                        0x0000003c  0x00000046  0x00000050  0x0000005a
+[0x100100e0]                        0x00000064  0x0000006e  0x00000078  0x0000000a
+[0x100100f0]                        0x0000001e  0x00000032  0x00000046  0x0000005a
+[0x10010100]                        0x0000006e  0x00000014  0x00000028  0x0000003c
+[0x10010110]                        0x00000050  0x00000064  0x00000078  0x00000005
+[0x10010120]                        0x00000006  0x0000000a  0x00000014  0x0000001e
+[0x10010130]                        0x00000028  0x00000032  0x0000000c  0x00000016
+[0x10010140]                        0x00000020  0x0000002a  0x00000034  0x0000000e
+[0x10010150]                        0x00000018  0x00000022  0x0000002c  0x00000036
+[0x10010160]                        0x00000010  0x0000001a  0x00000024  0x0000002e
+[0x10010170]                        0x00000038  0x00000012  0x0000001c  0x00000026
+[0x10010180]                        0x00000030  0x0000003a  0x00000014  0x0000001e
+[0x10010190]                        0x00000028  0x00000032  0x0000003c  0x0000000a
+[0x100101a0]                        0x0000000c  0x0000000e  0x00000010  0x00000012
+[0x100101b0]                        0x00000014  0x00000014  0x00000016  0x00000018
+[0x100101c0]                        0x0000001a  0x0000001c  0x0000001e  0x0000001e
+[0x100101d0]                        0x00000020  0x00000022  0x00000024  0x00000026
+[0x100101e0]                        0x00000028  0x00000028  0x0000002a  0x0000002c
+[0x100101f0]                        0x0000002e  0x00000030  0x00000032  0x00000032
+[0x10010200]                        0x00000034  0x00000036  0x00000038  0x0000003a
+[0x10010210]                        0x0000003c  0x00000008  0x00000003  0x00000001
+[0x10010220]                        0x00000002  0x00000003  0x00000004  0x00000005
+[0x10010230]                        0x00000006  0x00000007  0x00000008  0x00000009
+[0x10010240]                        0x0000000a  0x0000000b  0x0000000c  0x0000000d
+[0x10010250]                        0x0000000e  0x0000000f  0x00000010  0x00000011
+[0x10010260]                        0x00000012  0x00000013  0x00000014  0x00000015
+[0x10010270]                        0x00000016  0x00000017  0x00000018  0x00000001
+[0x10010280]                        0x00000009  0x00000011  0x00000002  0x0000000a
+[0x10010290]                        0x00000012  0x00000003  0x0000000b  0x00000013
+[0x100102a0]                        0x00000004  0x0000000c  0x00000014  0x00000005
+[0x100102b0]                        0x0000000d  0x00000015  0x00000006  0x0000000e
+[0x100102c0]                        0x00000016  0x00000007  0x0000000f  0x00000017
+[0x100102d0]                        0x00000008  0x00000010  0x00000018  0x00000004
+[0x100102e0]                        0x00000008  0x0000006e  0x00000078  0x00000082
+[0x100102f0]                        0x0000008c  0x00000096  0x000000a0  0x000000aa
+[0x10010300]                        0x000000b4  0x000000be  0x000000c8  0x000000d2
+[0x10010310]                        0x000000dc  0x000000e6  0x000000f0  0x000000fa
+[0x10010320]                        0x00000104  0x0000012c  0x00000136  0x00000140
+[0x10010330]                        0x0000014a  0x00000154  0x0000015e  0x00000168
+[0x10010340]                        0x00000172  0x0000017c  0x00000186  0x00000190
+[0x10010350]                        0x0000019a  0x000001a4  0x000001ae  0x000001b8
+[0x10010360]                        0x000001c2  0x0000006e  0x00000096  0x000000be
+[0x10010370]                        0x000000e6  0x0000012c  0x00000154  0x0000017c
+[0x10010380]                        0x000001a4  0x00000078  0x000000a0  0x000000c8
+[0x10010390]                        0x000000f0  0x00000136  0x0000015e  0x00000186
+[0x100103a0]                        0x000001ae  0x00000082  0x000000aa  0x000000d2
+[0x100103b0]                        0x000000fa  0x00000140  0x00000168  0x00000190
+[0x100103c0]                        0x000001b8  0x0000008c  0x000000b4  0x000000dc
+[0x100103d0]                        0x00000104  0x0000014a  0x00000172  0x0000019a
+[0x100103e0]                        0x000001c2  0x0000000a  0x00000005  0x0000000a
+[0x100103f0]                        0x00000017  0x0000002d  0x00000034  0x0000003c
+[0x10010400]                        0x0000000c  0x00000017  0x0000002d  0x00000020
+[0x10010410]                        0x00000014  0x0000000e  0x0000003a  0x0000001c
+[0x10010420]                        0x00000036  0x0000004d  0x00000018  0x0000001f
+[0x10010430]                        0x00000033  0x00000036  0x00000029  0x0000001b
+[0x10010440]                        0x00000048  0x0000001f  0x00000029  0x00000052
+[0x10010450]                        0x00000020  0x00000030  0x00000043  0x0000004c
+[0x10010460]                        0x0000003c  0x00000030  0x0000003b  0x0000004b
+[0x10010470]                        0x00000062  0x00000058  0x00000031  0x00000024
+[0x10010480]                        0x00000035  0x0000003f  0x0000002e  0x00000032
+[0x10010490]                        0x0000003f  0x00000052  0x00000010  0x0000005b
+[0x100104a0]                        0x00000035  0x0000000c  0x0000000d  0x00000025
+[0x100104b0]                        0x00000015  0x0000000a  0x0000000e  0x0000001b
+[0x100104c0]                        0x00000030  0x00000032  0x00000017  0x0000003a
+[0x100104d0]                        0x00000048  0x0000003b  0x0000003f  0x0000002d
+[0x100104e0]                        0x0000001c  0x0000001f  0x0000004b  0x00000052
+[0x100104f0]                        0x00000034  0x00000036  0x00000029  0x00000062
+[0x10010500]                        0x00000010  0x0000003c  0x0000004d  0x00000052
+[0x10010510]                        0x00000058  0x0000005b  0x0000000c  0x00000018
+[0x10010520]                        0x00000020  0x00000031  0x00000035  0x00000017
+[0x10010530]                        0x0000001f  0x00000030  0x00000024  0x0000000c
+[0x10010540]                        0x0000002d  0x00000033  0x00000043  0x00000035
+[0x10010550]                        0x0000000d  0x00000020  0x00000036  0x0000004c
+[0x10010560]                        0x0000003f  0x00000025  0x00000014  0x00000029
+[0x10010570]                        0x0000003c  0x0000002e  0x00000015  0x00000005
+[0x10010580]                        0x0000000a  0x00000048  0x00000009  0x0000005c
+[0x10010590]                        0x00000006  0x00000044  0x00000059  0x00000004
+[0x100105a0]                        0x00000041  0x00000007  0x0000004d  0x00000334
+[0x100105b0]                        0x000000dd  0x00000009  0x00000022  0x0000007b
+[0x100105c0]                        0x00000001  0x000000b7  0x00000341  0x00000034
+[0x100105d0]                        0x000002af  0x0000003e  0x000002d3  0x00000004
+[0x100105e0]                        0x0000039a  0x00000005  0x000000d5  0x00000082
+[0x100105f0]                        0x00000010  0x000000a7  0x0000000f  0x000000be
+[0x10010600]                        0x0000007b  0x000003d7  0x0000000c  0x000001af
+[0x10010610]                        0x00000070  0x0000000d  0x0000001f  0x00000038
+[0x10010620]                        0x00000003  0x00000072  0x000001a9  0x00000042
+[0x10010630]                        0x0000002b  0x00000036  0x00000394  0x0000020f
+[0x10010640]                        0x000002e2  0x00000318  0x00000020  0x00000048
+[0x10010650]                        0x00000059  0x00000334  0x00000001  0x0000003e
+[0x10010660]                        0x000000d5  0x000000be  0x00000070  0x00000072
+[0x10010670]                        0x00000394  0x00000009  0x00000004  0x000000dd
+[0x10010680]                        0x000000b7  0x000002d3  0x00000082  0x0000007b
+[0x10010690]                        0x0000000d  0x000001a9  0x0000020f  0x0000005c
+[0x100106a0]                        0x00000041  0x00000009  0x00000341  0x00000004
+[0x100106b0]                        0x00000010  0x000003d7  0x0000001f  0x00000042
+[0x100106c0]                        0x000002e2  0x00000006  0x00000007  0x00000022
+[0x100106d0]                        0x00000034  0x0000039a  0x000000a7  0x0000000c
+[0x100106e0]                        0x00000038  0x0000002b  0x00000318  0x00000044
+[0x100106f0]                        0x0000004d  0x0000007b  0x000002af  0x00000005
+[0x10010700]                        0x0000000f  0x000001af  0x00000003  0x00000036
+[0x10010710]                        0x00000020  0x2d2d2d0a  0x2d2d2d2d  0x2d2d2d2d
+[0x10010720]                        0x2d2d2d2d  0x2d2d2d2d  0x2d2d2d2d  0x2d2d2d2d
+[0x10010730]                        0x2d2d2d2d  0x2d2d2d2d  0x2d2d2d2d  0x614d0a2d
+[0x10010740]                        0x78697274  0x0a002320  0x74614d0a  0x0a786972
+[0x10010750]                        0x74614d00  0x20786972  0x6e617254  0x736f7073
+[0x10010760]                        0x000a6465  0x2020000a  0x2000207c  0x00000000
+[0x10010770]...[0x10040000]        0x00000000
+
+        STACK
+[0x7fffef80]                        0x00000000  0x00000000  0x7fffefc1  0x7fffef80
+[0x7fffef90]                        0x7fffef6d  0x7fffef3c  0x7fffef29  0x7fffef05
+[0x7fffefa0]                        0x7fffeef1  0x7fffeee4  0x7fffeeb5  0x7fffeea1
+[0x7fffefb0]                        0x7fffee8a  0x7fffee7c  0x7fffeddf  0x7fffeda6
+[0x7fffefc0]                        0x7fffed8b  0x7fffed47  0x7fffed34  0x7fffed1c
+[0x7fffefd0]                        0x7fffecfe  0x7fffecea  0x7fffecdb  0x7fffecc5
+[0x7fffefe0]                        0x7fffec99  0x7fffec6e  0x7fffec5d  0x7fffec4c
+[0x7fffeff0]                        0x7fffec18  0x7fffec06  0x00000000  0x00000000
+
+        KERNEL DATA
+[0x90000000]                        0x78452020  0x74706563  0x206e6f69  0x636f2000
+[0x90000010]                        0x72727563  0x61206465  0x6920646e  0x726f6e67
+[0x90000020]                        0x000a6465  0x495b2020  0x7265746e  0x74707572
+[0x90000030]                        0x2000205d  0x4c545b20  0x20005d42  0x4c545b20
+[0x90000040]                        0x20005d42  0x4c545b20  0x20005d42  0x64415b20
+[0x90000050]                        0x73657264  0x72652073  0x20726f72  0x69206e69
+[0x90000060]                        0x2f74736e  0x61746164  0x74656620  0x205d6863
+[0x90000070]                        0x5b202000  0x72646441  0x20737365  0x6f727265
+[0x90000080]                        0x6e692072  0x6f747320  0x205d6572  0x5b202000
+[0x90000090]                        0x20646142  0x74736e69  0x74637572  0x206e6f69
+[0x900000a0]                        0x72646461  0x5d737365  0x20200020  0x6461425b
+[0x900000b0]                        0x74616420  0x64612061  0x73657264  0x00205d73
+[0x900000c0]                        0x455b2020  0x726f7272  0x206e6920  0x63737973
+[0x900000d0]                        0x5d6c6c61  0x20200020  0x6572425b  0x6f706b61
+[0x900000e0]                        0x5d746e69  0x20200020  0x7365525b  0x65767265
+[0x900000f0]                        0x6e692064  0x75727473  0x6f697463  0x00205d6e
+[0x90000100]                        0x5b202000  0x74697241  0x74656d68  0x6f206369
+[0x90000110]                        0x66726576  0x5d776f6c  0x20200020  0x6172545b
+[0x90000120]                        0x00205d70  0x5b202000  0x616f6c46  0x676e6974
+[0x90000130]                        0x696f7020  0x205d746e  0x20000000  0x6f435b20
+[0x90000140]                        0x636f7270  0x005d3220  0x20000000  0x444d5b20
+[0x90000150]                        0x005d584d  0x575b2020  0x68637461  0x2020005d
+[0x90000160]                        0x63614d5b  0x656e6968  0x65686320  0x005d6b63
+[0x90000170]                        0x00000000  0x5b202000  0x68636143  0x00005d65
+[0x90000180]                        0x90000024  0x90000033  0x9000003b  0x90000043
+[0x90000190]                        0x9000004b  0x90000071  0x9000008d  0x900000aa
+[0x900001a0]                        0x900000c0  0x900000d6  0x900000e6  0x90000100
+[0x900001b0]                        0x90000101  0x9000011a  0x90000124  0x90000125
+[0x900001c0]                        0x90000139  0x9000013a  0x9000013b  0x90000148
+[0x900001d0]                        0x90000149  0x9000014a  0x9000014b  0x90000154
+[0x900001e0]                        0x9000015e  0x90000170  0x90000171  0x90000172
+[0x900001f0]                        0x90000173  0x90000174  0x90000175  0x9000017f
+[0x90000200]...[0x90010000]        0x00000000
+
+

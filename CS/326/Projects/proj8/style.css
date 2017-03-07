@@ -1,0 +1,114 @@
+body{
+	background-color: #FFFFFF;
+	font-family: Arial, Verdana;
+	font-size: 12px;
+	margin-bottom: 10;
+	margin-left: 10;
+	margin-right: 10;
+	margin-top: 10;
+}
+
+table{
+	background-color: #FFFFFF;
+	FONT-FAMILY: Arial, Verdana;
+	font-size: 12px;
+}
+
+tr{
+	background-color: #FFFFFF;
+	FONT-FAMILY: Arial, Verdana;
+	font-size: 12px;
+}
+
+td{
+	FONT-FAMILY: Arial, Verdana;
+	font-size: 12px;
+	vertical-align: top;
+	background-color: #C0C0C0;
+}
+
+.dotted{
+	border-bottom: 1px dotted #858585;
+	border-right: 1px dotted #858585;
+}
+
+.alldotted{
+	border-bottom: 1px dotted #858585;
+	border-top: 1px dotted #858585;
+	border-right: 1px dotted #858585;
+	border-left: 1px dotted #858585;
+}
+
+.dashed{
+	border-bottom: 1px dashed #858585;
+	border-right: 1px dashed #858585;
+}
+
+.alldashed{
+	border-bottom: 1px dashed #858585;
+	border-top: 1px dashed #858585;
+	border-right: 1px dashed #858585;
+	border-left: 1px dashed #858585;
+}
+
+A:link{
+	COLOR: Gray;
+	TEXT-DECORATION: none;
+}
+A:visited{
+	COLOR: Gray;
+	TEXT-DECORATION: none;
+}
+A:active{
+	COLOR: Gray;
+	TEXT-DECORATION: none;
+}
+A:hover{
+	COLOR: Gray;
+	TEXT-DECORATION: none;
+}
+
+.formfield{
+	BORDER-RIGHT: #000000 1px solid;
+	BORDER-TOP: #000000 1px solid;
+	FONT-SIZE: 10;
+	BORDER-LEFT: #000000 1px solid;
+	COLOR: #000000;
+	BORDER-BOTTOM: #000000 1px solid;
+	FONT-FAMILY: Arial, Verdana;
+	WIDTH:80;
+}
+
+.disformfield{
+	BORDER-RIGHT: #000000 1px solid;
+	BORDER-TOP: #000000 1px solid;
+	FONT-SIZE: 10;
+	BORDER-LEFT: #000000 1px solid;
+	COLOR: #000000;
+	BORDER-BOTTOM: #000000 1px solid;
+	FONT-FAMILY: Arial, Verdana;
+	WIDTH:80;
+	BACKGROUND-COLOR: #FFFFFF;
+}
+
+.formbutton{
+	BORDER-RIGHT: #575757 1px solid;
+	BORDER-TOP: #575757 1px solid;
+	FONT-SIZE: 10;
+	BORDER-LEFT: #575757 1px solid;
+	COLOR: #000000;
+	BORDER-BOTTOM: #575757 1px solid;
+	FONT-FAMILY: Arial, Verdana;
+	BACKGROUND-COLOR: #AEAEAE;
+}
+
+.myTable{
+	margin-bottom: 10;
+	margin-left: 10;
+	margin-right: 10;
+	margin-top: 10;
+	border: 0;
+	width:250;
+	background-color: #C0C0C0;
+	padding: 5px;
+}

@@ -1,0 +1,255 @@
+Misc. Interrupt Services
+-------------------------
+This file contains some additional information regarding
+some potentially useful interrupts.
+
+
+
+Int 1ah, Service 02h
+
+This interrupt returns the current time in Binary Coded
+Decimal (BCD) format.  The results are returned in
+CH for hours, CL for minutes, and DH for seconds.
+
+Additionally, to convert the BCD results to ASCII,
+it is necessary to divide by 10h (i.e., ten hex, or 16).
+
+For example:
+	mov	ah, 02h
+	int	1ah
+
+Returns hours in CH, minutes in CL, and seconds in DH.
+To convert hours to ASCII:
+
+	mov	al, ch
+	cbw
+	mov	bl, 10h
+	idiv	bl
+	add	ah, 30h
+	add	ah, 30h
+
+Which performs the ASCII conversion for hours providing the
+ASCII characters in the AL and AH registers.
+
+
+
+Int 21h, Service 49h, Free Allocated Memory
+
+This service frees allocted memory, commonly used to release a
+resident program.  First load in ES the segmemt address of the block
+to be returned.  A successful operation clears the carry flag.
+An uunseccessful operation sets the carry flag and returns in the
+AX register an error code (07=memory control block destroyed and
+09=invalid memory block address).
+
+Two calls are required to fully release memory from a resident
+program.
+
+	mov	ax, cs
+	mov	ds, ax
+
+	mov	ds, word ptr cs:psp		; De-allocate memory A
+	mov	es, ds:[2ch]
+	mov	ah, 49h
+	int	21h
+
+	mov	ax, word ptr cs:psp		; De-allocate memory B
+	mov	es, ax
+	mov	ah, 49h
+	int	21h
+
+The variable "psp" must be the Program Segment Prefix (PSP)
+offset obtained during the inital program load.
+
+
+
+Int 21h, Service 35h, Get Interrupt Address
+
+This service returns the address of the specified interrupt from
+the system Interrupt Vector Table.  Requires al register to
+be the interrupt requested.   Upon completion, the ES:BX registers
+are set as the segment:offset for the requested interupt.
+
+For example:
+
+	mov	ah, 35h
+	mov	al, 09h
+	int	21h
+
+Would return in ES:BX the segment:offset of the 09h interrupt
+(from the interrupt vector table).
+
+
+
+Int 21h, Service 25h, Set Interrupt Address
+
+This service updates the system Interrupt Vector Table with the
+specific address for a specified interrupt.
+The interrupt to be set is specified in the al register.
+The DS:DX registers are used to specify the new segment:offset
+to be placed in the interrupt vector table.
+
+For example, a typical usage might be to install a user written
+routine in the user control for the timer interrupt (1ch):
+
+	mov	ax, cs
+	mov	ds, ax			; set segment for new routine
+	mov	dx, offset usr_tmr	; offset for new routine
+	mov	ah, 25h
+	mov	al, 1ch
+	int	21h
+
+Nothing returned.
+
+
+
+Int 10h, Service 0fh
+
+This service provides the display page in the BH register.
+The operating system supports multiple "display pages", which
+can be interchanged by applications.  Before writting to the
+screen using the various 10h services, it is necessary to
+obtain the current, active display page.
+
+	mov	ah, 0fh
+	int	10h
+	mov	dis_page, bh
+
+The variable "dis_page" is defined as a byte in memory.
+
+
+
+Int 10h, Service 03h
+
+This service provides the current cursor position in
+the DH (row) and DL (colunm) registers.  The active
+display page must be provide before the call in the BH
+register.  For example:
+
+	mov	ah, 03h
+	mov	bh, dis_page
+	int	10h
+	mov	row, dh		; save row
+	mov	col, dl		; save column
+
+The variable "dis_page" must be previously set via the
+int 10h, service 0fh function.   The variables "row" and "co;"
+are defined as a bytes in memory.
+
+
+
+Int 10h, Service 02h
+
+This service sets the cursor position.  The new values for
+row and colunm are places in the DH (row) and DL (column) registers.
+The active display page must be provide before the call in the BH
+register.  For example:
+
+	mov	ah, 02h
+	mov	bh, dis_page
+	mov	row, dh		; new row
+	mov	col, dl		; new column
+	int	10h
+
+Nothing is returned.
+
+
+
+Int 10h, Service 0eh
+
+This service writes a single characters to the screen.
+The character, in ASCII format, is placed in the AL register.
+The active display page must be provide before the call in the BH
+register.  For example:
+
+	mov	ah, 02h
+	mov	bh, dis_page
+	mov	al, "H"
+	int	10h
+
+Nothing is returned.
+
+
+
+Int 16h
+
+This service provides an interface with the BIOS for keyboard
+interface.  There are a number different services which
+provide useful functions for reading input.
+
+A detailed review of this interrupt is located in the text,
+chapter 20, sections 20.3 and 20.4.
+
+
+
+Int 16h, Service, 12h
+
+Returns the current status of the shift flags in AL register.
+The shift flags are defined as follows: 
+
+     bit 7: Insert toggle
+     bit 6: Capslock toggle
+     bit 5: Numlock toggle
+     bit 4: Scroll lock toggle
+     bit 3: Alt key is down
+     bit 2: Ctrl key is down
+     bit 1: Left shift key is down
+     bit 0: Right shift key is down
+
+That is if the "ctrl" key is pressed, but 2 will be set to a 1.
+If it is not pressed, it would be set to 0.
+
+To check if the status of various possibilities of the
+control, alt, and/or shift keys it would be necessary to check
+bits 0, 1, 2, and 3.   A "1" would imply the key was pressed
+or down and a "0" would imply the key was not pressed.
+
+However, since the "insert", "capslock", "numlock",
+and "scroll" keys are of no interest, they must be masked
+off before any comparisons are performed.
+
+For example:
+
+	mov	ah, 12h
+	int	16h		; get last character typed.
+
+	and	al, 00001111b	; eliminate insert, capslock
+				; numlock, and scroll bits.
+
+	cmp	al, 00000100b	; is it ctrl only?
+	je	ctrl_only
+
+	cmp	al, 00001100b	; is it ctrl AND alt?
+	je	ctrl_alt
+
+This will jump to "ctrl_only" if the control key is pressed and
+the alt or shift keys are NOT pressed.
+
+If that jump does not occur, it will jump to "ctrl_alt" if both
+the control key is pressed and the alt are pressed (and the
+shift key is NOT pressed).
+
+
+
+Int 21h, Service 31h, Terminate and Stay Resident (TSR)
+
+This service terminates the current process and leaves the
+memory allocated.  The amount of memory, in paragraphis, to
+leave allocated is in the DX register.  Paragraphs is
+defined as the number of bytes divided by 16.  For example,
+assuming the label "prog_end" is the location of where the
+resident code ends, the following code would perform the TSR:
+
+	mov	ah, 31h                 	; TSR
+	mov	dx, offset prog_end
+	mov	cl, 4
+	shr	dx, cl
+	add	dx, 1                   	; force round-up
+	int	21h
+
+Note, the shift right ("shr") instruction by 4 bits is
+the divide by 16 function.   Must also force a round-up
+to ensure all memory needed is allocated correctly.
+For example, 20/16=1, but 2 paragraphs would be required.
+
+

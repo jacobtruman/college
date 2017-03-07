@@ -1,0 +1,128 @@
+CSC 218, Section 01, 02
+Homework,  Asst. #09
+
+Purpose:  Become familiar with system services or I/O, data representation,
+          program control instructions, stacks, and procedure handling.
+Due:      Wednesday    (10/12)
+Points:   115
+
+Assignment:
+Write a simple assembly language program to read race information from the
+user (race name, race start day/time, and race length), calculate the race
+end day/time, and display the final race information.  The provided main
+program will call three routines as follows:
+
+   * Procedure 1, "read_race_info", will read the race information
+     (race name, race start day/time, and race length), perform error
+     checking, and return the final race information (as integer). The
+     procedure must perform complete error checking on the race name
+     (3 character minimum, 20 character max), race start day (2 characters,
+     Su/Mo/Tu/We/Th/Fr/Sa, case sensitive), race start time (hh:mm:ss,
+     24-hour time format, leading 0's required) and the race length
+     (hh:mm:ss, leading 0's required, 0-99 hours, 0-59 minutes, 0-59 seconds
+     maximum, 00:00:00 not allowed).  The procedure should return a single
+     integer for the day (0=Su, 1=Mo, etc.).  If there is an error in the
+     input, display an appropriate message and re-prompt for just that field.
+     Note, prompting and error messages must match the example exactly.
+     As such, you must use the provided prompt and error message strings.
+
+   * Procedure 2, "calc_end_time", compute and return the race end day and
+     race end time based on the race start day/time and race length.
+
+   * Procedure 3, "disp_race_info", to display the race information in the
+     specified format (next page).  Display should include header, race name,
+     race start day/time, and race end day/time.  The day must be formatted
+     with the full day name.  The times must be displayed in the 12-hour
+     AM/PM format (see example).  Note, output must match the example exactly
+     (with regard to spacing and formatting).
+
+You may use the integer/ASCII conversion code from assignment #6 (with
+appropriate updates).
+
+
+Note, your source must be placed into a separate file and linked with the
+provided main.  Refer to the handout for directions how to link multiple
+files.
+
+
+
+
+Submission:
+When complete, submit a copy of the source file via the class web page
+(assignment submission link) on Wednesday, October 12, 2005 before 4:00pm.
+Assignments received after 4:00pm will not  be accepted!
+Do not submit a hard-copy.
+
+
+
+
+---------------------------------------
+For example, the I/O should look like:
+
+Example #1
+                         
+     **************************************
+     CSC218 - Race Time Calculation Program
+     
+      Enter Race Name: none
+      Enter Race Start Day (Su/Mo/Tu/We/Th/Fr/Sa): Su
+      Enter Race Start Time (hh:mm:ss): 12:50:50
+      Enter Race Length (hh:mm:ss): 02:20:20
+     
+     ------------------------------------
+     Race Information:
+     
+      Race Name       : none
+      Race Start Time : Sunday, 12:50:50pm
+      Race End Time   : Sunday, 03:11:10pm
+     
+     F:\csc218\ast9>
+
+Example #2
+     
+     **************************************
+     CSC218 - Race Time Calculation Program
+     
+      Enter Race Name: Race #1
+      Enter Race Start Day (Su/Mo/Tu/We/Th/Fr/Sa): Tu
+      Enter Race Start Time (hh:mm:ss): 23:30:30
+      Enter Race Length (hh:mm:ss): 12:30:30
+     
+     ------------------------------------
+     Race Information:
+     
+      Race Name       : Race #1
+      Race Start Time : Tuesday, 11:30:30pm
+      Race End Time   : Wednesday, 12:01:00pm
+     
+     F:\csc218\ast9>
+
+Example #3 (including error checking)
+     
+     **************************************
+     CSC218 - Race Time Calculation Program
+     
+      Enter Race Name: Good Race
+      Enter Race Start Day (Su/Mo/Tu/We/Th/Fr/Sa): We
+      Enter Race Start Time (hh:mm:ss): 24:00:00
+      *Error, must enter valid race start time (hh:mm:ss):
+       Please re-enter.
+      Enter Race Start Time (hh:mm:ss): 23:60:00
+      *Error, must enter valid race start time (hh:mm:ss):
+       Please re-enter.
+      Enter Race Start Time (hh:mm:ss): 23:59:60
+      *Error, must enter valid race start time (hh:mm:ss):
+       Please re-enter.
+      Enter Race Start Time (hh:mm:ss): 17:59:59
+      Enter Race Length (hh:mm:ss): 36:00:01
+     
+     ------------------------------------
+     Race Information:
+     
+      Race Name       : Good Race
+      Race Start Time : Wednesday, 05:59:59pm
+      Race End Time   : Friday, 06:00:00am
+     
+     F:\csc218\ast9>
+
+

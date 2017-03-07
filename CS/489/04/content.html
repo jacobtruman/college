@@ -1,0 +1,253 @@
+<html><head><!--
+  --      file: content.html
+  --  function: HTML src for Web Page that
+  --    author: Roy H. Ogawa <rho@cs.unlv.edu>
+  -- copyright: Roy H. Ogawa, Computer Science, UNLV
+  --      date: 9/25/2006
+  --><title>Assignment 04</title></head><body bgcolor="white">
+<table>
+<tbody>
+<tr>
+<td width="50"> &nbsp; </td>
+<td width="300"> 
+<center>
+<p>
+</p><h2>
+Bioinformatics<br>
+Assignment 4
+</h2>
+<p></p>
+</center>
+
+<center>
+<p>
+</p><h3>
+Consensus Sequences of Length 30 Straddling<br>
+the <em>exon-intron</em> and <em>intron-exon</em> Boundaries.
+</h3>
+<p></p>
+</center>
+
+<p>
+If you look at chromosome 08 of Os, and use the chr08.seq file and
+the chr08.intron file, you will find that the lines below show the
+15 characters upstream and 15 characters downstream of the
+exon-intron boundaries for gene g17940:
+</p>
+<p>
+exon-intron boudaries:
+<font size="2">
+<pre>GCCGAATACGTAGAG GTAAGTATCCATCGG exon1-intron1
+GATGATGGGGAAGAG GTCACCCACCGCCGA exon2-intron2
+ACTCACTTCTCAAGG GTAAACCACTCACCT exon3-intron3
+AAACCAGCTCCACCA GTAAGATTTTCTTAT exon4-intron4
+</pre>
+</font>
+</p>
+<p>
+You can see that for this gene, the exon-intron boundaries,
+indicated with a space, all are followed by 'GT', which is followed
+mostly by 'AA' with a single case of a 'CA'.
+</p>
+<p>
+Similarly, the intron-exon boundaries for the same gene are shown below:
+</p>
+<p>
+intron-exon boudaries:
+<font size="2">
+<pre>TCGGCTAGCAAGCAG GTCCATTGGGATGAA intron1-exon2
+CCCCCTCCTCGCAAG AGTAACAGTGGAAGG intron2-exon3
+ATCTCGTTTTGGCAG AAAAAGAAGACTGCT intron3-exon4
+ATTTCTCTTTTCCAG ACCTTAGCCGATCTA intron4-exon5
+</pre>
+</font>
+</p>
+<p>
+You can see that for this gene, the intron-exon boundaries,
+indicated with a space are prefixed with 'AG', half of
+which is also prefixed by 'C' with a single case of a 'A',
+and that there may be regularities before that also..
+</p>
+<h3>Problem 1</h3>
+<p>
+Write a program that creates, for a specified chromosome, a file named,
+for example for chromosome 01, 'chr01.exon-intron' and a similar file
+named 'chr01.intron-exon', with the different chromosome numbers
+and with the .exon-intron file containing the exon-intron boundaries
+and the .intron-exon file containing the intron-exon boundaries for
+each gene and corresponding introns, if any.
+</p>
+<p>
+An example of input records and output records for a single gene
+in chromosome 08 are shown below.
+</p>
+<p>
+</p><h3>Example</h3>
+<p></p>
+<p>
+</p><h4>Input Files</h4>
+<p></p>
+<p>
+.seq file header:
+</p><pre>   &gt;LOC_Os08g17940|11978.t01664|unspliced-genomic hypothetical protein
+</pre>
+.intron file headers:
+<pre>   &gt;LOC_Os08g17940.1|11978.m05913|intron_1
+   &gt;LOC_Os08g17940.1|11978.m05913|intron_2
+   &gt;LOC_Os08g17940.1|11978.m05913|intron_3
+   &gt;LOC_Os08g17940.1|11978.m05913|intron_4
+</pre>
+corresponding .exon-intron file output record headers:
+<font size="2">
+<pre>   &gt;LOC_Os08g17940|11978.t01664.m05913|exon_1-intron_1 unspliced-genomic hypothetical protein
+   &gt;LOC_Os08g17940|11978.t01664.m05913|exon_2-intron_2 unspliced-genomic hypothetical protein
+   &gt;LOC_Os08g17940|11978.t01664.m05913|exon_3-intron_3 unspliced-genomic hypothetical protein
+   &gt;LOC_Os08g17940|11978.t01664.m05913|exon_4-intron_4 unspliced-genomic hypothetical protein
+</pre>
+</font>
+<p></p>
+<p>
+</p><h4>Corresponding output records for exon-intron</h4>
+<p></p>
+<p>
+<font size="2">
+<pre>   &gt;LOC_Os08g17940|11978.t01664.m05913|exon_1-intron_1 unspliced-genomic hypothetical protein
+   CATCGGCCGAATACGTAGAGGTAAGTATCCATCGGCTAGA
+   &gt;LOC_Os08g17940|11978.t01664.m05913|exon_2-intron_2 unspliced-genomic hypothetical protein
+   CTAATGATGATGGGGAAGAGGTCACCCACCGCCGATGCAT
+   &gt;LOC_Os08g17940|11978.t01664.m05913|exon_3-intron_3 unspliced-genomic hypothetical protein
+   CCCCGACTCACTTCTCAAGGGTAAACCACTCACCTTGACT
+   &gt;LOC_Os08g17940|11978.t01664.m05913|exon_4-intron_4 unspliced-genomic hypothetical protein
+   CACTTAAACCAGCTCCACCAGTAAGATTTTCTTATACAAA
+</pre>
+</font>
+</p>
+<p>
+</p><h4> Corresponding output records for intron-exon</h4>
+<p></p>
+<p>
+The intron-exon boundary file records should be of the following
+</p>
+<p>
+<font size="2">
+<pre>   &gt;LOC_Os08g17940|11978.t01664.m05913|intron_1-exon_2 unspliced-genomic hypothetical protein
+   TCGGCTAGCAAGCAGGTCCATTGGGATGAA
+   &gt;LOC_Os08g17940|11978.t01664.m05913|intron_2-exon_3 unspliced-genomic hypothetical protein
+   CCCCCTCCTCGCAAGAGTAACAGTGGAAGG
+   &gt;LOC_Os08g17940|11978.t01664.m05913|intron_3-exon_4 unspliced-genomic hypothetical protein
+   ATCTCGTTTTGGCAGAAAAAGAAGACTGCT
+   &gt;LOC_Os08g17940|11978.t01664.m05913|intron_4-exon_5 unspliced-genomic hypothetical protein
+   ATTTCTCTTTTCCAGACCTTAGCCGATCTA
+</pre>
+</font>
+</p>
+<p>
+A header identifier should have the information
+consisting of '&gt;LOC_' followed by the species ID, the gene ID,
+the transcription unit number from the .seq header, a version
+number if there, the model number from the .intron header, the
+fact that it is the exon-intron (or intron-exon) boundary, and
+finally, the commentary, which should be the same for the .seq file
+and for the intron file..
+</p>
+<p>
+The single body line contains the subsequence consisting of 10
+bases before and 10 bases after the boundary for each record in
+the .seq file and the corresponding records in the .intron files
+(with NO helpful space in between, as shown in the earlier
+discussion but is not in the sample input/output.)
+</p>
+<p>
+Similarly for the intron-exon boundaries.
+</p>
+<p>
+The header line should have the following format:
+</p>
+<p>
+<font size="2">
+<pre>   &gt;LOC_Os08g17940|11978.t01664.m05913|exon_1-intron_1 unspliced-genomic hypothetical protein
+  "&gt;LOC_Os" + "&lt;chr #&gt;" + "g" + "&lt;gene number&gt;" + "|" + "" + "." + "t" + "&lt;TU #&gt;
+  + "." + "m" + "&lt;model #&gt;" + "|" + "intron_" + "&lt;intron #&gt;" + "-exon_" + "&lt;exon #&gt;"
+  + " " + "&lt;commentary&gt;"
+</pre>
+</font>
+</p>
+<p>
+The command line for this program should have the usage:
+</p>
+<font size="2">
+<pre>   Usage: exonIntron &lt;.seq file name&gt; &lt;.intron file name&gt; &lt;chromosome number (beginning with 'chr')&gt;
+</pre>
+</font>
+For example:
+<p></p>
+<p>
+</p><pre>	exonIntron chr01.dir/chr01.seq chr01.dir/chr01.intron chr01
+</pre>
+<p></p>
+<p>
+The input files may not be in the current directory.  The output file
+should be in the current directory and it's name can be figured from the
+chromosome number on the command line.
+</p>
+<p>
+</p><h3>Problem 2</h3>
+<p></p>
+<p>
+Write a program that takes as input, either one of these files, and finds the
+profile matrix and the consensus sequence for the file.  The output is to be
+exactly in the following format (3 after decimal, 15 cols):
+</p>
+<p>
+<font size="2">
+<pre>     File: chr08.exon-intron
+     Profile Matrix:
+          G    C    G    C    A    T    A    T    C    A    C    C    C    C    T
+     A: .000 .177 .260 .059 .397 .230 .407 .105 .193 .492 .221 .043 .302 .153 .092 
+     C: .098 .481 .147 .358 .112 .264 .165 .283 .507 .334 .583 .366 .335 .315 .090 
+     G: .746 .333 .371 .238 .223 .127 .316 .304 .029 .105 .189 .274 .309 .302 .258 
+     T: .155 .010 .222 .345 .267 .379 .112 .308 .271 .069 .008 .317 .054 .231 .560 
+
+          A    C    A    G    G    C    A    G    A    G    C    C    A    G    C
+     A: .342 .142 .473 .265 .193 .239 .530 .246 .291 .189 .106 .144 .489 .077 .161 
+     C: .373 .578 .148 .150 .093 .524 .251 .332 .245 .030 .517 .383 .106 .056 .329 
+     G: .241 .147 .019 .380 .375 .091 .155 .377 .139 .496 .310 .144 .285 .663 .291 
+     T: .044 .134 .360 .205 .338 .146 .064 .045 .325 .285 .067 .329 .120 .204 .220 
+
+     Consensus Sequence: GCGCATATCACCCCTACAGGCAGAGCCAGC
+</pre>
+</font>
+</p>
+<p>
+The command line for this program should look have the usage:
+</p>
+<p>
+</p><pre>	Usage: profile &lt;input file&gt; [&lt;output file&gt;]
+</pre>
+<p></p>
+
+<p>
+</p><h3>
+Handins due Midnight, Sunday October 15, 2006
+</h3>
+<p></p>
+<p>
+Handin by by email, under directory 04, tar'd and gzip'd from above your
+name directory.
+</p>
+<p>
+</p><pre>	tar cv &lt;your-name&gt;/04 | gzip &gt; &lt;your-name&gt;.04.tgz
+</pre>
+<p></p>
+<p>
+There should be 3 programs: main programs in exon-intron.cpp, intron-exon.cpp,
+and profile.cpp (or .java as the case may be) with other module files as needed.
+</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+
+
+</body></html>

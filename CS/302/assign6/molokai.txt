@@ -1,0 +1,14 @@
+Kalaupapa,Kalae 10
+Kalaupapa,Wailau 44
+Kalae,Kualapuu 3
+Kalae,Kaunakakai 37
+Hooleliua,Kualapuu 8
+Hooleliua,Maunaloa 23
+Hooleliua,Kaunakakai 19
+Kamalo,Kaunakakai 31
+Kamalo,Kaluaaha 10
+Kaluaaha,Pukoo 2
+Waialua,Pukoo 8
+Waialua,Wailau 32
+Waialua,Haiwa 14
+Haiwa,Wailau 30

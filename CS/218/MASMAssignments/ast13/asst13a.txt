@@ -1,0 +1,264 @@
+CSC 218, Section 01, 02
+Homework,  Asst. #13
+
+Purpose:    Create a user-defined interrupt to provide a background
+            stop-watch function.
+Due:        Monday    (11/14)
+Points:     220    (180 program, 40 documentation)
+
+Assignment:
+Write an interrupt handler that will implement a background "stop watch"
+function.  When counting, the interrupt should display the start time
+and elapsed time in the upper right hand corner of the screen.
+For example, the display should look like the following:
+
+                    Initial:  18:23:48
+                    Elapsed:     01:23
+
+When the interrupt is initially installed, it should display the message,
+"Stop Watch Utility Installed - by <your name>" and on the next line
+"F9 Stop/Stop,  F10 Reset,  F11 Display,  F12 Remove".  Once the interrupt
+is installed and working correctly, you should be able to perform normal
+DOS operations.
+
+  When the F9 function key button is pressed, the interrupt should
+  start the stop watch and display the initial start time in
+  hrs:mins:secs (24-hour format), elapsed time (00:00 initially) in 
+  mins:secs  format, and begin counting (in seconds).  The elapsed
+  time should be updated every second and the start time refreshed
+  (i.e, redisplayed on the screen).  The program need not count past
+  99 minutes, 59 seconds.  When the F9 button is typed again, the
+  interrupt should stop counting and display the start time and final
+  elapsed time (which is no longer being updated).
+
+  When the F10 function key is pressed  the interrupt handler should
+  re-set the start time and elapsed time.  If the interrupt is counting,
+  the start time and elapsed time should be redisplayed and continue
+  counting.
+
+  When the F11 function key is pressed - when the interrupt is not
+  counting - the interrupt handler should display the current initial
+  time and elapsed time.  If the interrupt is counting, typing the F11
+  function key should be ignored.
+
+  When the F12 function key is pressed - when the interrupt is not
+  counting - the interrupt handler should de-install itself.  That is,
+  the interrupt handler should restore the IVT and deallocate the memory.
+  If the interrupt is counting, typing the F12 function key should be
+  ignored.
+
+The interrupt handler must be written as Terminate and Stay Resident (TSR)
+program.  To do this you should use the ".com" format, as discussed in the
+class.  For efficiency the "int 10h" should be utilized for screen output
+and the "int  1ah" to get the system time. Use the 09h interrupt for the
+keyboard, use the 1ch interrupt for the timer.  Refer to the text,
+chapter 18 for additional explanations and an example TSR program.
+
+
+
+Submission:
+When complete, submit a copy of the source file via the class web page
+(assignment submission link) before Monday 4:00pm on November 14, 2005.
+Assignments received after 4:00pm will not be accepted!
+Do not submit a hardcopy.
+
+
+
+
+Assignment #13 - Overview:
+                                   
+
+Assignment 13 will have three major parts:
+
+interrupt - timer
+     if sw_on
+          inc tck_counter
+          if (1 sec)
+               call disp_times
+
+interrupt - keyboard
+     check:
+          f9 - toggle sw_on/sw_off
+          f10 - reset times, call disp_times
+          f11 - if sw_off, call disp_times
+          f12 - if sw_off, de-install
+     else
+          do original 09 int
+
+The initialization code.
+     get/save old int's
+     set interrupt vector table
+     disp install message
+     tsr
+
+
+Must follow the ".com" rules which require
+everything to be in a single segment, with an
+assume statement setting cs=ds=es=ss.
+
+Since we will require a stack inside the
+interrupt (during the serpinsky display), we
+must define our own stack.  We can do this by
+setting the SS:SP registers.  However
+BEFORE we change them, we must save the
+old values!!  The old SS:SP values must be
+restored before the interrupt returns.
+
+During the time when we are changing the
+SS:SP registers, we do NOT want our
+interrupt handler to be interrupted by another
+interrupt.  So, we need to turn interrupts off -
+only during the time when we are updating the
+SS:SP registers.
+
+The following is one way, not the only way!
+
+
+
+
+; Example layout for interrupt handler:
+
+
+text	segment	public	'CODE'
+
+; all segments set equal as required for tsr's.
+
+assume	cs:text, ds:text, es:text, ss:text
+
+; must put start of program at 100 hex,
+; as required for ".com" format.
+
+	org	100h
+start:
+	jmp	init
+
+; note, required to "start" just past the "org",
+; but need to goto the initialization code.
+; must jump, not call, since we will not return.
+
+
+;---------------------------------------------------
+; interrupt service routine - timer interrupt.
+
+tm_chk	proc	far
+
+; since this is using the timer interrupt, it will
+; be called ~18.2 times a second.   ignore 17
+; calls and on the 18th call, 1 sec has elapsed.
+
+;     if sw_on:
+	inc     word ptr cs:tick_cnt
+;          if (1 sec)
+;              update elapsed time
+;               call disp_times
+
+	iret
+tm_chk	endp
+
+
+
+;---------------------------------------
+key_chk	proc	far
+
+; - get key scan code
+; - check for f9, f10, f11, f12
+	f9 - toggle sw_on/sw_off
+	f10 - if sw_off, jmp disp_tm
+	f11 - if sw_off, reset times
+	f12 - if sw_off, de-install
+
+     else
+
+; - do original 09h interrupt
+	jmp   dword ptr cs:old09
+
+
+; -----
+disp_tm:
+; - set stack, call disp_times, reset stack
+
+	mov	word ptr cs:old_sp, sp
+	mov	word ptr cs:old_ss, ss
+	mov	ax, cs
+	cli
+	mov	ss, ax
+	mov	sp, offset stk_top
+	sti
+
+	call	disp_times
+
+	cli
+	mov	ss, word ptr cs:old_ss
+	mov	sp, word ptr cs:old_sp
+	sti
+
+	iret
+key_chk	endp
+
+
+
+;---------------------------------------
+
+disp_times     proc near
+
+; routine to display times
+;  - convert times to ASCII
+;  - get/save cursor position
+;  - use "int 10h" to display times
+;  - restore cursor position
+
+	ret
+disp_times endp
+
+
+
+;---------------------------------------
+
+reset_times    proc near
+
+; reset initial time and set elapsed time=0.
+
+	ret
+reset_times    endp
+
+
+;-----------------------------------------------------
+; interrupt handler requires data located in cs.
+; requires use of "cs:" to over-ride DS usage.
+
+stk_bot		dw	99 dup(?)
+stk_top		dw	?
+old_ss		dw	0
+old_sp		dw	0
+tick_cnt	dw	0
+
+prog_end:
+ld_mdgs		db	"Stop Watch..."
+		db	CR, LF, END_STR
+
+
+; Note, the label "prog_end" indicates the
+; end "memory resident" code.
+
+
+;-----------------------------------------------------
+; initialization:
+; must initialize the interrupt vectors for the
+; interrupt handler.  then, terminate the
+; program leaving the interrupt handler code
+; and data  resident in memory.
+; note, can use DOS int 21h functions here.
+
+init:
+; * get/set initial time
+; * get/save old interupts (09h, 1ch)
+; * set IVT with new addresses
+; * display installation message
+; * terminate and stay resident
+
+text     ends
+end     start
+
+; note, must use an explicit entry point
+;---------------------------------------------------
+

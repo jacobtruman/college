@@ -1,0 +1,11 @@
+Waling,Kombir 3
+Kombir,Solamon 3
+Solamon,Dender 2
+Naira,Lautaka 5
+Waling,Lonthoir 4
+Lautung,Uring 2
+Tutra,Uring 3
+Tutra,Waling 5
+Dender,Waer 3
+Lautung,Waer 3
+Kombir,Waer 5

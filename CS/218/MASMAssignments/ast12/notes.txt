@@ -1,0 +1,101 @@
+Interupts
+---------
+
+Interupt Vector Table (ivt)
+Table of addresses
+
+- push cs, ip, flag
+- multiply int # by 4 and use as an offset into the ivt to obtain a new cs:ip
+
+The Interupt Service Routine (ISR) executes an "iret" when done
+
+
+OTHERS:
+-------
+set DTA (ah=1ah) 
+See example, class web page (DTA Example) 
+See text (13.3.8.7) 
+ 
+
+find first (ah=4eh) 
+See example, class web page (File I/O Example) 
+See text (13.3.8.8) 
+ 
+
+find next (ah=4fh) 
+See text (13.3.8.9) 
+ 
+
+file open (ah=3dh) 
+See text (13.3.8.1) 
+ 
+
+set file date/time (ah=57h) 
+See text (13.3.8.13) 
+For an example of accessing the file date data structure, see class web page (File I/O Example) 
+ 
+
+file close (ah=3eh) 
+See text (13.3.8.3) 
+See asst #12 Provided Main
+
+
+Ast 12
+------
+
+inbuff	db	8192 dup(?)
+bf_size	dw	8192
+bf_max	dw	8191
+curr	dw	bf_size
+
+eof_flg	db	FALSE
+
+Procedures:
+get_lne
+di = 0
+
+fl_rd:
+if (curr > bf_max){
+	if (eof == true){
+		exit_done
+	}else{
+		read file into buffer
+		if (actual read == 0){
+			exit_done
+		}
+		if (actual read != bf_size){
+			eof = true
+			bf_max = actual read - 1
+		}
+		curr = 0
+	}
+}
+
+loop inbuff -> ln_buff
+	read buffer til CR, LF (really only LF)
+	if (curr > bf_max){
+		go to fl_rd
+	}
+
+get 1 char    [from:  inbuff(curr)]
+if (char == LF){
+	exit_proc
+}
+put 1 char    [to:    ln_buff(di)]
+; (ln_buff -> stack)
+inc curr
+inc di
+go to fl_rd
+
+
+
+
+exit_done:
+
+done = TRUE
+
+exit_proc:
+
+ret
+
+

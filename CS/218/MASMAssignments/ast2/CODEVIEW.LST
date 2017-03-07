@@ -1,0 +1,79 @@
+>BEFORE
+>
+>mdi nm1 l1
+12E3:0008      25  
+>mdix nm1 l1
+12E3:0008  0019  
+>mdi nm2 l1
+12E3:000A      13  
+>mdix nm2 l1
+12E3:000A  000D  
+>mdi re1 l1
+12E3:000C       0  
+>mdix re1 l1
+12E3:000C  0000  
+>mdi re2 l1
+12E3:000E       0  
+>mdix re2 l1
+12E3:000E  0000  
+>mdi re3 l1
+12E3:0010       0  
+>mdix re3 l1
+12E3:0010  0000  
+>mdr fl1 l1
+12E3:0012  +7.6250000E+000  
+>mdlx fl1 l1
+12E3:0012  40F40000  
+>mdr fl2 l1
+12E3:0016  +3.1400001E+000  
+>mdlx fl2 l1
+12E3:0016  4048F5C3  
+>mda iname l12
+12E3:001A  Ed Jorgensen
+>mdb iname l12
+12E3:001A  45 64 20 4A 6F 72 67 65 6E 73 65 6E              Ed Jorgensen
+>mda mynam l12
+12E3:0026  Jacob Truman
+>mdb mynam l12
+12E3:0026  4A 61 63 6F 62 20 54 72 75 6D 61 6E              Jacob Truman
+>
+>
+>AFTER
+>
+>mdi nm1 l1
+12E3:0008      25  
+>mdix nm1 l1
+12E3:0008  0019  
+>mdi nm2 l1
+12E3:000A      13  
+>mdix nm2 l1
+12E3:000A  000D  
+>mdi re1 l1
+12E3:000C      38  
+>mdix re1 l1
+12E3:000C  0026  
+>mdi re2 l1
+12E3:000E     -12  
+>mdix re2 l1
+12E3:000E  FFF4  
+>mdi re3 l1
+12E3:0010      12  
+>mdix re3 l1
+12E3:0010  000C  
+>mdr fl1 l1
+12E3:0012  +7.6250000E+000  
+>mdlx fl1 l1
+12E3:0012  40F40000  
+>mdr fl2 l1
+12E3:0016  +3.1400001E+000  
+>mdlx fl2 l1
+12E3:0016  4048F5C3  
+>mda iname l12
+12E3:001A  Ed Jorgensen
+>mdb iname l12
+12E3:001A  45 64 20 4A 6F 72 67 65 6E 73 65 6E              Ed Jorgensen
+>mda mynam l12
+12E3:0026  Jacob Truman
+>mdb mynam l12
+12E3:0026  4A 61 63 6F 62 20 54 72 75 6D 61 6E              Jacob Truman
+>

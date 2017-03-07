@@ -1,0 +1,125 @@
+Microsoft (R) Macro Assembler Version 6.15.8803		    09/03/05 08:00:49
+ast1.asm						     Page 1 - 1
+
+
+				;   Jacob Truman Section 02
+				;   Assignment 1
+
+
+				.model medium
+				.486
+
+
+				; ----------------------------------------------
+				          
+ 0000				.data
+ 0000 0013				nm1	dw	19
+ 0002 0007				nm2	dw	7
+ 0004 0000				an1	dw	?
+ 0006 0000				an2	dw	?
+ 0008 0000				an3	dw	?
+ 000A 0000				an4	dw	?
+ 000C 0000				re4	dw	?
+
+				; ----------------------------------------------
+
+				.stack
+
+ 0000				.code
+
+ 0000				main proc far
+ 0000  B8 ---- R			mov  ax, @data
+ 0003  8E D8				mov  ds, ax
+
+				; -----
+				;	Example addition.
+				;	Calculate:   an1 = nm1 + nm2
+
+ 0005  A1 0000 R			mov	ax, nm1
+ 0008  03 06 0002 R			add	ax, nm2
+ 000C  A3 0004 R			mov	an1, ax
+
+				; -----
+				;	Example subtraction.
+				;	Calculate:   an2 = nm1 - nm2
+
+ 000F  A1 0000 R			mov	ax, nm1
+ 0012  2B 06 0002 R			sub	ax, nm2
+ 0016  A3 0006 R			mov	an2, ax
+
+				; -----
+				;	Example multiplication.
+				;	Calculate:   an3 = nm1 * nm2
+
+ 0019  A1 0000 R			mov	ax, nm1
+ 001C  F7 2E 0002 R			imul	nm2
+ 0020  A3 0008 R			mov	an3, ax
+
+				; -----
+				;	Example division.
+				;	Calculate:   ans = nm1 / nm2
+
+ 0023  A1 0000 R			mov	ax, nm1
+ 0026  99				cwd
+ 0027  F7 3E 0002 R			idiv	nm2
+ 002B  A3 000A R			mov	an4, ax
+ 002E  89 16 000C R			mov	re4, dx
+
+
+				; -----
+				;	Done, terminate program.
+
+ 0032				last:
+ 0032  B4 4C				mov  ah, 4ch
+ 0034  CD 21				int  21h
+ 0036				main endp
+
+				end main
+
+Microsoft (R) Macro Assembler Version 6.15.8803		    09/03/05 08:00:49
+ast1.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+AST1_TEXT  . . . . . . . . . . .	16 Bit	 0036	  Word	  Public  'CODE'	
+DGROUP . . . . . . . . . . . . .	GROUP
+_DATA  . . . . . . . . . . . . .	16 Bit	 000E	  Word	  Public  'DATA'	
+STACK  . . . . . . . . . . . . .	16 Bit	 0400	  Para	  Stack	  'STACK'	 
+
+
+Procedures,  parameters and locals:
+
+                N a m e                 Type     Value    Attr
+
+main . . . . . . . . . . . . . .	P Far	 0000	  AST1_TEXT	Length= 0036 Public
+  last . . . . . . . . . . . . .	L Near	 0032	  AST1_TEXT	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 0001h	 
+@DataSize  . . . . . . . . . . .	Number	 0000h	 
+@Interface . . . . . . . . . . .	Number	 0000h	 
+@Model . . . . . . . . . . . . .	Number	 0004h	 
+@code  . . . . . . . . . . . . .	Text   	 AST1_TEXT
+@data  . . . . . . . . . . . . .	Text   	 DGROUP
+@fardata?  . . . . . . . . . . .	Text   	 FAR_BSS
+@fardata . . . . . . . . . . . .	Text   	 FAR_DATA
+@stack . . . . . . . . . . . . .	Text   	 DGROUP
+an1  . . . . . . . . . . . . . .	Word	 0004	  _DATA	
+an2  . . . . . . . . . . . . . .	Word	 0006	  _DATA	
+an3  . . . . . . . . . . . . . .	Word	 0008	  _DATA	
+an4  . . . . . . . . . . . . . .	Word	 000A	  _DATA	
+nm1  . . . . . . . . . . . . . .	Word	 0000	  _DATA	
+nm2  . . . . . . . . . . . . . .	Word	 0002	  _DATA	
+re4  . . . . . . . . . . . . . .	Word	 000C	  _DATA	
+
+	   0 Warnings
+	   0 Errors

@@ -1,0 +1,42 @@
+The program took me around 5 and a half hours, all of it on Monday,
+April 18, 2005.  In order to obtain a fair measure of the amount of
+time the task took, I did not use any previously written code.
+
+The completed program is 290 lines long, not counting blank lines.
+I use fairly long identifiers, decreasing the need for comments.
+
+Data structures and Algorithms used:
+
+I store the towns in a hash table, using separate chaining.
+The forest is implicit, since each town has a link for the chain
+and also a parent pointer for the forest.
+
+I store the edges in an array.  Each edge has two town pointers,
+a cost, and a boolean field to indicate whether it is chosen for
+the minimum spanning tree.
+
+I read the edges in the order they appeared in the file.  The edges
+are then entered into the array in the order they are read.  As each
+edge is read, findInsert into the hash table for each town returns
+two town pointers which are then stored in the edge.
+
+I use randomized quicksort to sort the array of edges in order of
+increasing cost.  Since the graph is planar, it is not possible to
+save much time by using a heap.  My sort automatically switches to
+bubblesort when the array is very small.
+
+I initialize the number of components to be the number of towns.
+In the union-find loop, I visit the edges in order of increasing cost.
+Each time I do a union, I decrement the number of components.  The
+loop halts when there is only one component or there are no more edges,
+whichever happens first.
+
+Every time I do a find in the union-find loop, I do path compression.
+
+If there is just one component, I visit the array, writing out the
+MST edges.  I also add up the cost of the MST during that pass,
+which I write at the end.
+
+If there are two or more components, I write all the edges, together
+with the message that the graph is disconnected, hence there is no
+spanning tree.

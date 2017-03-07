@@ -1,0 +1,23 @@
+
+1kUpstream-sol
+
+>LOC_Os08g17390.1|11978.m05858|1000bp_UpstreamSeq|10623000..10624002 expressed protein
+ccgggcccatatctccgacagatagctagataacatcaaattaagtaaattaatgtgatt {1kUpstream
+tatgataatttaaatttaaatagtatgtagaatggtgattcaaacgtaaaaagtaaggtg
+gtatgactttatggaagaagaaaagtagggtagtttggaccgtagattaatcatttaaag
+gctaaaaacaattgatgtgatatgacttaattagaggaaaaaaggagaaatataatttgg
+accatagattaatcatttaagcactaactaagtgaggatgaactatataagtatgtactt
+cctccgtttcacaatgtaagtcataacatcaatatgaatgtgggaaatgctataatgact
+tacattgtgaaacggatggagtaggattttataaaatatagatatacattgaaacattgt
+gtgaattatgtgggatgataatttaacatgcttgtattttaaaagctcttaaattataaa
+aactataaaattatagataatataacatgtttgcatgatgtttaaatgtgatgatcgtta
+gtggatgatgatgtggcatctggttaattagtggataatgatgtggcatctttgcatgtt
+aagcttaaatgagttagtggggggtaattttatagtaagataggattagttcagctgtca
+taaagataaatcttctacaattactccattctgaaagatccttgtagaaactcacaag
+                                                          ta   tata box ?
+taatccaaactccaaaagaattttcggagggattttgccagctgccacatcaacaaaaag
+gatgaaccaaattaaaggagatcgaggaatggtggcacaagaaaacaggaccaattggca
+ccatcatcgtgcactttatccttcctcctccacacatccctaacccaccacatccaaacc
+cctcctccacacaccaaaaaacaaaaaacatagaaataaataaataaaaacaatagcaat
+atccaa agcaactcatcagcacactcactctgcaacaagcATG                 {5UTR }5UTR ATG
+                                                             }1kUpstream

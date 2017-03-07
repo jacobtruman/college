@@ -1,0 +1,163 @@
+;  CSC 218 Example Program.
+
+;  Demonstrates use of the DTA call to define a local DTA.
+
+;  Note, program expects a file to exist
+;  named file.txt.  Content does not matter.
+
+.model small
+
+; ---------------------------------------------------
+
+.data
+
+CR	equ	13
+LF	equ	10
+END_STR	equ	"$"
+
+; -----
+;  As per documentation (text, 13.3.8.8), Whenever
+;  "Find First" and/or "Find Next" is called, it sets
+;  up the following information at the DTA:
+;
+;	Offset  Description 
+;	0       Reserved for use by Find Next File 
+;	21      Attribute of file found
+;	22      Time stamp of file
+;	24      Date stamp of file
+;	26      File size in bytes
+;	30      Filename and extension (zero terminated)
+;	(The offsets are decimal)
+;
+;  So, the DTA data structure for this program is defined
+;  to allow easy access to the specific sub-portions of
+;  the DTA (as per definition above).
+
+mydta	db	21 dup (?)
+f_att	db	?
+f_time	dw	?
+f_date	dw	?
+f_size	dd	?
+f_name	db	13 dup (5)
+
+
+; ----
+;  Other data defintions...
+
+fspec	db	"file.txt"
+
+tmp	db	20 dup (?)
+
+year	dw	0
+month	dw	0
+date	dw	0
+
+err_ff	db	CR, LF, "Error, this demo program "
+	db	"requires a file named  file.txt  "
+	db	"to exist.", CR, LF, "Please create."
+	db	CR, LF, CR, LF, END_STR
+
+
+; ---------------------------------------------------
+
+.stack
+.code
+          
+main proc far
+     mov  ax, @data
+     mov  ds, ax
+
+; -----
+;  Set local Disk Transfer Area (DTA).
+;  For more information, refer to the text, 13.3.8.7.
+
+	mov	ah, 1ah
+	lea	dx, mydta
+	int	21h
+
+; -----
+;  Find First (FF) file matching the specification.
+;  For this example, the file specification is just
+;  a normal file name, file.txt.
+
+	mov	ah, 4eh
+	mov	cx, 0
+	lea	dx, fspec
+	int	21h
+
+	jc	err_on_ff
+
+; -----
+;  No error, so the file information is in the DTA.
+;  Includes name, date, time, and size.
+
+;  Copy the file name to another string and output.
+;  Since outputting, must include a CR, LF, and $.
+
+	lea	si, f_name
+	lea	di, tmp
+
+clp:	mov	al, byte ptr [si]
+	cmp	al, 0
+	je	cdne
+	mov	byte ptr [di], al
+	inc	si
+	inc	di
+	jmp	clp
+
+cdne:	mov	byte ptr [di], CR
+	mov	byte ptr 1[di], CR
+	mov	byte ptr 2[di], END_STR
+
+	mov	ah, 09h
+	lea	dx, tmp
+	int	21h
+
+; -----
+;  Get the file date.  The file date is contained within
+;  a single word.  That word is alloctaed as such:
+;	file year-1980	bits 15-9
+;	file month	bits 8-5
+;	file date	bits 4-0
+;  So get each part into a single word.
+;  For more information, refer to the on-line text.
+
+	mov	ax, f_date
+	mov	cl, 9
+	shr	ax, cl
+	add	ax, 1980
+	mov	year, ax
+
+	mov	ax, f_date
+	mov	cl, 5
+	shr	ax, cl
+	and	ax, 000fh
+	mov	month, ax
+
+	mov	ax, f_date
+	and	ax, 001fh
+	mov	date, ax
+
+;  At this point, the individual year, month, and
+;  date integers can be converted to ASCII.
+;  Left to the reader as an excersize.
+
+	jmp	last
+
+; -----
+;  Error handling.
+
+err_on_ff:
+	mov	ah, 09h
+	lea	dx, err_ff
+	int	21h
+
+; -----
+;  Done, terminate program.
+
+last:
+     mov  ah, 4ch
+     int  21h
+main endp
+
+end main

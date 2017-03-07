@@ -1,0 +1,23 @@
+
+chr08.1kUpstream-sol.txt
+
+>LOC_Os08g17400.1|11978.m05859|1000bp_UpstreamSeq|10634143..10633141 WRKY DNA binding domain containing protein, expressed
+tcataaagtcacaccaccttactatttatgtttgaatcaccattctacatactatttaaa {1kUpstream
+ttatccttaagcttaacatgcaaagatgccacatcatcatccactaacaatcatcacatt
+taaacatcatgcaaacatgctatatctttatagtttttatattttaagagcttttcaaat
+ataaatatgttaaattattatccaacataattcacataatatttcaatgtatatctttat
+tatgttttatgatatcctatatacttata                                tata box ?
+                             tagttcatccttacttagttagtgtttaaat
+gattaatctatggtccaaattatttttccttttattcttctaactaagtcatatcacatc
+aattgtttttagcctttagatgattaatctacggtacaaactatctccctacttttcttt
+tttcataaagtcataccaccttactatttatgtttgaatcaccattctacatactattta
+aatttaaattatcataaaccacattaatttacttaatctgatgttatctagctatcttac
+atgttattattttattgttatcatactaaatttccgcagcaatgcgcggggtttcaccta
+ttcgtgtgaaaagagtgtcaaccactcctatctgcaatctcccaactccgtgggccaagg
+cctggcccatccaaacgagccttttgtgggccttctcgcagtccagccgggcagccggct
+aggcccgaatcgacgcgggcccaccaggtcgggcaaccaacggtgggggcccaccgccat
+ccgaccgtttcgacggcttccccgtccgtaaccgctaacgccgttacgtctccgtttccg
+ctccgtcaccccgtttcaccgctctccggacctccggtcaatc
+                                           gcagtcaaaaggctccc {5UTR
+cgctcccccgtccccttccccctctcgccctctcctacccaacttctcgaactctccaaa
+ccctagctttttcctcctccccctcctccgcgaatcttccATG					 }5UTR }1kUpstream

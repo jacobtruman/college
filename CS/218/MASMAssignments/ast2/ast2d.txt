@@ -1,0 +1,26 @@
+mdi nm1 l1
+mdix nm1 l1
+
+mdi nm2 l1
+mdix nm2 l1
+
+mdi re1 l1
+mdix re1 l1
+
+mdi re2 l1
+mdix re2 l1
+
+mdi re3 l1
+mdix re3 l1
+
+mdr fl1 l1
+mdlx fl1 l1
+
+mdr fl2 l1
+mdlx fl2 l1
+
+mda iname l12
+mdb iname l12
+
+mda mynam l12
+mdb mynam l12

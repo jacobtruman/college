@@ -1,0 +1,844 @@
+Microsoft (R) Macro Assembler Version 6.15.8803		    10/04/05 01:54:53
+ast6.asm						     Page 1 - 1
+
+
+				;  CSC218, Assignment #6
+				;  Example Solution
+				
+				
+				;  Write a simple assembly language program to convert integers
+				;  to ASCII charatcers and output the ASCII strings to the screen
+				;  (using the provided routine).
+				
+				
+				.model medium
+				.486
+				
+				; --------------------------------------------------------------
+				;  Macro, “i_to_a”, to convert an integer to an ascii string.
+				;   Each ASCII string must be right justified, blank filled,
+				;   and terminated with a "$"
+				
+				i_to_a	macro	int_num_addr, asc_str_addr, str_siz
+					local	i_lp1, i_lp2
+				
+				; -----;  Loop to convert an integer to an ascii string.;   Places remainders on stack and counts.
+					mov	bx, int_num_addr
+					mov	ax, word ptr [bx]	mov	dx, word ptr 2[bx]	mov	cx, 0
+				i_lp1:
+					div	wten
+					add	dl, 30h	push	dx				; store remainder on stack	inc	cx	mov	dx, 0				; successive division	cmp	ax, 0	jg	i_lp1
+				
+				; -----;  Loop to read characters off stack and place into the string.;  First, calculate starting location of string based on size.
+					mov	ax, str_siz			; max-cnt-"$"
+					sub	ax, cx	dec	ax
+					mov	bx, asc_str_addr
+					add	bx, ax
+				i_lp2:
+					pop	ax				; get remainder from stack	mov	byte ptr [bx], al		; place into string	inc	bx	loop	i_lp2
+				
+					mov	byte ptr [bx], END_STR		; add "$"
+				
+				endm
+				
+				
+				; --------------------------------------------------------------
+				;  Macro, “ilst_to_alst”, to convert a series of integers
+				;  into a series of strings.
+				;  Uses the "i_to_a" macro for each integer in the list.
+				
+				;  Assumes valid data, no error checking is performed.
+				
+				
+				ilst_to_alst	macro   int_arr, str_arr, len, str_siz
+					local	main_ilp
+				; -----;  Loop to access each of "len" integers.
+					lea	si, int_arr
+					lea	di, str_arr
+					mov	cx, len
+				
+				main_ilp:
+					push	cx				; cx also used by i_to_a macro
+					i_to_a	si, di, str_siz
+				
+					add	si, 4	add	di, str_siz
+				
+					pop	cx
+					loop	main_ilp
+				
+				endm
+				
+				
+				; --------------------------------------------------------------
+				;  Provided macro to output ASCII stings to the screen.
+				
+				;  Uses operating system service to output an ASCII string.
+				;    The specific service utilized (09h) requires the string
+				;    to be terminated with a NULL (integer zero).
+				
+				;  General process:
+				;	- print header
+				;	LP:
+				;	- print numbers
+				;	- if 5th number, print CF/LF
+				;	- if more numbers, loop to LP
+				
+				prt_strings	macro	str_lst, len, str_siz
+					local	main_loop, skp_nline1, skp_nline2
+				; -----;  Ouptut a header string...
+					mov	ah, 09h	lea	dx, hdr
+					int	21h				; output header
+				; -----;  Initializations for main loop.
+					lea	si, str_lst
+					mov	di, 0	mov	cx, len
+				
+				; -----;  Print number.
+				main_loop:
+					mov	ah, 09h	mov	dx, si	int	21h				; output header
+					add	si, str_siz
+				
+				; -----;  If 5th number, print CF/LF.
+					inc	di	cmp	di, 5	jl	skp_nline1
+				
+					mov	ah, 09h	lea	dx, nline
+					int	21h	mov	di, 0skp_nline1:
+				
+				
+					loop	main_loop
+				
+				; -----;  Done, print new line (only if not already printed).
+					cmp	di, 0	je	skp_nline2
+				
+					mov	ah, 09h	lea	dx, nline
+					int	21hskp_nline2:
+				
+				endm
+				
+				
+				; --------------------------------------------------------------
+				
+				.data
+				
+				; -----
+				;  Variables and constants for print macro.
+				
+				CR		equ	13
+				LF		equ	10
+				MAX_SIZ		equ	10
+				END_STR		equ	"$"
+				
+				; -----
+				;  Misc. variales for prt_strings macro.
+				
+				hdr		db	CR, LF, "----------", CR, LF, "ASCII List"
+						db	CR, LF, END_STR
+				nline		db	CR, LF, END_STR
+				
+				
+				; -----
+				;  Misc. data definitions.
+				
+				wten		dw	10
+				w_two		dw	2
+				
+				
+				; -----
+				;  Assignment #6 Provided Data:
+				
+				STR_SIZE	equ	9
+				
+				ilst0		dd	    12,     345,    6789,   12345,  123456
+				len0		dw	5
+				alst0		db	5 dup ( STR_SIZE dup (20h) )
+				
+				ilst1		dd	152432,   61740,   10300,   25000,  110000
+						dd	 54321,      32,  101010,  121201,     312
+				len1		dw	10
+				alst1		db	10 dup ( STR_SIZE dup (20h) )
+				
+				ilst2		dd	115997,   12360,   13230,   21234,  111111
+						dd	 11795,    6312,     420,    5532,   15533
+				len2		dw	10
+				alst2		db	10 dup ( STR_SIZE dup (20h) )
+				
+				ilst3		dd	112627,   11622,   19110,   10669,   36516
+						dd	111512,   14552,   11344,   10134,   18208
+						dd	134112,    1231,    8765,   87312,  100012
+						dd	112808,  112344
+				len3		dw	17
+				alst3		db	17 dup ( STR_SIZE dup (20h) )
+				
+				ilst4		dd	111512,   14552,   11344,   10134,   18208
+ 0000						dd	112808,  112344,     214,  111212,  111115
+						dd	  1265,  112130,      85,  112233
+				len4		dw	14
+				alst4		db	14 dup ( STR_SIZE dup (20h) )
+				
+ = 000D				ilst5		dd	117864,    1068,   11721,   26000,  123584
+ = 000A						dd	   129,   31212,     117,   132163,   2112
+ = 000A						dd	 11345,   11068,   11721,   26000,  123584
+ = 0024				len5		dw	15
+				alst5		db	15 dup ( STR_SIZE dup (20h) )
+				
+				ilst6		dd	168795,    3110,      20,   13332,  110022
+						dd	  7560,   12313,   11760,    4312,    7865
+ 0000 0D 0A 2D 2D 2D 2D				dd	123241,   98231,      80,    4313,   31233
+       2D 2D 2D 2D 2D 2D
+       0D 0A 41 53 43 49
+       49 20 4C 69 73 74
+ 0018  0D 0A 24					dd	118637,   34513,    1691,   11312,    8551
+ 001B 0D 0A 24					dd	 12241,   13231,    3280,    7653,   45127
+				len6		dw	25
+				alst6		db	25 dup ( STR_SIZE dup (20h) )
+				
+				
+				; -----
+ 001E 000A			;  Misc. varibales for main.
+ 0020 0002			
+				
+				; --------------------------------------------------------------
+				
+				.stack
+				
+ = 0009				.code
+				main	proc	far
+ 0022 0000000C 00000159			mov	ax, @data
+       00001A85 00003039
+       0001E240
+ 0036 0005				mov	ds, ax
+ 0038  0005 [			
+        0009 [
+	 20
+	]
+       ]
+				; -----
+ 0065 00025370 0000F12C		;  Invoke macro for each set of data.
+       0000283C 000061A8
+       0001ADB0
+ 0079  0000D431 00000020	
+       00018A92 0001D971
+       00000138
+ 008D 000A			
+ 008F  000A [				ilst_to_alst	ilst0, alst0, len0, STR_SIZE
+        0009 [
+	 20
+	]
+       ]
+					prt_strings	alst0, len0, STR_SIZE
+ 00E9 0001C51D 00003048		
+       000033AE 000052F2
+       0001B207
+ 00FD  00002E13 000018A8		ilst_to_alst	ilst1, alst1, len1, STR_SIZE
+       000001A4 0000159C
+       00003CAD
+ 0111 000A				prt_strings	alst1, len1, STR_SIZE
+ 0113  000A [			
+        0009 [
+	 20
+	]
+       ]
+					ilst_to_alst	ilst2, alst2, len2, STR_SIZE
+ 016D 0001B7F3 00002D66			prt_strings	alst2, len2, STR_SIZE
+       00004AA6 000029AD
+       00008EA4
+ 0181  0001B398 000038D8	
+       00002C50 00002796
+       00004720
+ 0195  00020BE0 000004CF		ilst_to_alst	ilst3, alst3, len3, STR_SIZE
+       0000223D 00015510
+       000186AC
+ 01A9  0001B8A8 0001B6D8		prt_strings	alst3, len3, STR_SIZE
+ 01B1 0011			
+ 01B3  0011 [				ilst_to_alst	ilst4, alst4, len4, STR_SIZE
+        0009 [
+	 20
+	]
+       ]
+					prt_strings	alst4, len4, STR_SIZE
+ 024C 0001B398 000038D8		
+       00002C50 00002796
+       00004720
+ 0260  0001B8A8 0001B6D8		ilst_to_alst	ilst5, alst5, len5, STR_SIZE
+       000000D6 0001B26C
+       0001B20B
+ 0274  000004F1 0001B602		prt_strings	alst5, len5, STR_SIZE
+       00000055 0001B669
+ 0284 000E			
+ 0286  000E [				ilst_to_alst	ilst6, alst6, len6, STR_SIZE
+        0009 [
+	 20
+	]
+       ]
+					prt_strings	alst6, len6, STR_SIZE
+ 0304 0001CC68 0000042C		
+       00002DC9 00006590
+       0001E2C0
+ 0318  00000081 000079EC	
+       00000075 00020443
+       00000840
+ 032C  00002C51 00002B3C	; -----
+       00002DC9 00006590
+       0001E2C0
+ 0340 000F			; Done, terminate program.
+ 0342  000F [			
+        0009 [
+	 20
+	]
+       ]
+				last:
+ 03C9 0002935B 00000C26			mov	ah, 4ch
+       00000014 00003414
+       0001ADC6
+ 03DD  00001D88 00003019		int	21h
+       00002DF0 000010D8
+       00001EB9
+ 03F1  0001E169 00017FB7	main endp
+       00000050 000010D9
+       00007A01
+ 0405  0001CF6D 000086D1	
+       0000069B 00002C30
+       00002167
+ 0419  00002FD1 000033AF	end	main
+       00000CD0 00001DE5
+       0000B047
+ 042D 0019
+ 042F  0019 [
+        0009 [
+	 20
+	]
+       ]
+ 0000
+ 0000
+ 0000  B8 ---- R
+ 0003  8E D8
+ 0005  8D 36 0022 R	     1		lea	si, ilst0
+ 0009  8D 3E 0038 R	     1		lea	di, alst0
+ 000D  8B 0E 0036 R	     1		mov	cx, len0
+ 0011			     1	??0000:
+ 0011  51		     1		push	cx				; cx also used by i_to_a macro
+ 0012  8B DE		     2		mov	bx, si
+ 0014  8B 07		     2		mov	ax, word ptr [bx]
+ 0016  8B 57 02		     2		mov	dx, word ptr 2[bx]
+ 0019  B9 0000		     2		mov	cx, 0
+ 001C			     2	??0001:
+ 001C  F7 36 001E R	     2		div	wten
+ 0020  80 C2 30		     2		add	dl, 30h
+ 0023  52		     2		push	dx				; store remainder on stack
+ 0024  41		     2		inc	cx
+ 0025  BA 0000		     2		mov	dx, 0				; successive division
+ 0028  83 F8 00		     2		cmp	ax, 0
+ 002B  7F EF		     2		jg	??0001
+ 002D  B8 0009		     2		mov	ax, STR_SIZE			; max-cnt-"$"
+ 0030  2B C1		     2		sub	ax, cx
+ 0032  48		     2		dec	ax
+ 0033  8B DF		     2		mov	bx, di
+ 0035  03 D8		     2		add	bx, ax
+ 0037			     2	??0002:
+ 0037  58		     2		pop	ax				; get remainder from stack
+ 0038  88 07		     2		mov	byte ptr [bx], al		; place into string
+ 003A  43		     2		inc	bx
+ 003B  E2 FA		     2		loop	??0002
+ 003D  C6 07 24		     2		mov	byte ptr [bx], END_STR		; add "$"
+ 0040  83 C6 04		     1		add	si, 4
+ 0043  83 C7 09		     1		add	di, STR_SIZE
+ 0046  59		     1		pop	cx
+ 0047  E2 C8		     1		loop	??0000
+ 0049  B4 09		     1		mov	ah, 09h
+ 004B  8D 16 0000 R	     1		lea	dx, hdr
+ 004F  CD 21		     1		int	21h				; output header
+ 0051  8D 36 0038 R	     1		lea	si, alst0
+ 0055  BF 0000		     1		mov	di, 0
+ 0058  8B 0E 0036 R	     1		mov	cx, len0
+ 005C			     1	??0003:
+ 005C  B4 09		     1		mov	ah, 09h
+ 005E  8B D6		     1		mov	dx, si
+ 0060  CD 21		     1		int	21h				; output header
+ 0062  83 C6 09		     1		add	si, STR_SIZE
+ 0065  47		     1		inc	di
+ 0066  83 FF 05		     1		cmp	di, 5
+ 0069  7C 0B		     1		jl	??0004
+ 006B  B4 09		     1		mov	ah, 09h
+ 006D  8D 16 001B R	     1		lea	dx, nline
+ 0071  CD 21		     1		int	21h
+ 0073  BF 0000		     1		mov	di, 0
+ 0076			     1	??0004:
+ 0076  E2 E4		     1		loop	??0003
+ 0078  83 FF 00		     1		cmp	di, 0
+ 007B  74 08		     1		je	??0005
+ 007D  B4 09		     1		mov	ah, 09h
+ 007F  8D 16 001B R	     1		lea	dx, nline
+ 0083  CD 21		     1		int	21h
+ 0085			     1	??0005:
+ 0085  8D 36 0065 R	     1		lea	si, ilst1
+ 0089  8D 3E 008F R	     1		lea	di, alst1
+ 008D  8B 0E 008D R	     1		mov	cx, len1
+ 0091			     1	??0006:
+ 0091  51		     1		push	cx				; cx also used by i_to_a macro
+ 0092  8B DE		     2		mov	bx, si
+ 0094  8B 07		     2		mov	ax, word ptr [bx]
+ 0096  8B 57 02		     2		mov	dx, word ptr 2[bx]
+ 0099  B9 0000		     2		mov	cx, 0
+ 009C			     2	??0007:
+ 009C  F7 36 001E R	     2		div	wten
+ 00A0  80 C2 30		     2		add	dl, 30h
+ 00A3  52		     2		push	dx				; store remainder on stack
+ 00A4  41		     2		inc	cx
+ 00A5  BA 0000		     2		mov	dx, 0				; successive division
+ 00A8  83 F8 00		     2		cmp	ax, 0
+ 00AB  7F EF		     2		jg	??0007
+ 00AD  B8 0009		     2		mov	ax, STR_SIZE			; max-cnt-"$"
+ 00B0  2B C1		     2		sub	ax, cx
+ 00B2  48		     2		dec	ax
+ 00B3  8B DF		     2		mov	bx, di
+ 00B5  03 D8		     2		add	bx, ax
+ 00B7			     2	??0008:
+ 00B7  58		     2		pop	ax				; get remainder from stack
+ 00B8  88 07		     2		mov	byte ptr [bx], al		; place into string
+ 00BA  43		     2		inc	bx
+ 00BB  E2 FA		     2		loop	??0008
+ 00BD  C6 07 24		     2		mov	byte ptr [bx], END_STR		; add "$"
+ 00C0  83 C6 04		     1		add	si, 4
+ 00C3  83 C7 09		     1		add	di, STR_SIZE
+ 00C6  59		     1		pop	cx
+ 00C7  E2 C8		     1		loop	??0006
+ 00C9  B4 09		     1		mov	ah, 09h
+ 00CB  8D 16 0000 R	     1		lea	dx, hdr
+ 00CF  CD 21		     1		int	21h				; output header
+ 00D1  8D 36 008F R	     1		lea	si, alst1
+ 00D5  BF 0000		     1		mov	di, 0
+ 00D8  8B 0E 008D R	     1		mov	cx, len1
+ 00DC			     1	??0009:
+ 00DC  B4 09		     1		mov	ah, 09h
+ 00DE  8B D6		     1		mov	dx, si
+ 00E0  CD 21		     1		int	21h				; output header
+ 00E2  83 C6 09		     1		add	si, STR_SIZE
+ 00E5  47		     1		inc	di
+ 00E6  83 FF 05		     1		cmp	di, 5
+ 00E9  7C 0B		     1		jl	??000A
+ 00EB  B4 09		     1		mov	ah, 09h
+ 00ED  8D 16 001B R	     1		lea	dx, nline
+ 00F1  CD 21		     1		int	21h
+ 00F3  BF 0000		     1		mov	di, 0
+ 00F6			     1	??000A:
+ 00F6  E2 E4		     1		loop	??0009
+ 00F8  83 FF 00		     1		cmp	di, 0
+ 00FB  74 08		     1		je	??000B
+ 00FD  B4 09		     1		mov	ah, 09h
+ 00FF  8D 16 001B R	     1		lea	dx, nline
+ 0103  CD 21		     1		int	21h
+ 0105			     1	??000B:
+ 0105  8D 36 00E9 R	     1		lea	si, ilst2
+ 0109  8D 3E 0113 R	     1		lea	di, alst2
+ 010D  8B 0E 0111 R	     1		mov	cx, len2
+ 0111			     1	??000C:
+ 0111  51		     1		push	cx				; cx also used by i_to_a macro
+ 0112  8B DE		     2		mov	bx, si
+ 0114  8B 07		     2		mov	ax, word ptr [bx]
+ 0116  8B 57 02		     2		mov	dx, word ptr 2[bx]
+ 0119  B9 0000		     2		mov	cx, 0
+ 011C			     2	??000D:
+ 011C  F7 36 001E R	     2		div	wten
+ 0120  80 C2 30		     2		add	dl, 30h
+ 0123  52		     2		push	dx				; store remainder on stack
+ 0124  41		     2		inc	cx
+ 0125  BA 0000		     2		mov	dx, 0				; successive division
+ 0128  83 F8 00		     2		cmp	ax, 0
+ 012B  7F EF		     2		jg	??000D
+ 012D  B8 0009		     2		mov	ax, STR_SIZE			; max-cnt-"$"
+ 0130  2B C1		     2		sub	ax, cx
+ 0132  48		     2		dec	ax
+ 0133  8B DF		     2		mov	bx, di
+ 0135  03 D8		     2		add	bx, ax
+ 0137			     2	??000E:
+ 0137  58		     2		pop	ax				; get remainder from stack
+ 0138  88 07		     2		mov	byte ptr [bx], al		; place into string
+ 013A  43		     2		inc	bx
+ 013B  E2 FA		     2		loop	??000E
+ 013D  C6 07 24		     2		mov	byte ptr [bx], END_STR		; add "$"
+ 0140  83 C6 04		     1		add	si, 4
+ 0143  83 C7 09		     1		add	di, STR_SIZE
+ 0146  59		     1		pop	cx
+ 0147  E2 C8		     1		loop	??000C
+ 0149  B4 09		     1		mov	ah, 09h
+ 014B  8D 16 0000 R	     1		lea	dx, hdr
+ 014F  CD 21		     1		int	21h				; output header
+ 0151  8D 36 0113 R	     1		lea	si, alst2
+ 0155  BF 0000		     1		mov	di, 0
+ 0158  8B 0E 0111 R	     1		mov	cx, len2
+ 015C			     1	??000F:
+ 015C  B4 09		     1		mov	ah, 09h
+ 015E  8B D6		     1		mov	dx, si
+ 0160  CD 21		     1		int	21h				; output header
+ 0162  83 C6 09		     1		add	si, STR_SIZE
+ 0165  47		     1		inc	di
+ 0166  83 FF 05		     1		cmp	di, 5
+ 0169  7C 0B		     1		jl	??0010
+ 016B  B4 09		     1		mov	ah, 09h
+ 016D  8D 16 001B R	     1		lea	dx, nline
+ 0171  CD 21		     1		int	21h
+ 0173  BF 0000		     1		mov	di, 0
+ 0176			     1	??0010:
+ 0176  E2 E4		     1		loop	??000F
+ 0178  83 FF 00		     1		cmp	di, 0
+ 017B  74 08		     1		je	??0011
+ 017D  B4 09		     1		mov	ah, 09h
+ 017F  8D 16 001B R	     1		lea	dx, nline
+ 0183  CD 21		     1		int	21h
+ 0185			     1	??0011:
+ 0185  8D 36 016D R	     1		lea	si, ilst3
+ 0189  8D 3E 01B3 R	     1		lea	di, alst3
+ 018D  8B 0E 01B1 R	     1		mov	cx, len3
+ 0191			     1	??0012:
+ 0191  51		     1		push	cx				; cx also used by i_to_a macro
+ 0192  8B DE		     2		mov	bx, si
+ 0194  8B 07		     2		mov	ax, word ptr [bx]
+ 0196  8B 57 02		     2		mov	dx, word ptr 2[bx]
+ 0199  B9 0000		     2		mov	cx, 0
+ 019C			     2	??0013:
+ 019C  F7 36 001E R	     2		div	wten
+ 01A0  80 C2 30		     2		add	dl, 30h
+ 01A3  52		     2		push	dx				; store remainder on stack
+ 01A4  41		     2		inc	cx
+ 01A5  BA 0000		     2		mov	dx, 0				; successive division
+ 01A8  83 F8 00		     2		cmp	ax, 0
+ 01AB  7F EF		     2		jg	??0013
+ 01AD  B8 0009		     2		mov	ax, STR_SIZE			; max-cnt-"$"
+ 01B0  2B C1		     2		sub	ax, cx
+ 01B2  48		     2		dec	ax
+ 01B3  8B DF		     2		mov	bx, di
+ 01B5  03 D8		     2		add	bx, ax
+ 01B7			     2	??0014:
+ 01B7  58		     2		pop	ax				; get remainder from stack
+ 01B8  88 07		     2		mov	byte ptr [bx], al		; place into string
+ 01BA  43		     2		inc	bx
+ 01BB  E2 FA		     2		loop	??0014
+ 01BD  C6 07 24		     2		mov	byte ptr [bx], END_STR		; add "$"
+ 01C0  83 C6 04		     1		add	si, 4
+ 01C3  83 C7 09		     1		add	di, STR_SIZE
+ 01C6  59		     1		pop	cx
+ 01C7  E2 C8		     1		loop	??0012
+ 01C9  B4 09		     1		mov	ah, 09h
+ 01CB  8D 16 0000 R	     1		lea	dx, hdr
+ 01CF  CD 21		     1		int	21h				; output header
+ 01D1  8D 36 01B3 R	     1		lea	si, alst3
+ 01D5  BF 0000		     1		mov	di, 0
+ 01D8  8B 0E 01B1 R	     1		mov	cx, len3
+ 01DC			     1	??0015:
+ 01DC  B4 09		     1		mov	ah, 09h
+ 01DE  8B D6		     1		mov	dx, si
+ 01E0  CD 21		     1		int	21h				; output header
+ 01E2  83 C6 09		     1		add	si, STR_SIZE
+ 01E5  47		     1		inc	di
+ 01E6  83 FF 05		     1		cmp	di, 5
+ 01E9  7C 0B		     1		jl	??0016
+ 01EB  B4 09		     1		mov	ah, 09h
+ 01ED  8D 16 001B R	     1		lea	dx, nline
+ 01F1  CD 21		     1		int	21h
+ 01F3  BF 0000		     1		mov	di, 0
+ 01F6			     1	??0016:
+ 01F6  E2 E4		     1		loop	??0015
+ 01F8  83 FF 00		     1		cmp	di, 0
+ 01FB  74 08		     1		je	??0017
+ 01FD  B4 09		     1		mov	ah, 09h
+ 01FF  8D 16 001B R	     1		lea	dx, nline
+ 0203  CD 21		     1		int	21h
+ 0205			     1	??0017:
+ 0205  8D 36 024C R	     1		lea	si, ilst4
+ 0209  8D 3E 0286 R	     1		lea	di, alst4
+ 020D  8B 0E 0284 R	     1		mov	cx, len4
+ 0211			     1	??0018:
+ 0211  51		     1		push	cx				; cx also used by i_to_a macro
+ 0212  8B DE		     2		mov	bx, si
+ 0214  8B 07		     2		mov	ax, word ptr [bx]
+ 0216  8B 57 02		     2		mov	dx, word ptr 2[bx]
+ 0219  B9 0000		     2		mov	cx, 0
+ 021C			     2	??0019:
+ 021C  F7 36 001E R	     2		div	wten
+ 0220  80 C2 30		     2		add	dl, 30h
+ 0223  52		     2		push	dx				; store remainder on stack
+ 0224  41		     2		inc	cx
+ 0225  BA 0000		     2		mov	dx, 0				; successive division
+ 0228  83 F8 00		     2		cmp	ax, 0
+ 022B  7F EF		     2		jg	??0019
+ 022D  B8 0009		     2		mov	ax, STR_SIZE			; max-cnt-"$"
+ 0230  2B C1		     2		sub	ax, cx
+ 0232  48		     2		dec	ax
+ 0233  8B DF		     2		mov	bx, di
+ 0235  03 D8		     2		add	bx, ax
+ 0237			     2	??001A:
+ 0237  58		     2		pop	ax				; get remainder from stack
+ 0238  88 07		     2		mov	byte ptr [bx], al		; place into string
+ 023A  43		     2		inc	bx
+ 023B  E2 FA		     2		loop	??001A
+ 023D  C6 07 24		     2		mov	byte ptr [bx], END_STR		; add "$"
+ 0240  83 C6 04		     1		add	si, 4
+ 0243  83 C7 09		     1		add	di, STR_SIZE
+ 0246  59		     1		pop	cx
+ 0247  E2 C8		     1		loop	??0018
+ 0249  B4 09		     1		mov	ah, 09h
+ 024B  8D 16 0000 R	     1		lea	dx, hdr
+ 024F  CD 21		     1		int	21h				; output header
+ 0251  8D 36 0286 R	     1		lea	si, alst4
+ 0255  BF 0000		     1		mov	di, 0
+ 0258  8B 0E 0284 R	     1		mov	cx, len4
+ 025C			     1	??001B:
+ 025C  B4 09		     1		mov	ah, 09h
+ 025E  8B D6		     1		mov	dx, si
+ 0260  CD 21		     1		int	21h				; output header
+ 0262  83 C6 09		     1		add	si, STR_SIZE
+ 0265  47		     1		inc	di
+ 0266  83 FF 05		     1		cmp	di, 5
+ 0269  7C 0B		     1		jl	??001C
+ 026B  B4 09		     1		mov	ah, 09h
+ 026D  8D 16 001B R	     1		lea	dx, nline
+ 0271  CD 21		     1		int	21h
+ 0273  BF 0000		     1		mov	di, 0
+ 0276			     1	??001C:
+ 0276  E2 E4		     1		loop	??001B
+ 0278  83 FF 00		     1		cmp	di, 0
+ 027B  74 08		     1		je	??001D
+ 027D  B4 09		     1		mov	ah, 09h
+ 027F  8D 16 001B R	     1		lea	dx, nline
+ 0283  CD 21		     1		int	21h
+ 0285			     1	??001D:
+ 0285  8D 36 0304 R	     1		lea	si, ilst5
+ 0289  8D 3E 0342 R	     1		lea	di, alst5
+ 028D  8B 0E 0340 R	     1		mov	cx, len5
+ 0291			     1	??001E:
+ 0291  51		     1		push	cx				; cx also used by i_to_a macro
+ 0292  8B DE		     2		mov	bx, si
+ 0294  8B 07		     2		mov	ax, word ptr [bx]
+ 0296  8B 57 02		     2		mov	dx, word ptr 2[bx]
+ 0299  B9 0000		     2		mov	cx, 0
+ 029C			     2	??001F:
+ 029C  F7 36 001E R	     2		div	wten
+ 02A0  80 C2 30		     2		add	dl, 30h
+ 02A3  52		     2		push	dx				; store remainder on stack
+ 02A4  41		     2		inc	cx
+ 02A5  BA 0000		     2		mov	dx, 0				; successive division
+ 02A8  83 F8 00		     2		cmp	ax, 0
+ 02AB  7F EF		     2		jg	??001F
+ 02AD  B8 0009		     2		mov	ax, STR_SIZE			; max-cnt-"$"
+ 02B0  2B C1		     2		sub	ax, cx
+ 02B2  48		     2		dec	ax
+ 02B3  8B DF		     2		mov	bx, di
+ 02B5  03 D8		     2		add	bx, ax
+ 02B7			     2	??0020:
+ 02B7  58		     2		pop	ax				; get remainder from stack
+ 02B8  88 07		     2		mov	byte ptr [bx], al		; place into string
+ 02BA  43		     2		inc	bx
+ 02BB  E2 FA		     2		loop	??0020
+ 02BD  C6 07 24		     2		mov	byte ptr [bx], END_STR		; add "$"
+ 02C0  83 C6 04		     1		add	si, 4
+ 02C3  83 C7 09		     1		add	di, STR_SIZE
+ 02C6  59		     1		pop	cx
+ 02C7  E2 C8		     1		loop	??001E
+ 02C9  B4 09		     1		mov	ah, 09h
+ 02CB  8D 16 0000 R	     1		lea	dx, hdr
+ 02CF  CD 21		     1		int	21h				; output header
+ 02D1  8D 36 0342 R	     1		lea	si, alst5
+ 02D5  BF 0000		     1		mov	di, 0
+ 02D8  8B 0E 0340 R	     1		mov	cx, len5
+ 02DC			     1	??0021:
+ 02DC  B4 09		     1		mov	ah, 09h
+ 02DE  8B D6		     1		mov	dx, si
+ 02E0  CD 21		     1		int	21h				; output header
+ 02E2  83 C6 09		     1		add	si, STR_SIZE
+ 02E5  47		     1		inc	di
+ 02E6  83 FF 05		     1		cmp	di, 5
+ 02E9  7C 0B		     1		jl	??0022
+ 02EB  B4 09		     1		mov	ah, 09h
+ 02ED  8D 16 001B R	     1		lea	dx, nline
+ 02F1  CD 21		     1		int	21h
+ 02F3  BF 0000		     1		mov	di, 0
+ 02F6			     1	??0022:
+ 02F6  E2 E4		     1		loop	??0021
+ 02F8  83 FF 00		     1		cmp	di, 0
+ 02FB  74 08		     1		je	??0023
+ 02FD  B4 09		     1		mov	ah, 09h
+ 02FF  8D 16 001B R	     1		lea	dx, nline
+ 0303  CD 21		     1		int	21h
+ 0305			     1	??0023:
+ 0305  8D 36 03C9 R	     1		lea	si, ilst6
+ 0309  8D 3E 042F R	     1		lea	di, alst6
+ 030D  8B 0E 042D R	     1		mov	cx, len6
+ 0311			     1	??0024:
+ 0311  51		     1		push	cx				; cx also used by i_to_a macro
+ 0312  8B DE		     2		mov	bx, si
+ 0314  8B 07		     2		mov	ax, word ptr [bx]
+ 0316  8B 57 02		     2		mov	dx, word ptr 2[bx]
+ 0319  B9 0000		     2		mov	cx, 0
+ 031C			     2	??0025:
+ 031C  F7 36 001E R	     2		div	wten
+ 0320  80 C2 30		     2		add	dl, 30h
+ 0323  52		     2		push	dx				; store remainder on stack
+ 0324  41		     2		inc	cx
+ 0325  BA 0000		     2		mov	dx, 0				; successive division
+ 0328  83 F8 00		     2		cmp	ax, 0
+ 032B  7F EF		     2		jg	??0025
+ 032D  B8 0009		     2		mov	ax, STR_SIZE			; max-cnt-"$"
+ 0330  2B C1		     2		sub	ax, cx
+ 0332  48		     2		dec	ax
+ 0333  8B DF		     2		mov	bx, di
+ 0335  03 D8		     2		add	bx, ax
+ 0337			     2	??0026:
+ 0337  58		     2		pop	ax				; get remainder from stack
+ 0338  88 07		     2		mov	byte ptr [bx], al		; place into string
+ 033A  43		     2		inc	bx
+ 033B  E2 FA		     2		loop	??0026
+ 033D  C6 07 24		     2		mov	byte ptr [bx], END_STR		; add "$"
+ 0340  83 C6 04		     1		add	si, 4
+ 0343  83 C7 09		     1		add	di, STR_SIZE
+ 0346  59		     1		pop	cx
+ 0347  E2 C8		     1		loop	??0024
+ 0349  B4 09		     1		mov	ah, 09h
+ 034B  8D 16 0000 R	     1		lea	dx, hdr
+ 034F  CD 21		     1		int	21h				; output header
+ 0351  8D 36 042F R	     1		lea	si, alst6
+ 0355  BF 0000		     1		mov	di, 0
+ 0358  8B 0E 042D R	     1		mov	cx, len6
+ 035C			     1	??0027:
+ 035C  B4 09		     1		mov	ah, 09h
+ 035E  8B D6		     1		mov	dx, si
+ 0360  CD 21		     1		int	21h				; output header
+ 0362  83 C6 09		     1		add	si, STR_SIZE
+ 0365  47		     1		inc	di
+ 0366  83 FF 05		     1		cmp	di, 5
+ 0369  7C 0B		     1		jl	??0028
+ 036B  B4 09		     1		mov	ah, 09h
+ 036D  8D 16 001B R	     1		lea	dx, nline
+ 0371  CD 21		     1		int	21h
+ 0373  BF 0000		     1		mov	di, 0
+ 0376			     1	??0028:
+ 0376  E2 E4		     1		loop	??0027
+ 0378  83 FF 00		     1		cmp	di, 0
+ 037B  74 08		     1		je	??0029
+ 037D  B4 09		     1		mov	ah, 09h
+ 037F  8D 16 001B R	     1		lea	dx, nline
+ 0383  CD 21		     1		int	21h
+ 0385			     1	??0029:
+ 0385
+ 0385  B4 4C
+ 0387  CD 21
+ 0389
+Microsoft (R) Macro Assembler Version 6.15.8803		    10/04/05 01:54:53
+ast6.asm						     Symbols 2 - 1
+
+
+
+
+Macros:
+
+                N a m e                 Type
+
+i_to_a . . . . . . . . . . . . .	Proc
+ilst_to_alst . . . . . . . . . .	Proc
+prt_strings  . . . . . . . . . .	Proc
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+AST6_TEXT  . . . . . . . . . . .	16 Bit	 0389	  Word	  Public  'CODE'	
+DGROUP . . . . . . . . . . . . .	GROUP
+_DATA  . . . . . . . . . . . . .	16 Bit	 0510	  Word	  Public  'DATA'	
+STACK  . . . . . . . . . . . . .	16 Bit	 0400	  Para	  Stack	  'STACK'	 
+
+
+Procedures,  parameters and locals:
+
+                N a m e                 Type     Value    Attr
+
+main . . . . . . . . . . . . . .	P Far	 0000	  AST6_TEXT	Length= 0389 Public
+  ??0000 . . . . . . . . . . . .	L Near	 0011	  AST6_TEXT	
+  ??0001 . . . . . . . . . . . .	L Near	 001C	  AST6_TEXT	
+  ??0002 . . . . . . . . . . . .	L Near	 0037	  AST6_TEXT	
+  ??0003 . . . . . . . . . . . .	L Near	 005C	  AST6_TEXT	
+  ??0004 . . . . . . . . . . . .	L Near	 0076	  AST6_TEXT	
+  ??0005 . . . . . . . . . . . .	L Near	 0085	  AST6_TEXT	
+  ??0006 . . . . . . . . . . . .	L Near	 0091	  AST6_TEXT	
+  ??0007 . . . . . . . . . . . .	L Near	 009C	  AST6_TEXT	
+  ??0008 . . . . . . . . . . . .	L Near	 00B7	  AST6_TEXT	
+  ??0009 . . . . . . . . . . . .	L Near	 00DC	  AST6_TEXT	
+  ??000A . . . . . . . . . . . .	L Near	 00F6	  AST6_TEXT	
+  ??000B . . . . . . . . . . . .	L Near	 0105	  AST6_TEXT	
+  ??000C . . . . . . . . . . . .	L Near	 0111	  AST6_TEXT	
+  ??000D . . . . . . . . . . . .	L Near	 011C	  AST6_TEXT	
+  ??000E . . . . . . . . . . . .	L Near	 0137	  AST6_TEXT	
+  ??000F . . . . . . . . . . . .	L Near	 015C	  AST6_TEXT	
+  ??0010 . . . . . . . . . . . .	L Near	 0176	  AST6_TEXT	
+  ??0011 . . . . . . . . . . . .	L Near	 0185	  AST6_TEXT	
+  ??0012 . . . . . . . . . . . .	L Near	 0191	  AST6_TEXT	
+  ??0013 . . . . . . . . . . . .	L Near	 019C	  AST6_TEXT	
+  ??0014 . . . . . . . . . . . .	L Near	 01B7	  AST6_TEXT	
+  ??0015 . . . . . . . . . . . .	L Near	 01DC	  AST6_TEXT	
+  ??0016 . . . . . . . . . . . .	L Near	 01F6	  AST6_TEXT	
+  ??0017 . . . . . . . . . . . .	L Near	 0205	  AST6_TEXT	
+  ??0018 . . . . . . . . . . . .	L Near	 0211	  AST6_TEXT	
+  ??0019 . . . . . . . . . . . .	L Near	 021C	  AST6_TEXT	
+  ??001A . . . . . . . . . . . .	L Near	 0237	  AST6_TEXT	
+  ??001B . . . . . . . . . . . .	L Near	 025C	  AST6_TEXT	
+  ??001C . . . . . . . . . . . .	L Near	 0276	  AST6_TEXT	
+  ??001D . . . . . . . . . . . .	L Near	 0285	  AST6_TEXT	
+  ??001E . . . . . . . . . . . .	L Near	 0291	  AST6_TEXT	
+  ??001F . . . . . . . . . . . .	L Near	 029C	  AST6_TEXT	
+  ??0020 . . . . . . . . . . . .	L Near	 02B7	  AST6_TEXT	
+  ??0021 . . . . . . . . . . . .	L Near	 02DC	  AST6_TEXT	
+  ??0022 . . . . . . . . . . . .	L Near	 02F6	  AST6_TEXT	
+  ??0023 . . . . . . . . . . . .	L Near	 0305	  AST6_TEXT	
+  ??0024 . . . . . . . . . . . .	L Near	 0311	  AST6_TEXT	
+  ??0025 . . . . . . . . . . . .	L Near	 031C	  AST6_TEXT	
+  ??0026 . . . . . . . . . . . .	L Near	 0337	  AST6_TEXT	
+  ??0027 . . . . . . . . . . . .	L Near	 035C	  AST6_TEXT	
+  ??0028 . . . . . . . . . . . .	L Near	 0376	  AST6_TEXT	
+  ??0029 . . . . . . . . . . . .	L Near	 0385	  AST6_TEXT	
+  last . . . . . . . . . . . . .	L Near	 0385	  AST6_TEXT	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 0001h	 
+@DataSize  . . . . . . . . . . .	Number	 0000h	 
+@Interface . . . . . . . . . . .	Number	 0000h	 
+@Model . . . . . . . . . . . . .	Number	 0004h	 
+@code  . . . . . . . . . . . . .	Text   	 AST6_TEXT
+@data  . . . . . . . . . . . . .	Text   	 DGROUP
+@fardata?  . . . . . . . . . . .	Text   	 FAR_BSS
+@fardata . . . . . . . . . . . .	Text   	 FAR_DATA
+@stack . . . . . . . . . . . . .	Text   	 DGROUP
+CR . . . . . . . . . . . . . . .	Number	 000Dh	 
+END_STR  . . . . . . . . . . . .	Number	 0024h	 
+LF . . . . . . . . . . . . . . .	Number	 000Ah	 
+MAX_SIZ  . . . . . . . . . . . .	Number	 000Ah	 
+STR_SIZE . . . . . . . . . . . .	Number	 0009h	 
+alst0  . . . . . . . . . . . . .	Byte	 0038	  _DATA	
+alst1  . . . . . . . . . . . . .	Byte	 008F	  _DATA	
+alst2  . . . . . . . . . . . . .	Byte	 0113	  _DATA	
+alst3  . . . . . . . . . . . . .	Byte	 01B3	  _DATA	
+alst4  . . . . . . . . . . . . .	Byte	 0286	  _DATA	
+alst5  . . . . . . . . . . . . .	Byte	 0342	  _DATA	
+alst6  . . . . . . . . . . . . .	Byte	 042F	  _DATA	
+hdr  . . . . . . . . . . . . . .	Byte	 0000	  _DATA	
+ilst0  . . . . . . . . . . . . .	DWord	 0022	  _DATA	
+ilst1  . . . . . . . . . . . . .	DWord	 0065	  _DATA	
+ilst2  . . . . . . . . . . . . .	DWord	 00E9	  _DATA	
+ilst3  . . . . . . . . . . . . .	DWord	 016D	  _DATA	
+ilst4  . . . . . . . . . . . . .	DWord	 024C	  _DATA	
+ilst5  . . . . . . . . . . . . .	DWord	 0304	  _DATA	
+ilst6  . . . . . . . . . . . . .	DWord	 03C9	  _DATA	
+len0 . . . . . . . . . . . . . .	Word	 0036	  _DATA	
+len1 . . . . . . . . . . . . . .	Word	 008D	  _DATA	
+len2 . . . . . . . . . . . . . .	Word	 0111	  _DATA	
+len3 . . . . . . . . . . . . . .	Word	 01B1	  _DATA	
+len4 . . . . . . . . . . . . . .	Word	 0284	  _DATA	
+len5 . . . . . . . . . . . . . .	Word	 0340	  _DATA	
+len6 . . . . . . . . . . . . . .	Word	 042D	  _DATA	
+nline  . . . . . . . . . . . . .	Byte	 001B	  _DATA	
+w_two  . . . . . . . . . . . . .	Word	 0020	  _DATA	
+wten . . . . . . . . . . . . . .	Word	 001E	  _DATA	
+
+	   0 Warnings
+	   0 Errors

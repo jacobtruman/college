@@ -1,0 +1,54 @@
+
+**************************************
+CSC218 - Race Time Calculation Program
+
+ Enter Race Name: No
+ *Error, must enter race name (4 char min).
+  Please re-enter.
+ Enter Race Name: Easy Race
+ Enter Race Start Day (Su/Mo/Tu/We/Th/Fr/Sa): Fi
+ *Error, must enter valid day (Su/Mo/Tu/We/Th/Fr/Sa): 
+  Please re-enter.
+ Enter Race Start Day (Su/Mo/Tu/We/Th/Fr/Sa): Fr
+ Enter Race Start Time (hh:mm:ss): 12:00:0x
+ *Error, must enter valid race start time (hh:mm:ss):
+  Please re-enter.
+ Enter Race Start Time (hh:mm:ss): 1x:00:00
+ *Error, must enter valid race start time (hh:mm:ss):
+  Please re-enter.
+ Enter Race Start Time (hh:mm:ss): 12:0x:00
+ *Error, must enter valid race start time (hh:mm:ss):
+  Please re-enter.
+ Enter Race Start Time (hh:mm:ss): 01:60:00
+ *Error, must enter valid race start time (hh:mm:ss):
+  Please re-enter.
+ Enter Race Start Time (hh:mm:ss): 01:00:60
+ *Error, must enter valid race start time (hh:mm:ss):
+  Please re-enter.
+ Enter Race Start Time (hh:mm:ss): 24:00:00
+ *Error, must enter valid race start time (hh:mm:ss):
+  Please re-enter.
+ Enter Race Start Time (hh:mm:ss): 00:00:00
+ Enter Race Length (hh:mm:ss): 01:00:0x
+ *Error, must enter valid race length time (hh:mm:ss):
+  Please re-enter.
+ Enter Race Length (hh:mm:ss): 1x:10:10
+ *Error, must enter valid race length time (hh:mm:ss):
+  Please re-enter.
+ Enter Race Length (hh:mm:ss): 30:0x:10
+ *Error, must enter valid race length time (hh:mm:ss):
+  Please re-enter.
+ Enter Race Length (hh:mm:ss): 51:60:10
+ *Error, must enter valid race length time (hh:mm:ss):
+  Please re-enter.
+ Enter Race Length (hh:mm:ss): 71:10:60
+ *Error, must enter valid race length time (hh:mm:ss):
+  Please re-enter.
+ Enter Race Length (hh:mm:ss): 99:59:59
+
+------------------------------------
+Race Information:
+
+ Race Name       : Easy Race
+ Race Start Time : Friday, 12:00:00am
+ Race End Time   : Tuesday, 03:59:59am

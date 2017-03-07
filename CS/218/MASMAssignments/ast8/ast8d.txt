@@ -1,0 +1,39 @@
+mdi lst1 l40
+mdi min1 l1
+mdi max1 l1
+mdi sum1 l1
+mdi ave1 l1
+mdi med1 l1
+mdi var1 l1
+
+mdi lst2 l31
+mdi min2 l1
+mdi max2 l1
+mdi sum2 l1
+mdi ave2 l1
+mdi med2 l1
+mdi var2 l1
+
+mdi lst3 l95
+mdi min3 l1
+mdi max3 l1
+mdi sum3 l1
+mdi ave3 l1
+mdi med3 l1
+mdi var3 l1
+
+mdi lst4 l100
+mdi min4 l1
+mdi max4 l1
+mdi sum4 l1
+mdi ave4 l1
+mdi med4 l1
+mdi var4 l1
+
+mdi lst5 l80
+mdi min5 l1
+mdi max5 l1
+mdi sum5 l1
+mdi ave5 l1
+mdi med5 l1
+mdi var5 l1

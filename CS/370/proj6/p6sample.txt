@@ -1,0 +1,71 @@
+INPUT:
+
+2048
+512
+4
+1500
+570
+1024
+2000
+0 10
+0 600
+1 200
+2 0
+0 300
+2 300
+0 1024
+1 600
+1 400
+3 150
+1 550
+3 800
+
+
+OUTPUT:
+
+-bash-3.00$ g++ p6.cpp
+-bash-3.00$ ./a.out < p6input
+[0](10) Page Fault, page 0 moved to memory location 0
+[0](600) Page Fault, page 1 moved to memory location 1
+[1](1736) Page Fault, page 3 moved to memory location 2
+[2](2560) Page Fault, page 5 moved to memory location 3
+[0](300) Page Hit, page 0 Already In Memory
+[2](2860) Page Hit, page 5 Already In Memory
+[0](1024) Page Fault, page 2 moved to memory location 1 Swapped with page 1
+[1](2136) Invalid Address Reference
+[1](1936) Page Hit, page 3 Already In Memory
+[3](3734) Page Fault, page 7 moved to memory location 0 Swapped with page 0
+[1](2086) Page Fault, page 4 moved to memory location 3 Swapped with page 5
+[3](4384) Page Fault, page 8 moved to memory location 1 Swapped with page 2
+
+
+Memory: 
+----------
+| Page 7 |
+----------
+| Page 8 |
+----------
+| Page 3 |
+----------
+| Page 4 |
+----------
+
+
+Processes:
+Process : 0
+Total Page Faults: 3
+75% page faults per access
+
+Process : 1
+Total Page Faults: 2
+50% page faults per access
+
+Process : 2
+Total Page Faults: 1
+50% page faults per access
+
+Process : 3
+Total Page Faults: 2
+100% page faults per access
+
+-bash-3.00$ 

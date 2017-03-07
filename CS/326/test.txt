@@ -1,0 +1,5 @@
+imperative - c, fortran
+oo - c++, java
+markup - php, html
+logical - prolog
+functional - scheme, lisp

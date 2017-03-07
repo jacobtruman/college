@@ -1,0 +1,776 @@
+Microsoft (R) Macro Assembler Version 6.15.8803		    10/02/05 06:46:41
+ast8.asm						     Page 1 - 1
+
+
+				;  CSC 218, Assignment #8
+				;  Provided Main
+
+
+				;  Main program to call procedures for:
+				;	1) Procedure for shaker sort (descending order)
+				;	2) Procedure for minimum, maximum, sum, abd average
+				;	3) Procedure for median and variance
+
+				;  Note, The selection sort procedure uses the asst #7
+				;        code with minor modifications.
+
+
+				.model	small
+
+				;----------------------------------------------------------
+
+ 0000				.data
+
+ 0000 000A 000C 000E 0010	lst1	dw	10,  12,  14,  16,  18,  20,  22,  24,  26,  28
+       0012 0014 0016
+       0018 001A 001C
+ 0014  001F 0021 0023			dw	31,  33,  35,  37,  39,  41,  43,  45,  47,  49
+       0025 0027 0029
+       002B 002D 002F
+       0031
+ 0028  001E 0020 0022			dw	30,  32,  34,  36,  38,  40,  42,  44,  46,  48
+       0024 0026 0028
+       002A 002C 002E
+       0030
+ 003C  001D 001B 0019			dw	29,  27,  25,  23,  21,  19,  17,  15,  13,  11
+       0017 0015 0013
+       0011 000F 000D
+       000B
+ 0050 0028			len1	dw	40
+ 0052 0000			min1	dw	?
+ 0054 0000			med1	dw	?
+ 0056 0000			max1	dw	?
+ 0058 0000			sum1	dw	?
+ 005A 0000			ave1	dw	?
+ 005C 00000000			var1	dd	?
+
+ 0060 FFF1 000F FFF2 000E	lst2	dw	-15,  15, -14,  14, -13,  13, -12,  12, -11,  11
+       FFF3 000D FFF4
+       000C FFF5 000B
+ 0074  FFF6 000A FFF7			dw	-10,  10,  -9,   9,  -8,   8,  -7,   7,  -6,   6
+       0009 FFF8 0008
+       FFF9 0007 FFFA
+       0006
+ 0088  FFFB 0005 FFFC			dw	 -5,   5,  -4,   4,  -3,   3,  -2,   2,  -1,   1
+       0004 FFFD 0003
+       FFFE 0002 FFFF
+       0001
+ 009C  0000				dw	0
+ 009E 001F			len2	dw	31
+ 00A0 0000			min2	dw	?
+ 00A2 0000			med2	dw	?
+ 00A4 0000			max2	dw	?
+ 00A6 0000			sum2	dw	?
+ 00A8 0000			ave2	dw	?
+ 00AA 00000000			var2	dd	?
+
+ 00AE 007B 0002 0092 004C	lst3	dw	123,   2, 146,  76,   0,  56, 264,  65, 155, -56
+       0000 0038 0108
+       0041 009B FFC8
+ 00C2  002F 007B FFFD			dw	 47, 123,  -3,  40,  65, -11,  54,  28, -13,  22
+       0028 0041 FFF5
+       0036 001C FFF3
+       0016
+ 00D6  0045 001A 003E			dw	 69,  26,  62,   7,  27,  27,   9, -77,  75,  14
+       0007 001B 001B
+       0009 FFB3 004B
+       000E
+ 00EA  0051 0019 000F			dw	 81,  25,  15,   2,  17,   5,  10, 129,  12, 134
+       0002 0011 0005
+       000A 0081 000C
+       0086
+ 00FE  00A1 0002 FFCD			dw	161,   2, -51,   2,   1,   9, -14,  22,  15, -31
+       0002 0001 0009
+       FFF2 0016 000F
+       FFE1
+ 0112  001B 0040 000A			dw	 27,  64,  10, 172,  24, -25,  16,  62,   8,  92
+       00AC 0018 FFE7
+       0010 003E 0008
+       005C
+ 0126  000B FFAD 00E9			dw	 11, -83, 233,  50,   5,   1,  15,   8, 413, 415
+       0032 0005 0001
+       000F 0008 019D
+       019F
+ 013A  0009 007E 003E			dw	  9, 126,  62,   7, 227,  77, -99,  77, 175,  14
+       0007 00E3 004D
+       FF9D 004D 00AF
+       000E
+ 014E  005E 0018 0004			dw	 94,  24,   4,  43,  76,  34,  26,   2, -56,  63
+       002B 004C 0022
+       001A 0002 FFC8
+       003F
+ 0162  0018 0013 0011			dw	 24,  19,  17, 183,  10
+       00B7 000A
+ 016C 005F			len3	dw	95
+ 016E 0000			min3	dw	?
+ 0170 0000			med3	dw	?
+ 0172 0000			max3	dw	?
+ 0174 0000			sum3	dw	?
+ 0176 0000			ave3	dw	?
+ 0178 00000000			var3	dd	?
+
+ 017C 0017 01B0 00F6 004C	lst4	dw	 23, 432, 246,  76, -11,  16, 164, 165, -95,  56
+       FFF5 0010 00A4
+       00A5 FFA1 0038
+ 0190  FFDB FFE9 FFFD			dw	-37, -23,  -3, 140,  15, 111,  54,  28, -13, 122
+       008C 000F 006F
+       0036 001C FFF3
+       007A
+ 01A4  0023 001A 003E			dw	 35,  26,  62,   7,  27,  27,   9, -77,  75,  14
+       0007 001B 001B
+       0009 FFB3 004B
+       000E
+ 01B8  002D 0019 000F			dw	 45,  25,  15,   2, -17,  15,  10, 129,  12, 134
+       0002 FFEF 000F
+       000A 0081 000C
+       0086
+ 01CC  00A1 0002 FFCD			dw	161,   2, -51,   2,   2,  -9, -14,  22,  15, -31
+       0002 0002 FFF7
+       FFF2 0016 000F
+       FFE1
+ 01E0  001B 002C 000A			dw	 27,  44,  10, 172,  24, -25,  16,  62,  28,  92
+       00AC 0018 FFE7
+       0010 003E 001C
+       005C
+ 01F4  000B FFAD 00E9			dw	 11, -83, 233,  50, -27,   1,  15,   8, 413, 415
+       0032 FFE5 0001
+       000F 0008 019D
+       019F
+ 0208  0007 007E 003E			dw	  7, 126,  62,   7, 227, 177, -99,  77, 175,  14
+       0007 00E3 00B1
+       FF9D 004D 00AF
+       000E
+ 021C  00C2 0018 0002			dw	194,  24,   2,  43,  76,  34,  26,   2, -56,  63
+       002B 004C 0022
+       001A 0002 FFC8
+       003F
+ 0230  0018 FFED 0016			dw	 24, -19,  22,  83,  10, -91, -92, 129, 129, -19
+       0053 000A FFA5
+       FFA4 0081 0081
+       FFED
+ 0244 0064			len4	dw	100
+ 0246 0000			min4	dw	?
+ 0248 0000			med4	dw	?
+ 024A 0000			max4	dw	?
+ 024C 0000			sum4	dw	?
+ 024E 0000			ave4	dw	?
+ 0250 00000000			var4	dd	?
+
+ 0254 0017 FFF4 002E FFDC	lst5	dw	 23, -12,  46, -36,  10, -16,  64, -56,  15, -32
+       000A FFF0 0040
+       FFC8 000F FFE0
+ 0268  FFCF 002C FFF2			dw	-49,  44, -14,  34, -67,  43, -29,  61, -65,  36
+       0022 FFBD 002B
+       FFE3 003D FFBF
+       0024
+ 027C  0047 FFD1 000A			dw	 71, -47,  10, -27,  74, -65,  61, -97,  81, -29
+       FFE5 004A FFBF
+       003D FF9F 0051
+       FFE3
+ 0290  FFC0 0029 FFD6			dw	-64,  41, -42,  33, -76,  34, -46,  23, -56,  63
+       0021 FFB4 0022
+       FFD2 0017 FFC8
+       003F
+ 02A4  0015 FFEE 0011			dw	 21, -18,  17, -43,  78, -12,  11, -10,  35, -10
+       FFD5 004E FFF4
+       000B FFF6 0023
+       FFF6
+ 02B8  FFF5 0053 FFDF			dw	-11,  83, -33,  50,  -5,   1, -15,   8, -13,  15
+       0032 FFFB 0001
+       FFF1 0008 FFF3
+       000F
+ 02CC  004F FFE7 0034			dw	 79, -25,  52, -77,  87, -67,  91, -77,  52, -24
+       FFB3 0057 FFBD
+       005B FFB3 0034
+       FFE8
+ 02E0  FFB1 003F FFDC			dw	-79,  63, -36,  40, -35,  12, -54,  28, -13,  22
+       0028 FFDD 000C
+       FFCA 001C FFF3
+       0016
+ 02F4 0050			len5	dw	80
+ 02F6 0000			min5	dw	?
+ 02F8 0000			med5	dw	?
+ 02FA 0000			max5	dw	?
+ 02FC 0000			sum5	dw	?
+ 02FE 0000			ave5	dw	?
+ 0300 00000000			var5	dd	?
+
+
+				;------------
+				;  Constants:
+
+ =-0001				FALSE	equ	-1
+ = 0001				TRUE	equ	1
+
+
+				;----------------------------------------
+				; Temporary variables for sort procedure.
+
+ 0304 000A			ten	dw	10
+
+ 0306 0000			moved	dw	?
+ 0308 0000			curmax	dw	?
+ 030A 0000			curmin	dw	?
+ 030C 0000			i	dw	?
+
+ 030E 0002			two	dw	2
+
+
+				;------------------------------------------------------
+				; Temporary variables for standard deviation procedure.
+
+ 0310 0000			tmp_avg	dw	?
+ 0312 00000000			dsum	dd	?
+ 0316 0000			sqtmp	dw	?
+ 0318 0000			tmp_sum	dw	?
+
+
+				;-----
+
+				.stack
+
+ 0000				.code
+
+				;-----------------------------------------------------------
+				;  Main program to call sort routine then call stats routine
+				;   and the advanced stats procedure.
+
+				;  Call the sort routine with each set of data.
+				;   Arguments passed on the stack are:
+				;	list (address)
+				;	len (value)
+				;   The procedure will sort the list in place.
+
+				;  Call the stats procedure
+				;   Arguments passed on the stack are:
+				;	list (address)
+				;	len (value)
+				;	minimum (address)
+				;	maximum (address)
+				;	sum (address)
+				;	average (address)
+				;   The procedure will return the minimum, maximum, sum
+				;   and average values.
+
+				;  Call the procedure for advanced stats.
+				;   Arguments passed on the stack are:
+				;	list (address)
+				;	len (value)
+				;	median (address)
+				;	variance (address)
+				;   The procedure will return the median and variance.
+
+				;--------------------
+				;-- Main Procedure --
+				;--------------------
+
+ 0000				main	proc	far
+ 0000  B8 ---- R			mov	ax, @data
+ 0003  8E D8				mov	ds, ax
+
+				;-------------
+;  Data Set #1
+
+ 0005  8D 06 0000 R			lea	ax, lst1
+ 0009  50				push	ax
+ 000A  FF 36 0050 R			push	len1
+ 000E  E8 0142				call	shk_sort
+
+ 0011  8D 06 0000 R			lea	ax, lst1
+ 0015  50				push	ax
+ 0016  FF 36 0050 R			push	len1
+ 001A  8D 06 0052 R			lea	ax, min1
+ 001E  50				push	ax
+ 001F  8D 06 0056 R			lea	ax, max1
+ 0023  50				push	ax
+ 0024  8D 06 0058 R			lea	ax, sum1
+ 0028  50				push	ax
+ 0029  8D 06 005A R			lea	ax, ave1
+ 002D  50				push	ax
+ 002E  E8 01A8				call	stats
+					
+ 0031  8D 06 0000 R			lea	ax, lst1
+ 0035  50				push	ax
+ 0036  FF 36 0050 R			push	len1
+ 003A  8D 06 0054 R			lea	ax, med1
+ 003E  50				push	ax
+ 003F  8D 06 005C R			lea	ax, var1
+ 0043  50				push	ax
+ 0044  E8 01F8				call	adv_stats
+
+				;-------------
+				;  Data Set #2
+
+ 0047  8D 06 0060 R			lea	ax, lst2
+ 004B  50				push	ax
+ 004C  FF 36 009E R			push	len2
+ 0050  E8 0100				call	shk_sort
+
+ 0053  8D 06 0060 R			lea	ax, lst2
+ 0057  50				push	ax
+ 0058  FF 36 009E R			push	len2
+ 005C  8D 06 00A0 R			lea	ax, min2
+ 0060  50				push	ax
+ 0061  8D 06 00A4 R			lea	ax, max2
+ 0065  50				push	ax
+ 0066  8D 06 00A6 R			lea	ax, sum2
+ 006A  50				push	ax
+ 006B  8D 06 00A8 R			lea	ax, ave2
+ 006F  50				push	ax
+ 0070  E8 0166				call	stats
+
+ 0073  8D 06 0060 R			lea	ax, lst2
+ 0077  50				push	ax
+ 0078  FF 36 009E R			push	len2
+ 007C  8D 06 00A2 R			lea	ax, med2
+ 0080  50				push	ax
+ 0081  8D 06 00AA R			lea	ax, var2
+ 0085  50				push	ax
+ 0086  E8 01B6				call	adv_stats
+
+				;-------------
+				;  Data Set #3
+
+ 0089  8D 06 00AE R			lea	ax, lst3
+ 008D  50				push	ax
+ 008E  FF 36 016C R			push	len3
+ 0092  E8 00BE				call	shk_sort
+
+ 0095  8D 06 00AE R			lea	ax, lst3
+ 0099  50				push	ax
+ 009A  FF 36 016C R			push	len3
+ 009E  8D 06 016E R			lea	ax, min3
+ 00A2  50				push	ax
+ 00A3  8D 06 0172 R			lea	ax, max3
+ 00A7  50				push	ax
+ 00A8  8D 06 0174 R			lea	ax, sum3
+ 00AC  50				push	ax
+ 00AD  8D 06 0176 R			lea	ax, ave3
+ 00B1  50				push	ax
+ 00B2  E8 0124				call	stats
+
+ 00B5  8D 06 00AE R			lea	ax, lst3
+ 00B9  50				push	ax
+ 00BA  FF 36 016C R			push	len3
+ 00BE  8D 06 0170 R			lea	ax, med3
+ 00C2  50				push	ax
+ 00C3  8D 06 0178 R			lea	ax, var3
+ 00C7  50				push	ax
+ 00C8  E8 0174				call	adv_stats
+
+				;-------------
+				;  Data Set #4
+
+ 00CB  8D 06 017C R			lea	ax, lst4
+ 00CF  50				push	ax
+ 00D0  FF 36 0244 R			push	len4
+ 00D4  E8 007C				call	shk_sort
+
+ 00D7  8D 06 017C R			lea	ax, lst4
+ 00DB  50				push	ax
+ 00DC  FF 36 0244 R			push	len4
+ 00E0  8D 06 0246 R			lea	ax, min4
+ 00E4  50				push	ax
+ 00E5  8D 06 024A R			lea	ax, max4
+ 00E9  50				push	ax
+ 00EA  8D 06 024C R			lea	ax, sum4
+ 00EE  50				push	ax
+ 00EF  8D 06 024E R			lea	ax, ave4
+ 00F3  50				push	ax
+ 00F4  E8 00E2				call	stats
+
+ 00F7  8D 06 017C R			lea	ax, lst4
+ 00FB  50				push	ax
+ 00FC  FF 36 0244 R			push	len4
+ 0100  8D 06 0248 R			lea	ax, med4
+ 0104  50				push	ax
+ 0105  8D 06 0250 R			lea	ax, var4
+ 0109  50				push	ax
+ 010A  E8 0132				call	adv_stats
+
+				;-------------
+				;  Data Set #5
+
+ 010D  8D 06 0254 R			lea	ax, lst5
+ 0111  50				push	ax
+ 0112  FF 36 02F4 R			push	len5
+ 0116  E8 003A				call	shk_sort
+
+ 0119  8D 06 0254 R			lea	ax, lst5
+ 011D  50				push	ax
+ 011E  FF 36 02F4 R			push	len5
+ 0122  8D 06 02F6 R			lea	ax, min5
+ 0126  50				push	ax
+ 0127  8D 06 02FA R			lea	ax, max5
+ 012B  50				push	ax
+ 012C  8D 06 02FC R			lea	ax, sum5
+ 0130  50				push	ax
+ 0131  8D 06 02FE R			lea	ax, ave5
+ 0135  50				push	ax
+ 0136  E8 00A0				call	stats
+
+ 0139  8D 06 0254 R			lea	ax, lst5
+ 013D  50				push	ax
+ 013E  FF 36 02F4 R			push	len5
+ 0142  8D 06 02F8 R			lea	ax, med5
+ 0146  50				push	ax
+ 0147  8D 06 0300 R			lea	ax, var5
+ 014B  50				push	ax
+ 014C  E8 00F0				call	adv_stats
+
+				;-------------------------
+				; Done, terminate program.
+
+ 014F				last:
+ 014F  B4 4C				mov	ah, 4ch
+ 0151  CD 21				int	21h
+ 0153				main	endp
+
+				;-------------------------------------------------------------
+
+				;  Procedures go here...
+
+				;---------------------------
+				;-- Shaker Sort Procedure --
+				;---------------------------
+
+ 0153				shk_sort	proc	near
+
+ 0153  55				push bp
+ 0154  8B EC				mov  bp, sp
+ 0156  50				push ax
+ 0157  53				push bx
+ 0158  51				push cx
+ 0159  52				push dx
+ 015A  56				push si
+ 015B  57				push di
+ 015C  8B 5E 06				mov  bx, word ptr 6[bp]	; get list address
+ 015F  8B 4E 04				mov  cx, word ptr 4[bp]	; get list length
+
+ 0162  BA 0000				mov  dx, 0
+ 0165  89 16 0306 R			mov  moved, dx	; moved flag
+ 0169  BE 0000				mov  si, 0		; set si register for min offset
+ 016C  B8 0002				mov  ax, 2
+ 016F  F7 E1				mul  cx
+ 0171  8B F8				mov  di, ax		; set di register for max offset
+ 0173  83 EF 02				sub  di, 2
+					
+ 0176					shk_lp:
+
+ 0176  BA 0000					mov  dx, 0
+ 0179  89 16 0306 R				mov  moved, dx
+ 017D  8B CE					mov  cx, si
+ 017F  83 EF 02					sub  di, 2
+ 0182						mx_lp:
+ 0182  8B 00						mov  ax, word ptr [si][bx]
+ 0184  8B 50 02						mov  dx, word ptr 2[si][bx]
+ 0187  3B C2						cmp  ax, dx							; compare ilst[i] and ilst[i+1]
+ 0189  7F 0C						jg  skip_mxswap
+ 018B  89 10							mov  word ptr [si][bx], dx
+ 018D  89 40 02							mov  word ptr 2[si][bx], ax		; swap ilst[i] and ilst[i+1]
+ 0190  BA 0001							mov  dx, 1
+ 0193  89 16 0306 R						mov  moved, dx
+ 0197							skip_mxswap:
+ 0197  83 C6 02						add  si, 2
+ 019A  3B F7						cmp  si, di
+ 019C  7E E4						jle  mx_lp
+ 019E  8B F1						mov  si, cx
+						
+ 01A0  8B CF					mov  cx, di
+ 01A2  83 EF 02					sub  di, 2
+ 01A5						mn_lp:
+ 01A5  8B 01						mov  ax, word ptr [di][bx]
+ 01A7  8B 51 02						mov  dx, word ptr 2[di][bx]
+ 01AA  3B C2						cmp  ax, dx							; compare ilst[i] and ilst[i+1]
+ 01AC  7F 0C						jg  skip_mnswap
+ 01AE  89 11							mov  word ptr [di][bx], dx
+ 01B0  89 41 02							mov  word ptr 2[di][bx], ax		; swap ilst[i] and ilst[i+1]
+ 01B3  BA 0001							mov  dx, 1
+ 01B6  89 16 0306 R						mov  moved, dx
+ 01BA							skip_mnswap:
+ 01BA  83 EF 02						sub  di, 2
+ 01BD  3B FE						cmp  di, si
+ 01BF  7D E4						jge  mn_lp
+ 01C1  83 C6 02						add  si, 2
+ 01C4  8B F9					mov  di, cx
+						
+ 01C6  8B 16 0306 R			mov  dx, moved
+ 01CA  83 FA 00				cmp  dx, 0
+ 01CD  75 A7				jne  shk_lp
+					
+ 01CF  5F				pop  di
+ 01D0  5E				pop  si
+ 01D1  5A				pop  dx
+ 01D2  59				pop  cx
+ 01D3  5B				pop  bx
+ 01D4  58				pop  ax
+ 01D5  5D				pop  bp
+
+ 01D6  C2 0002				ret 2
+ 01D9				shk_sort endp
+
+				;---------------------
+				;-- Stats Procedure --
+				;---------------------
+
+ 01D9				stats	proc	near
+
+ 01D9  55				push bp
+ 01DA  8B EC				mov  bp, sp
+ 01DC  50				push ax
+ 01DD  53				push bx
+ 01DE  51				push cx
+ 01DF  56				push si
+ 01E0  8B 5E 0E				mov  bx, word ptr 14[bp]		; get list address
+ 01E3  8B 4E 0C				mov  cx, word ptr 12[bp]		; get list length
+					
+					;-------------------------
+					;-- Assign List Minimum --
+					;-------------------------
+
+ 01E6  B8 0002				mov  ax, 2
+ 01E9  F7 E1				mul  cx
+ 01EB  8B F0				mov  si, ax
+ 01ED  83 EE 02				sub  si, 2
+ 01F0  8B 00				mov  ax, word ptr [si][bx]
+ 01F2  8B 5E 0A				mov  bx, word ptr 10[bp]		; get Min address
+ 01F5  89 07				mov  word ptr [bx], ax
+
+ 01F7  8B 5E 0E				mov  bx, word ptr 14[bp]		; reset list address
+
+					;-------------------------
+					;-- Assign List Maximum --
+					;-------------------------
+
+ 01FA  8B 07				mov  ax, word ptr [bx]
+ 01FC  8B 5E 08				mov  bx, word ptr 8[bp]			; get Max address
+ 01FF  89 07				mov  word ptr [bx], ax
+					
+ 0201  8B 5E 0E				mov  bx, word ptr 14[bp]		; reset list address
+
+					;------------------
+					;-- Get List Sum --
+					;------------------
+
+ 0204  B8 0002				mov  ax, 2
+ 0207  F7 E1				mul  cx
+ 0209  83 E8 02				sub  ax, 2
+ 020C  8B F0				mov  si, ax
+ 020E  B8 0000				mov  ax, 0
+ 0211  C7 06 0318 R 0000		mov  tmp_sum, 0
+ 0217					avg_lp:
+ 0217  8B 00					mov  ax, word ptr [si][bx]
+ 0219  01 06 0318 R				add  tmp_sum, ax
+ 021D  83 EE 02					sub  si, 2
+ 0220  83 FE 00					cmp	 si, 0
+ 0223  7D F2					jge avg_lp
+ 0225  A1 0318 R			mov  ax, tmp_sum
+ 0228  8B 5E 06				mov  bx, word ptr 6[bp]			; get Sum address
+ 022B  89 07				mov  word ptr [bx], ax
+					
+					;----------------------
+					;-- Get List Average --
+					;----------------------
+
+ 022D  F7 F9				idiv cx
+ 022F  8B 5E 04				mov  bx, word ptr 4[bp]			; get Ave address
+ 0232  89 07				mov  word ptr [bx], ax
+ 0234  A3 0310 R			mov  tmp_avg, ax
+
+ 0237  5E				pop  si
+ 0238  59				pop  cx
+ 0239  5B				pop  bx
+ 023A  58				pop  ax
+ 023B  5D				pop  bp
+
+ 023C  C2 0006				ret 6
+ 023F				stats endp
+
+				;------------------------------
+				;-- Advanced Stats Procedure --
+				;------------------------------
+
+ 023F				adv_stats	proc	near
+ 023F  55				push bp
+ 0240  8B EC				mov  bp, sp
+ 0242  50				push ax
+ 0243  53				push bx
+ 0244  51				push cx
+ 0245  52				push dx
+ 0246  56				push si
+ 0247  BA 0000				mov  dx, 0
+ 024A  8B 5E 0A				mov  bx, word ptr 10[bp]		; get list address
+ 024D  8B 46 08				mov  ax, word ptr 8[bp]			; get list length
+
+					;---------------------
+					;-- Get List Median --
+					;---------------------
+
+ 0250  F7 36 030E R			div  two
+ 0254  8B 4E 08				mov  cx, word ptr 8[bp]			; get list length
+ 0257  83 FA 00				cmp  dx, 0
+ 025A  74 0C				je jmp_evn
+
+ 025C  8B F1				mov  si, cx
+ 025E  4E				dec  si
+ 025F  8B 00				mov  ax, word ptr [si][bx]
+ 0261  8B 5E 06				mov  bx, word ptr 6[bp]			; get Med address
+ 0264  89 07				mov  word ptr [bx], ax
+ 0266  EB 12				jmp jmp_end
+
+ 0268					jmp_evn:
+ 0268  8B F1					mov  si, cx
+ 026A  8B 00					mov  ax, word ptr [si][bx]
+ 026C  83 EE 02					sub  si, 2
+ 026F  03 00					add  ax, word ptr [si][bx]
+ 0271  F7 3E 030E R				idiv two
+ 0275  8B 5E 06					mov  bx, word ptr 6[bp]		; get Med address
+ 0278  89 07					mov  word ptr [bx], ax
+
+ 027A					jmp_end:
+					
+					;-----------------------
+					;-- Get List Variance --
+					;-----------------------
+
+ 027A  8B 5E 0A				mov  bx, word ptr 10[bp]		; reset list address
+ 027D  8B 7E 04				mov  di, word ptr 4[bp]			; get Var address
+ 0280  B8 0002				mov  ax, 2
+ 0283  F7 E1				mul  cx
+ 0285  83 E8 02				sub  ax, 2
+ 0288  8B F0				mov  si, ax
+ 028A  B8 0000				mov  ax, 0
+ 028D					var_lp:
+ 028D  8B 00					mov  ax, word ptr [si][bx]
+ 028F  2B 06 0310 R				sub  ax, tmp_avg
+ 0293  F7 E8					imul ax
+ 0295  01 05					add  word ptr [di], ax
+ 0297  11 55 02					adc  word ptr 2[di], dx
+ 029A  A3 0316 R				mov  sqtmp, ax
+ 029D  83 EE 02					sub  si, 2
+ 02A0  83 FE 00					cmp  si, 0
+ 02A3  7D E8					jge var_lp
+ 02A5  8B 05				mov  ax, word ptr [di]
+ 02A7  8B 55 02				mov  dx, word ptr 2[di]
+ 02AA  49				dec  cx
+ 02AB  F7 F9				idiv cx
+ 02AD  89 05				mov  word ptr [di], ax
+
+ 02AF  5E				pop  si
+ 02B0  5A				pop  dx
+ 02B1  59				pop  cx
+ 02B2  5B				pop  bx
+ 02B3  58				pop  ax
+ 02B4  5D				pop  bp
+
+ 02B5  C2 0004				ret 4
+ 02B8				adv_stats endp
+
+				;-------------------------------------------------------------
+
+				end	main
+
+Microsoft (R) Macro Assembler Version 6.15.8803		    10/02/05 06:46:41
+ast8.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+DGROUP . . . . . . . . . . . . .	GROUP
+_DATA  . . . . . . . . . . . . .	16 Bit	 031A	  Word	  Public  'DATA'	
+STACK  . . . . . . . . . . . . .	16 Bit	 0400	  Para	  Stack	  'STACK'	 
+_TEXT  . . . . . . . . . . . . .	16 Bit	 02B8	  Word	  Public  'CODE'	
+
+
+Procedures,  parameters and locals:
+
+                N a m e                 Type     Value    Attr
+
+adv_stats  . . . . . . . . . . .	P Near	 023F	  _TEXT	Length= 0079 Public
+  jmp_evn  . . . . . . . . . . .	L Near	 0268	  _TEXT	
+  jmp_end  . . . . . . . . . . .	L Near	 027A	  _TEXT	
+  var_lp . . . . . . . . . . . .	L Near	 028D	  _TEXT	
+main . . . . . . . . . . . . . .	P Far	 0000	  _TEXT	Length= 0153 Public
+  last . . . . . . . . . . . . .	L Near	 014F	  _TEXT	
+shk_sort . . . . . . . . . . . .	P Near	 0153	  _TEXT	Length= 0086 Public
+  shk_lp . . . . . . . . . . . .	L Near	 0176	  _TEXT	
+  mx_lp  . . . . . . . . . . . .	L Near	 0182	  _TEXT	
+  skip_mxswap  . . . . . . . . .	L Near	 0197	  _TEXT	
+  mn_lp  . . . . . . . . . . . .	L Near	 01A5	  _TEXT	
+  skip_mnswap  . . . . . . . . .	L Near	 01BA	  _TEXT	
+stats  . . . . . . . . . . . . .	P Near	 01D9	  _TEXT	Length= 0066 Public
+  avg_lp . . . . . . . . . . . .	L Near	 0217	  _TEXT	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 0000h	 
+@DataSize  . . . . . . . . . . .	Number	 0000h	 
+@Interface . . . . . . . . . . .	Number	 0000h	 
+@Model . . . . . . . . . . . . .	Number	 0002h	 
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 DGROUP
+@fardata?  . . . . . . . . . . .	Text   	 FAR_BSS
+@fardata . . . . . . . . . . . .	Text   	 FAR_DATA
+@stack . . . . . . . . . . . . .	Text   	 DGROUP
+FALSE  . . . . . . . . . . . . .	Number	 -0001h	  
+TRUE . . . . . . . . . . . . . .	Number	 0001h	 
+ave1 . . . . . . . . . . . . . .	Word	 005A	  _DATA	
+ave2 . . . . . . . . . . . . . .	Word	 00A8	  _DATA	
+ave3 . . . . . . . . . . . . . .	Word	 0176	  _DATA	
+ave4 . . . . . . . . . . . . . .	Word	 024E	  _DATA	
+ave5 . . . . . . . . . . . . . .	Word	 02FE	  _DATA	
+curmax . . . . . . . . . . . . .	Word	 0308	  _DATA	
+curmin . . . . . . . . . . . . .	Word	 030A	  _DATA	
+dsum . . . . . . . . . . . . . .	DWord	 0312	  _DATA	
+i  . . . . . . . . . . . . . . .	Word	 030C	  _DATA	
+len1 . . . . . . . . . . . . . .	Word	 0050	  _DATA	
+len2 . . . . . . . . . . . . . .	Word	 009E	  _DATA	
+len3 . . . . . . . . . . . . . .	Word	 016C	  _DATA	
+len4 . . . . . . . . . . . . . .	Word	 0244	  _DATA	
+len5 . . . . . . . . . . . . . .	Word	 02F4	  _DATA	
+lst1 . . . . . . . . . . . . . .	Word	 0000	  _DATA	
+lst2 . . . . . . . . . . . . . .	Word	 0060	  _DATA	
+lst3 . . . . . . . . . . . . . .	Word	 00AE	  _DATA	
+lst4 . . . . . . . . . . . . . .	Word	 017C	  _DATA	
+lst5 . . . . . . . . . . . . . .	Word	 0254	  _DATA	
+max1 . . . . . . . . . . . . . .	Word	 0056	  _DATA	
+max2 . . . . . . . . . . . . . .	Word	 00A4	  _DATA	
+max3 . . . . . . . . . . . . . .	Word	 0172	  _DATA	
+max4 . . . . . . . . . . . . . .	Word	 024A	  _DATA	
+max5 . . . . . . . . . . . . . .	Word	 02FA	  _DATA	
+med1 . . . . . . . . . . . . . .	Word	 0054	  _DATA	
+med2 . . . . . . . . . . . . . .	Word	 00A2	  _DATA	
+med3 . . . . . . . . . . . . . .	Word	 0170	  _DATA	
+med4 . . . . . . . . . . . . . .	Word	 0248	  _DATA	
+med5 . . . . . . . . . . . . . .	Word	 02F8	  _DATA	
+min1 . . . . . . . . . . . . . .	Word	 0052	  _DATA	
+min2 . . . . . . . . . . . . . .	Word	 00A0	  _DATA	
+min3 . . . . . . . . . . . . . .	Word	 016E	  _DATA	
+min4 . . . . . . . . . . . . . .	Word	 0246	  _DATA	
+min5 . . . . . . . . . . . . . .	Word	 02F6	  _DATA	
+moved  . . . . . . . . . . . . .	Word	 0306	  _DATA	
+sqtmp  . . . . . . . . . . . . .	Word	 0316	  _DATA	
+sum1 . . . . . . . . . . . . . .	Word	 0058	  _DATA	
+sum2 . . . . . . . . . . . . . .	Word	 00A6	  _DATA	
+sum3 . . . . . . . . . . . . . .	Word	 0174	  _DATA	
+sum4 . . . . . . . . . . . . . .	Word	 024C	  _DATA	
+sum5 . . . . . . . . . . . . . .	Word	 02FC	  _DATA	
+ten  . . . . . . . . . . . . . .	Word	 0304	  _DATA	
+tmp_avg  . . . . . . . . . . . .	Word	 0310	  _DATA	
+tmp_sum  . . . . . . . . . . . .	Word	 0318	  _DATA	
+two  . . . . . . . . . . . . . .	Word	 030E	  _DATA	
+var1 . . . . . . . . . . . . . .	DWord	 005C	  _DATA	
+var2 . . . . . . . . . . . . . .	DWord	 00AA	  _DATA	
+var3 . . . . . . . . . . . . . .	DWord	 0178	  _DATA	
+var4 . . . . . . . . . . . . . .	DWord	 0250	  _DATA	
+var5 . . . . . . . . . . . . . .	DWord	 0300	  _DATA	
+
+	   0 Warnings
+	   0 Errors

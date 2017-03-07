@@ -1,0 +1,1000 @@
+Microsoft (R) Macro Assembler Version 6.15.8803		    10/11/05 00:35:09
+ast9.asm						     Page 1 - 1
+
+
+				;   Jacob Truman Section 02
+				;   Assignment 9
+
+
+				.model small
+				.486
+
+				;  Note, any locally used temporary
+				;  variables should be defined here.
+
+ 0000				.data
+
+				;-------------
+				;- Constants -
+				;-------------
+
+ = 000A				LF	equ	10			; line feed
+ = 000D				CR	equ	13			; carridge return
+ = 0024				END_STR	equ	"$"			; end of string
+
+ 0000 0D 0A 24			newline	db	CR, LF, END_STR
+
+ 0003 00			ok_fl		db	?
+ 0004 0000			num			dw	?
+ 0006 00 00 00			tmp_time	db	?, ?, ?
+ 0009 000A			ten			dw	10
+ 000B 0A			bten		db	10
+ 000C 07			seven		db	7
+ 000D 00			dayn		db	?
+ 000E 00 00 3A 00 00 3A		print_time	db	?, ?, ":", ?, ?, ":", ?, ?, ?, "m", CR, LF, END_STR
+       00 00 00 6D 0D 0A
+       24
+
+
+ 001B 5375 4D6F 5475 5765	daylst		dw	"Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"
+       5468 4672 5361
+
+
+				;------------------- BUFFERS BEGIN -------------------
+
+				; Race Name buffer
+ 0029 15			rn_buff		db	21
+ 002A 00			rn_rd		db	?
+ 002B  0015 [			rn_chrd		db	21 dup (?)
+        00
+       ]
+
+				; Race Start Day buffer
+ 0040 03			rd_buff		db	3
+ 0041 00			rd_rd		db	?
+ 0042  0003 [			rd_chrd		db	3 dup (?)
+        00
+       ]
+
+				; Race Starts Time buffer
+ 0045 09			rt_buff		db	9
+ 0046 00			rt_rd		db	?
+ 0047  0009 [			rt_chrd		db	9 dup (?)
+        00
+       ]
+
+				; Race Length buffer
+ 0050 09			rl_buff		db	9
+ 0051 00			rl_rd		db	?
+ 0052  0009 [			rl_chrd		db	9 dup (?)
+        00
+       ]
+
+				;-------------------- BUFFERS END --------------------
+
+				;---------------------------------------------------
+				;- String definitions for read_race_info procedure -
+				;------------------ STRINGS BEGIN ------------------
+
+ 005B 20 45 6E 74 65 72		pm_rnam		db	" Enter Race Name: ", END_STR
+       20 52 61 63 65 20
+       4E 61 6D 65 3A 20
+       24
+ 006E 20 45 6E 74 65 72		pm_rstd		db	" Enter Race Start Day"
+       20 52 61 63 65 20
+       53 74 61 72 74 20
+       44 61 79
+ 0083  20 28 53 75 2F 4D			db	" (Su/Mo/Tu/We/Th/Fr/Sa): ", END_STR
+       6F 2F 54 75 2F 57
+       65 2F 54 68 2F 46
+       72 2F 53 61 29 3A
+       20 24
+ 009D 20 45 6E 74 65 72		pm_rsttm	db	" Enter Race Start Time (hh:mm:ss): ", END_STR
+       20 52 61 63 65 20
+       53 74 61 72 74 20
+       54 69 6D 65 20 28
+       68 68 3A 6D 6D 3A
+       73 73 29 3A 20 24
+ 00C1 20 45 6E 74 65 72		pm_rlen		db	" Enter Race Length (hh:mm:ss): ", END_STR
+       20 52 61 63 65 20
+       4C 65 6E 67 74 68
+       20 28 68 68 3A 6D
+       6D 3A 73 73 29 3A
+       20 24
+
+ 00E1 0D 0A 20 2A 45 72		err_r_name	db	CR, LF, " *Error, must enter race name "
+       72 6F 72 2C 20 6D
+       75 73 74 20 65 6E
+       74 65 72 20 72 61
+       63 65 20 6E 61 6D
+       65 20
+ 0101  28 34 20 63 68 61			db	"(4 char min).", CR, LF
+       72 20 6D 69 6E 29
+       2E 0D 0A
+ 0110  20 20 50 6C 65 61			db	"  Please re-enter.", CR, LF, END_STR
+       73 65 20 72 65 2D
+       65 6E 74 65 72 2E
+       0D 0A 24
+ 0125 0D 0A 20 2A 45 72		err_r_stday	db	CR, LF, " *Error, must enter valid day"
+       72 6F 72 2C 20 6D
+       75 73 74 20 65 6E
+       74 65 72 20 76 61
+       6C 69 64 20 64 61
+       79
+ 0144  20 28 53 75 2F 4D			db	" (Su/Mo/Tu/We/Th/Fr/Sa): ", CR, LF
+       6F 2F 54 75 2F 57
+       65 2F 54 68 2F 46
+       72 2F 53 61 29 3A
+       20 0D 0A
+ 015F  20 20 50 6C 65 61			db	"  Please re-enter.", CR, LF, END_STR
+       73 65 20 72 65 2D
+       65 6E 74 65 72 2E
+       0D 0A 24
+ 0174 0D 0A 20 2A 45 72		err_r_sttm	db	CR, LF, " *Error, must enter valid race start "
+       72 6F 72 2C 20 6D
+       75 73 74 20 65 6E
+       74 65 72 20 76 61
+       6C 69 64 20 72 61
+       63 65 20 73 74 61
+       72 74 20
+ 019B  74 69 6D 65 20 28			db	"time (hh:mm:ss):", CR, LF
+       68 68 3A 6D 6D 3A
+       73 73 29 3A 0D 0A
+ 01AD  20 20 50 6C 65 61			db	"  Please re-enter.", CR, LF, END_STR
+       73 65 20 72 65 2D
+       65 6E 74 65 72 2E
+       0D 0A 24
+ 01C2 0D 0A 20 2A 45 72		err_r_len	db	CR, LF, " *Error, must enter valid race length "
+       72 6F 72 2C 20 6D
+       75 73 74 20 65 6E
+       74 65 72 20 76 61
+       6C 69 64 20 72 61
+       63 65 20 6C 65 6E
+       67 74 68 20
+ 01EA  74 69 6D 65 20 28			db	"time (hh:mm:ss):", CR, LF
+       68 68 3A 6D 6D 3A
+       73 73 29 3A 0D 0A
+ 01FC  20 20 50 6C 65 61			db	"  Please re-enter.", CR, LF, END_STR
+       73 65 20 72 65 2D
+       65 6E 74 65 72 2E
+       0D 0A 24
+
+
+				;---------------------------------------------------
+				;- String definitions for disp_race_info procedure -
+				;---------------------------------------------------
+
+ 0211 0D 0A 2D 2D 2D 2D		race_hdr	db	CR, LF, "------------------------------------"
+       2D 2D 2D 2D 2D 2D
+       2D 2D 2D 2D 2D 2D
+       2D 2D 2D 2D 2D 2D
+       2D 2D 2D 2D 2D 2D
+       2D 2D 2D 2D 2D 2D
+       2D 2D
+ 0237  0D 0A 52 61 63 65			db	CR, LF, "Race Information:"
+       20 49 6E 66 6F 72
+       6D 61 74 69 6F 6E
+       3A
+ 024A  0D 0A 0D 0A 24				db	CR, LF, CR, LF, END_STR
+
+ 024F 20 52 61 63 65 20		r_title1	db	" Race Name       : ", END_STR
+       4E 61 6D 65 20 20
+       20 20 20 20 20 3A
+       20 24
+ 0263 20 52 61 63 65 20		r_title2	db	" Race Start Time : ", END_STR
+       53 74 61 72 74 20
+       54 69 6D 65 20 3A
+       20 24
+ 0277 20 52 61 63 65 20		r_title3	db	" Race End Time   : ", END_STR
+       45 6E 64 20 54 69
+       6D 65 20 20 20 3A
+       20 24
+
+ 028B 53 75 6E 64 61 79		days		db	"Sunday, $   "
+       2C 20 24 20 20 20
+ 0297  4D 6F 6E 64 61 79			db	"Monday, $   "
+       2C 20 24 20 20 20
+ 02A3  54 75 65 73 64 61			db	"Tuesday, $  "
+       79 2C 20 24 20 20
+ 02AF  57 65 64 6E 65 73			db	"Wednesday, $"
+       64 61 79 2C 20 24
+ 02BB  54 68 75 72 73 64			db	"Thursday, $ "
+       61 79 2C 20 24 20
+ 02C7  46 72 69 64 61 79			db	"Friday, $   "
+       2C 20 24 20 20 20
+ 02D3  53 61 74 75 72 64			db	"Saturday, $ "
+       61 79 2C 20 24 20
+ 02DF 0C			days_size	db	12
+
+				;------------------- STRINGS END -------------------
+
+
+ 0000				.code
+
+ 0000				read_race_info	proc	near
+
+				;-----------------------------------------------------
+				;- Print prompt for Race Name                        -
+				;- Get user input (1 line, min 4 chars, max 20 char) -
+				;-----------------------------------------------------
+
+ 0000  55			push bp
+ 0001  8B EC			mov  bp, sp
+
+ 0003  50			push ax
+ 0004  53			push bx
+ 0005  51			push cx
+ 0006  52			push dx
+ 0007  56			push si
+ 0008  57			push di
+ 0009  1E			push ds
+ 000A  06			push es
+
+ 000B				name_lp:
+
+ 000B  8D 06 005B R		lea  ax, pm_rnam
+ 000F  50			push ax
+ 0010  8D 06 0029 R		lea  ax, rn_buff
+ 0014  50			push ax
+ 0015  E8 0430			call gprompt
+
+ 0018  B9 0003				mov  cx, 3
+ 001B  B8 0000				mov  ax, 0
+ 001E  A0 002A R			mov  al, rn_rd
+ 0021  3B C1				cmp  ax, cx 
+ 0023  7E 15				jle   name_er
+ 0025  B8 0000				mov  ax, 0
+ 0028  A0 002A R			mov  al, rn_rd
+ 002B  8B F0				mov  si, ax
+ 002D  8D 1E 002B R			lea  bx, rn_chrd
+ 0031  C6 00 24				mov  byte ptr [si][bx], END_STR
+ 0034  FE 06 002A R			inc  rn_rd
+ 0038  EB 0A				jmp  name_end
+					
+ 003A				name_er:
+ 003A  B4 09				mov	ah, 09h
+ 003C  8D 16 00E1 R			lea	dx, err_r_name
+ 0040  CD 21				int	21h
+					
+ 0042  EB C7				jmp name_lp
+ 0044				name_end:
+
+ 0044  8D 36 002B R		lea  si, rn_chrd	; Set DS:SI
+ 0048  8C D8			mov  ax, ds
+ 004A  8E C0			mov  es, ax
+ 004C  8B 7E 0A			mov  di, word ptr 10[bp]	; Set ES:DI
+ 004F  B9 0000			mov  cx, 0
+ 0052  8A 0E 002A R		mov  cl, rn_rd	; Set CX
+ 0056  F3/ A4			rep  movsb
+
+ 0058  B4 09			mov	ah, 09h
+ 005A  8D 16 0000 R		lea	dx, newline
+ 005E  CD 21			int	21h
+
+				;----------------------------------------------------
+				;- Print prompt for Race Start Day                  -
+				;- Get user input (1 line, min 2 chars, max 2 char) -
+				;- Only accepts: (Su/Mo/Tu/We/Th/Fr/Sa)             -
+				;----------------------------------------------------
+
+ 0060				day_lp:
+ 0060  8D 06 006E R		lea  ax, pm_rstd
+ 0064  50			push ax
+ 0065  8D 06 0040 R		lea  ax, rd_buff
+ 0069  50			push ax
+ 006A  E8 03DB			call gprompt
+
+ 006D  B9 0002				mov  cx, 2
+ 0070  B8 0000				mov  ax, 0
+ 0073  A0 0041 R			mov  al, rd_rd
+ 0076  3B C1				cmp  ax, cx
+ 0078  7C 22				jl   day_er
+ 007A  B9 0000				mov  cx, 0
+ 007D  BB 0000				mov  bx, 0
+ 0080  8A 26 0042 R			mov  ah, rd_chrd
+ 0084  A0 0043 R			mov  al, 1[rd_chrd]
+ 0087					dl_lp:
+ 0087  83 FB 0E					cmp  bx, 14
+ 008A  74 0E					je   dlp_end
+ 008C  8B 97 001B R				mov  dx, daylst[bx]
+ 0090  83 C3 02					add  bx, 2
+ 0093  3B C2					cmp  ax, dx
+ 0095  74 0F					je   day_end
+ 0097  41					inc  cx
+ 0098  EB ED					jmp  dl_lp
+ 009A						dlp_end:
+ 009A  EB 00				jmp  day_er
+					
+ 009C				day_er:
+ 009C  B4 09				mov	ah, 09h
+ 009E  8D 16 0125 R			lea	dx, err_r_stday
+ 00A2  CD 21				int	21h
+					
+ 00A4  EB BA				jmp day_lp
+ 00A6				day_end:
+
+ 00A6  8B 5E 08			mov bx, word ptr 8[bp]	; Set ES:DI
+ 00A9  88 0F			mov byte ptr [bx], cl
+
+ 00AB  B4 09			mov	ah, 09h
+ 00AD  8D 16 0000 R		lea	dx, newline
+ 00B1  CD 21			int	21h
+
+				;----------------------------------------------------
+				;- Print prompt for Race Start Time                 -
+				;- Get user input (1 line, min 8 chars, max 8 char) -
+				;- Only accepts: (hh:mm:ss)                         -
+				;----------------------------------------------------
+
+ 00B3				time_lp:
+ 00B3  8D 06 009D R		lea  ax, pm_rsttm
+ 00B7  50			push ax
+ 00B8  8D 06 0045 R		lea  ax, rt_buff
+ 00BC  50			push ax
+ 00BD  E8 0388			call gprompt
+
+ 00C0  B9 0008				mov  cx, 8
+ 00C3  B8 0000				mov  ax, 0
+ 00C6  A0 0046 R			mov  al, rt_rd
+ 00C9  3B C1				cmp  ax, cx
+ 00CB  0F 8C 009C			jl   time_er
+					
+ 00CF  8D 1E 0047 R			lea	 bx, rt_chrd
+					
+ 00D3  B9 0000				mov  cx, 0			; Check for colons
+ 00D6  B8 0000				mov  ax, 0
+ 00D9  8A 47 02				mov  al, 2[bx]
+ 00DC  3C 3A				cmp  al, 3Ah
+ 00DE  0F 85 0089			jne  time_er
+ 00E2  8A 47 05				mov  al, 5[bx]
+ 00E5  3C 3A				cmp  al, 3Ah
+ 00E7  0F 85 0080			jne  time_er
+					
+ 00EB  8D 3E 0006 R				lea  di, tmp_time
+ 00EF  8B C3					mov  ax, word ptr bx	; Check Hours
+ 00F1  50					push ax
+ 00F2  8D 06 0004 R				lea	 ax, num
+ 00F6  50					push ax
+ 00F7  8D 06 0003 R				lea  ax, ok_fl
+ 00FB  50					push ax
+ 00FC  E8 036B					call a_to_i
+ 00FF  80 3E 0003 R 00				cmp  ok_fl, 0
+ 0104  74 65					je   time_er
+ 0106  83 3E 0004 R 18				cmp  num, 24
+ 010B  7D 5E					jge   time_er
+ 010D  B8 0000					mov  ax, 0
+ 0110  A1 0004 R				mov  ax, num
+ 0113  88 05					mov  byte ptr [di], al
+
+ 0115  83 C3 03					add  bx, 3
+ 0118  8B C3					mov  ax, word ptr bx	; Check Minutes
+ 011A  50					push ax
+ 011B  8D 06 0004 R				lea	 ax, num
+ 011F  50					push ax
+ 0120  8D 06 0003 R				lea  ax, ok_fl
+ 0124  50					push ax
+ 0125  E8 0342					call a_to_i
+ 0128  80 3E 0003 R 00				cmp  ok_fl, 0
+ 012D  74 3C					je   time_er
+ 012F  83 3E 0004 R 3B				cmp  num, 59
+ 0134  7F 35					jg   time_er
+ 0136  B8 0000					mov  ax, 0
+ 0139  A1 0004 R				mov  ax, num
+ 013C  88 45 01					mov  byte ptr 1[di], al
+
+ 013F  83 C3 03					add  bx, 3
+ 0142  8B C3					mov  ax, word ptr bx	; Check Seconds
+ 0144  50					push ax
+ 0145  8D 06 0004 R				lea	 ax, num
+ 0149  50					push ax
+ 014A  8D 06 0003 R				lea  ax, ok_fl
+ 014E  50					push ax
+ 014F  E8 0318					call a_to_i
+ 0152  80 3E 0003 R 00				cmp  ok_fl, 0
+ 0157  74 12					je   time_er
+ 0159  83 3E 0004 R 3B				cmp  num, 59
+ 015E  7F 0B					jg   time_er
+ 0160  B8 0000					mov  ax, 0
+ 0163  A1 0004 R				mov  ax, num
+ 0166  88 45 02					mov  byte ptr 2[di], al
+
+ 0169  EB 0B				jmp  time_end
+					
+ 016B				time_er:
+ 016B  B4 09				mov	ah, 09h
+ 016D  8D 16 0174 R			lea	dx, err_r_sttm
+ 0171  CD 21				int	21h
+					
+ 0173  E9 FF3D				jmp time_lp
+ 0176				time_end:
+
+ 0176  8D 36 0006 R		lea si, tmp_time	; Set DS:SI
+ 017A  8C D8			mov ax, ds
+ 017C  8E C0			mov es, ax
+ 017E  8B 7E 06			mov di, word ptr 6[bp]	; Set ES:DI
+ 0181  B9 0000			mov cx, 0
+ 0184  B1 03			mov cl, 3	; Set CX
+ 0186  F3/ A4			rep movsb
+
+ 0188  B4 09			mov	ah, 09h
+ 018A  8D 16 0000 R		lea	dx, newline
+ 018E  CD 21			int	21h
+
+				;----------------------------------------------------
+				;- Print prompt for Race Length                     -
+				;- Get user input (1 line, min 8 chars, max 8 char) -
+				;- Only accepts: (hh:mm:ss)                         -
+				;----------------------------------------------------
+
+ 0190				len_lp:
+ 0190  8D 06 00C1 R		lea  ax, pm_rlen
+ 0194  50			push ax
+ 0195  8D 06 0050 R		lea  ax, rl_buff
+ 0199  50			push ax
+ 019A  E8 02AB			call gprompt
+
+ 019D  B9 0008				mov  cx, 8
+ 01A0  B8 0000				mov  ax, 0
+ 01A3  A0 0051 R			mov  al, rl_rd
+ 01A6  3B C1				cmp  ax, cx
+ 01A8  0F 8C 009C			jl   len_er
+					
+ 01AC  8D 1E 0052 R			lea	 bx, rl_chrd
+					
+ 01B0  B9 0000				mov  cx, 0			; Check for colons
+ 01B3  B8 0000				mov  ax, 0
+ 01B6  8A 47 02				mov  al, 2[bx]
+ 01B9  3C 3A				cmp  al, 3Ah
+ 01BB  0F 85 0089			jne  len_er
+ 01BF  8A 47 05				mov  al, 5[bx]
+ 01C2  3C 3A				cmp  al, 3Ah
+ 01C4  0F 85 0080			jne  len_er
+					
+ 01C8  8D 3E 0006 R				lea  di, tmp_time
+ 01CC  8B C3					mov  ax, word ptr bx	; Check Hours
+ 01CE  50					push ax
+ 01CF  8D 06 0004 R				lea	 ax, num
+ 01D3  50					push ax
+ 01D4  8D 06 0003 R				lea  ax, ok_fl
+ 01D8  50					push ax
+ 01D9  E8 028E					call a_to_i
+ 01DC  80 3E 0003 R 00				cmp  ok_fl, 0
+ 01E1  74 65					je   len_er
+ 01E3  83 3E 0004 R 63				cmp  num, 99
+ 01E8  7F 5E					jg   len_er
+ 01EA  B8 0000					mov  ax, 0
+ 01ED  A1 0004 R				mov  ax, num
+ 01F0  88 05					mov  byte ptr [di], al
+
+ 01F2  83 C3 03					add  bx, 3
+ 01F5  8B C3					mov  ax, word ptr bx	; Check Minutes
+ 01F7  50					push ax
+ 01F8  8D 06 0004 R				lea	 ax, num
+ 01FC  50					push ax
+ 01FD  8D 06 0003 R				lea  ax, ok_fl
+ 0201  50					push ax
+ 0202  E8 0265					call a_to_i
+ 0205  80 3E 0003 R 00				cmp  ok_fl, 0
+ 020A  74 3C					je   len_er
+ 020C  83 3E 0004 R 3B				cmp  num, 59
+ 0211  7F 35					jg   len_er
+ 0213  B8 0000					mov  ax, 0
+ 0216  A1 0004 R				mov  ax, num
+ 0219  88 45 01					mov  byte ptr 1[di], al
+
+ 021C  83 C3 03					add  bx, 3
+ 021F  8B C3					mov  ax, word ptr bx	; Check Seconds
+ 0221  50					push ax
+ 0222  8D 06 0004 R				lea	 ax, num
+ 0226  50					push ax
+ 0227  8D 06 0003 R				lea  ax, ok_fl
+ 022B  50					push ax
+ 022C  E8 023B					call a_to_i
+ 022F  80 3E 0003 R 00				cmp  ok_fl, 0
+ 0234  74 12					je   len_er
+ 0236  83 3E 0004 R 3B				cmp  num, 59
+ 023B  7F 0B					jg   len_er
+ 023D  B8 0000					mov  ax, 0
+ 0240  A1 0004 R				mov  ax, num
+ 0243  88 45 02					mov  byte ptr 2[di], al
+
+ 0246  EB 0B				jmp  len_end
+					
+ 0248				len_er:
+ 0248  B4 09				mov	ah, 09h
+ 024A  8D 16 01C2 R			lea	dx, err_r_len
+ 024E  CD 21				int	21h
+					
+ 0250  E9 FF3D				jmp len_lp
+ 0253				len_end:
+
+ 0253  8D 36 0006 R		lea si, tmp_time	; Set DS:SI
+ 0257  8C D8			mov ax, ds
+ 0259  8E C0			mov es, ax
+ 025B  8B 7E 04			mov di, word ptr 4[bp]	; Set ES:DI
+ 025E  B9 0000			mov cx, 0
+ 0261  B1 03			mov cl, 3	; Set CX
+ 0263  F3/ A4			rep movsb
+
+ 0265  B4 09			mov	ah, 09h
+ 0267  8D 16 0000 R		lea	dx, newline
+ 026B  CD 21			int	21h
+
+ 026D  07			pop  es
+ 026E  1F			pop  ds
+ 026F  5F			pop  di
+ 0270  5E			pop  si
+ 0271  5A			pop  dx
+ 0272  59			pop  cx
+ 0273  5B			pop  bx
+ 0274  58			pop  ax
+ 0275  5D			pop  bp
+
+ 0276  C2 0008			ret 8
+
+ 0279				read_race_info endp
+
+
+				;-------------------------------------------------------------------
+				;- CALCULATE END TIME, GIVEN THE LENGTH AND THE START DAY AND TIME -
+				;- Arguments passed:                                               -
+				;- r_start_day (address) 12                                        -
+				;- r_start_time (address) 10                                       -
+				;- r_len (address) 8                                               -
+				;- r_end_day (address) 6                                           -
+				;- r_end_time (address) 4                                          -
+				;-------------------------------------------------------------------
+
+ 0279				calc_end_time	proc	near
+
+ 0279  55			push bp
+ 027A  8B EC			mov  bp, sp
+
+ 027C  50			push ax
+ 027D  53			push bx
+ 027E  51			push cx
+
+ 027F  B9 0000			mov  cx, 0
+
+ 0282  B8 0000			mov  ax, 0
+ 0285  8B 5E 0A			mov  bx, word ptr 10[bp]		; get start time seconds
+ 0288  8A 47 02			mov  al, byte ptr 2[bx]
+ 028B  8B 5E 08			mov  bx, word ptr 8[bp]			; get len seconds
+ 028E  02 47 02			add  al, byte ptr 2[bx]
+ 0291  83 F8 3C			cmp  ax, 60
+ 0294  7D 02			jge  sub_sec
+ 0296  EB 04			jmp  add_min
+
+ 0298				sub_sec:
+ 0298  83 E8 3C				sub  ax, 60
+ 029B  41				inc  cx
+
+ 029C				add_min:
+ 029C  8B 5E 04			mov  bx, word ptr 4[bp]
+ 029F  88 47 02			mov  byte ptr 2[bx], al			; set end time seconds
+
+ 02A2  8B 5E 0A			mov  bx, word ptr 10[bp]		; get start time minutes
+ 02A5  02 4F 01			add  cl, byte ptr 1[bx]
+ 02A8  8B 5E 08			mov  bx, word ptr 8[bp]			; get len minutes
+ 02AB  02 4F 01			add  cl, byte ptr 1[bx]
+ 02AE  B8 0000			mov  ax, 0
+ 02B1  83 F9 3C			cmp  cx, 60
+ 02B4  7D 02			jge  sub_min
+ 02B6  EB 04			jmp  add_hr
+
+ 02B8				sub_min:
+ 02B8  83 E9 3C				sub  cx, 60
+ 02BB  40				inc  ax
+
+ 02BC				add_hr:
+ 02BC  8B 5E 04			mov  bx, word ptr 4[bp]
+ 02BF  88 4F 01			mov  byte ptr 1[bx], cl			; set end time minutes
+
+ 02C2  8B 5E 0A			mov  bx, word ptr 10[bp]		; get start time hours
+ 02C5  02 07			add  al, byte ptr [bx]
+ 02C7  8B 5E 08			mov  bx, word ptr 8[bp]			; get len hours
+ 02CA  02 07			add  al, byte ptr [bx]
+ 02CC  B1 18			mov  cl, 24
+ 02CE  F6 F1			div  cl
+
+ 02D0  8B 5E 04			mov  bx, word ptr 4[bp]
+ 02D3  88 27			mov  byte ptr [bx], ah			; set end time hours
+ 02D5  B4 00			mov  ah, 0
+ 02D7  F6 36 000C R		div  seven
+
+ 02DB  8B 5E 0C			mov  bx, word ptr 12[bp]		; get start day
+ 02DE  02 27			add  ah, byte ptr [bx]
+ 02E0  80 FC 07			cmp  ah, 7
+ 02E3  7D 02			jge  nxt_wk
+ 02E5  EB 08			jmp  set_eday
+
+ 02E7				nxt_wk:
+ 02E7  8A C4				mov  al, ah
+ 02E9  B4 00				mov  ah, 0
+ 02EB  F6 36 000C R			div  seven
+
+ 02EF				set_eday:
+ 02EF  8B 5E 06				mov  bx, word ptr 6[bp]
+ 02F2  88 27				mov  byte ptr [bx], ah			; set end day
+
+ 02F4  59			pop  cx
+ 02F5  5B			pop  bx
+ 02F6  58			pop  ax
+ 02F7  5D			pop  bp
+
+ 02F8  C2 000A			ret 10
+ 02FB				calc_end_time endp
+
+
+				;----------------------------
+				;- DISPLAY RACE INFO        -
+				;- Arguments passed:        -
+				;- r_name (address) 12      -
+				;- r_start_day (address) 10 -
+				;- r_start_time (address) 8 -
+				;- r_end_day (address) 6    -
+				;- r_end_time (address) 4   -
+				;----------------------------
+
+ 02FB				disp_race_info	proc	near
+
+ 02FB  55			push bp
+ 02FC  8B EC			mov  bp, sp
+
+ 02FE  50			push ax
+ 02FF  53			push bx
+ 0300  52			push dx
+ 0301  56			push si
+
+
+ 0302  B4 09				mov	 ah, 09h
+ 0304  8D 16 0211 R			lea	 dx, race_hdr
+ 0308  CD 21				int	 21h
+
+ 030A  B4 09				mov	 ah, 09h
+ 030C  8D 16 024F R			lea	 dx, r_title1
+ 0310  CD 21				int	 21h
+					
+ 0312  BA 0000				mov  dx, 0
+ 0315  8B 5E 0C				mov  bx, word ptr 12[bp]		; get race name	
+ 0318  B4 09				mov	 ah, 09h
+ 031A  8D 17				lea	 dx, byte ptr [bx]
+ 031C  CD 21				int	 21h
+					
+ 031E  B4 09				mov	 ah, 09h
+ 0320  8D 16 0000 R			lea	 dx, newline
+ 0324  CD 21				int	 21h
+					
+ 0326  B4 09				mov	 ah, 09h
+ 0328  8D 16 0263 R			lea	 dx, r_title2
+ 032C  CD 21				int	 21h
+					
+ 032E  BA 0000				mov  dx, 0
+ 0331  8B 5E 0A				mov  bx, word ptr 10[bp]		; get race start day
+ 0334  B8 0000				mov  ax, 0
+ 0337  8A 07				mov  al, byte ptr [bx]
+ 0339  F6 26 02DF R			mul  days_size
+ 033D  8B F0				mov  si, ax
+ 033F  8D 1E 028B R			lea  bx, days
+					
+ 0343  B4 09				mov	 ah, 09h
+ 0345  8D 10				lea	 dx, byte ptr [si][bx]
+ 0347  CD 21				int	 21h
+					
+ 0349  8B 5E 08				mov  bx, word ptr 8[bp]		; get race start time
+ 034C  B8 0000				mov  ax, 0
+ 034F  8A 07				mov  al, byte ptr [bx]
+ 0351  3C 0C				cmp  al, 12
+ 0353  7C 0D				jl  set_low
+ 0355  C6 06 0016 R 70			mov  8[print_time], "p"
+ 035A  3C 0C				cmp  al, 12
+ 035C  74 0F				je   set_high
+ 035E  2C 0C				sub  al, 12
+ 0360  EB 0B				jmp  set_high
+ 0362					set_low:
+ 0362  C6 06 0016 R 61				mov  8[print_time], "a"
+ 0367  3C 00					cmp  al, 0
+ 0369  75 02					jne  set_high
+ 036B  B0 0C					mov  al, 12
+ 036D					set_high:
+ 036D  B4 00					mov  ah, 0
+ 036F  F6 36 000B R				div  bten
+ 0373  04 30					add  al, 30h
+ 0375  80 C4 30					add  ah, 30h
+ 0378  A2 000E R			mov  [print_time], al
+ 037B  88 26 000F R			mov  1[print_time], ah
+					
+ 037F  B8 0000				mov  ax, 0
+ 0382  8A 47 01				mov  al, byte ptr 1[bx]
+ 0385  F6 36 000B R				div  bten
+ 0389  04 30					add  al, 30h
+ 038B  80 C4 30					add  ah, 30h
+ 038E  A2 0011 R			mov  3[print_time], al
+ 0391  88 26 0012 R			mov  4[print_time], ah
+					
+ 0395  B8 0000				mov  ax, 0
+ 0398  8A 47 02				mov  al, byte ptr 2[bx]
+ 039B  F6 36 000B R				div  bten
+ 039F  04 30					add  al, 30h
+ 03A1  80 C4 30					add  ah, 30h
+ 03A4  A2 0014 R			mov  6[print_time], al
+ 03A7  88 26 0015 R			mov  7[print_time], ah
+
+ 03AB  B4 09				mov	 ah, 09h
+ 03AD  8D 16 000E R			lea	 dx, print_time
+ 03B1  CD 21				int	 21h
+					
+ 03B3  B4 09				mov	 ah, 09h
+ 03B5  8D 16 0277 R			lea	 dx, r_title3
+ 03B9  CD 21				int	 21h
+					
+ 03BB  BA 0000				mov  dx, 0
+ 03BE  8B 5E 06				mov  bx, word ptr 6[bp]		; get race end day
+ 03C1  B8 0000				mov  ax, 0
+ 03C4  8A 07				mov  al, byte ptr [bx]
+ 03C6  F6 26 02DF R			mul  days_size
+ 03CA  8B F0				mov  si, ax
+ 03CC  8D 1E 028B R			lea  bx, days
+					
+ 03D0  B4 09				mov	 ah, 09h
+ 03D2  8D 10				lea	 dx, byte ptr [si][bx]
+ 03D4  CD 21				int	 21h
+					
+ 03D6  8B 5E 04				mov  bx, word ptr 4[bp]		; get race end time
+ 03D9  B8 0000				mov  ax, 0
+ 03DC  8A 07				mov  al, byte ptr [bx]
+ 03DE  3C 0C				cmp  al, 12
+ 03E0  7C 0D				jl   set_elow
+ 03E2  C6 06 0016 R 70			mov  8[print_time], "p"
+ 03E7  3C 0C				cmp  al, 12
+ 03E9  74 0F				je   set_ehigh
+ 03EB  2C 0C				sub  al, 12
+ 03ED  EB 0B				jmp  set_ehigh
+ 03EF					set_elow:
+ 03EF  C6 06 0016 R 61				mov  8[print_time], "a"
+ 03F4  3C 00					cmp  al, 0
+ 03F6  75 02					jne  set_ehigh
+ 03F8  B0 0C					mov  al, 12
+ 03FA					set_ehigh:
+ 03FA  B4 00					mov  ah, 0
+ 03FC  F6 36 000B R				div  bten
+ 0400  04 30					add  al, 30h
+ 0402  80 C4 30					add  ah, 30h
+ 0405  A2 000E R			mov  [print_time], al
+ 0408  88 26 000F R			mov  1[print_time], ah
+					
+ 040C  B8 0000				mov  ax, 0
+ 040F  8A 47 01				mov  al, byte ptr 1[bx]
+ 0412  F6 36 000B R				div  bten
+ 0416  04 30					add  al, 30h
+ 0418  80 C4 30					add  ah, 30h
+ 041B  A2 0011 R			mov  3[print_time], al
+ 041E  88 26 0012 R			mov  4[print_time], ah
+					
+ 0422  B8 0000				mov  ax, 0
+ 0425  8A 47 02				mov  al, byte ptr 2[bx]
+ 0428  F6 36 000B R				div  bten
+ 042C  04 30					add  al, 30h
+ 042E  80 C4 30					add  ah, 30h
+ 0431  A2 0014 R			mov  6[print_time], al
+ 0434  88 26 0015 R			mov  7[print_time], ah
+					
+ 0438  B4 09				mov	 ah, 09h
+ 043A  8D 16 000E R			lea	 dx, print_time
+ 043E  CD 21				int	 21h
+
+ 0440  5E			pop  si
+ 0441  58			pop  ax
+ 0442  5B			pop  bx
+ 0443  5A			pop  dx
+ 0444  5D			pop  bp
+
+ 0445  C2 000A			ret 10
+ 0448				disp_race_info endp
+
+
+				;--------------------------------------------------------
+				;- PROMPT FOR INFORMATION AND STORE IT IN PASSED BUFFER -
+				;- Arguments passed:                                    -
+				;- Prompt string (address) 6                            -
+				;- Buffer (addresses) 4                                 -
+				;--------------------------------------------------------
+
+ 0448				gprompt	proc	near
+ 0448  55				push bp
+ 0449  8B EC				mov  bp, sp
+ 044B  50				push ax
+ 044C  53				push bx
+ 044D  52				push dx
+
+ 044E  BB 0000				mov  bx, 0
+ 0451  8B 5E 06				mov	 bx, word ptr 6[bp]
+
+ 0454  B4 09				mov	ah, 09h
+ 0456  8D 17				lea	dx, byte ptr [bx]
+ 0458  CD 21				int	21h
+
+ 045A  8B 5E 04				mov	bx, word ptr 4[bp]
+					
+ 045D  B4 0A				mov	ah, 0ah
+ 045F  8D 17				lea	dx, byte ptr [bx]
+ 0461  CD 21				int	21h
+
+ 0463  5A				pop  dx
+ 0464  5B				pop  bx
+ 0465  58				pop  ax
+ 0466  5D				pop  bp
+
+ 0467  C2 0004				ret  4
+ 046A				gprompt endp
+
+
+				;----------------------------------------------------------------
+				;- Procedure "a_to_i", to convert an ASCII string to an integer -
+				;----------------------------------------------------------------
+
+				;  Arguments passed:
+				;	string (address) 16
+				;	integer (address) 14
+				;	ok_fl (address) 12
+
+ 046A				a_to_i	proc	near
+ 046A  50				push	ax
+ 046B  53				push	bx
+ 046C  51				push	cx
+ 046D  52				push	dx
+ 046E  55				push	bp
+ 046F  8B EC				mov	bp, sp
+
+ 0471  8B 5E 0C				mov	bx, word ptr 12[bp]		; get ok_fl address
+ 0474  C7 07 0001			mov	word ptr [bx], 1		; assume ok.
+
+ 0478  8B 5E 10				mov	bx, word ptr 16[bp]		; string address
+ 047B  B8 0000				mov	ax, 0
+
+ 047E  8A 0F			a_lp:	mov	cl, byte ptr [bx]
+ 0480  80 F9 0D				cmp	cl, CR				; done?
+ 0483  74 27				je	a_lp_done
+ 0485  80 F9 3A				cmp	cl, 3Ah				; done?
+ 0488  74 22				je	a_lp_done
+
+ 048A  80 F9 30				cmp	cl, "0"				; is valid?
+ 048D  7C 13				jl	was_bad
+ 048F  80 F9 39				cmp	cl, "9"
+ 0492  7F 0E				jg	was_bad
+
+ 0494  80 E9 30				sub	cl, 30h				; sub "0"
+ 0497  B5 00				mov	ch, 0
+
+ 0499  F7 2E 0009 R			imul	ten				; mult sum by 10
+ 049D  03 C1				add	ax, cx				; add to sum
+ 049F  43				inc	bx
+ 04A0  EB DC				jmp	a_lp
+
+ 04A2				was_bad:
+ 04A2  8B 5E 0C				mov	bx, word ptr 12[bp]		; ok_flag address
+ 04A5  C7 07 0000			mov	word ptr [bx], 0		; set ok_flag to false
+ 04A9  B8 0000				mov	ax, 0
+
+ 04AC				a_lp_done:
+ 04AC  8B 5E 0E				mov	bx, word ptr 14[bp]
+ 04AF  89 07				mov	word ptr [bx], ax
+
+ 04B1  5D				pop	bp
+ 04B2  5A				pop	dx
+ 04B3  59				pop	cx
+ 04B4  5B				pop	bx
+ 04B5  58				pop	ax
+ 04B6  C2 0006				ret	6
+ 04B9				a_to_i	endp
+
+				; Note, use end with no entry point.
+				end
+Microsoft (R) Macro Assembler Version 6.15.8803		    10/11/05 00:35:09
+ast9.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+DGROUP . . . . . . . . . . . . .	GROUP
+_DATA  . . . . . . . . . . . . .	16 Bit	 02E0	  Word	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	16 Bit	 04B9	  Word	  Public  'CODE'	
+
+
+Procedures,  parameters and locals:
+
+                N a m e                 Type     Value    Attr
+
+a_to_i . . . . . . . . . . . . .	P Near	 046A	  _TEXT	Length= 004F Public
+  a_lp . . . . . . . . . . . . .	L Near	 047E	  _TEXT	
+  was_bad  . . . . . . . . . . .	L Near	 04A2	  _TEXT	
+  a_lp_done  . . . . . . . . . .	L Near	 04AC	  _TEXT	
+calc_end_time  . . . . . . . . .	P Near	 0279	  _TEXT	Length= 0082 Public
+  sub_sec  . . . . . . . . . . .	L Near	 0298	  _TEXT	
+  add_min  . . . . . . . . . . .	L Near	 029C	  _TEXT	
+  sub_min  . . . . . . . . . . .	L Near	 02B8	  _TEXT	
+  add_hr . . . . . . . . . . . .	L Near	 02BC	  _TEXT	
+  nxt_wk . . . . . . . . . . . .	L Near	 02E7	  _TEXT	
+  set_eday . . . . . . . . . . .	L Near	 02EF	  _TEXT	
+disp_race_info . . . . . . . . .	P Near	 02FB	  _TEXT	Length= 014D Public
+  set_low  . . . . . . . . . . .	L Near	 0362	  _TEXT	
+  set_high . . . . . . . . . . .	L Near	 036D	  _TEXT	
+  set_elow . . . . . . . . . . .	L Near	 03EF	  _TEXT	
+  set_ehigh  . . . . . . . . . .	L Near	 03FA	  _TEXT	
+gprompt  . . . . . . . . . . . .	P Near	 0448	  _TEXT	Length= 0022 Public
+read_race_info . . . . . . . . .	P Near	 0000	  _TEXT	Length= 0279 Public
+  name_lp  . . . . . . . . . . .	L Near	 000B	  _TEXT	
+  name_er  . . . . . . . . . . .	L Near	 003A	  _TEXT	
+  name_end . . . . . . . . . . .	L Near	 0044	  _TEXT	
+  day_lp . . . . . . . . . . . .	L Near	 0060	  _TEXT	
+  dl_lp  . . . . . . . . . . . .	L Near	 0087	  _TEXT	
+  dlp_end  . . . . . . . . . . .	L Near	 009A	  _TEXT	
+  day_er . . . . . . . . . . . .	L Near	 009C	  _TEXT	
+  day_end  . . . . . . . . . . .	L Near	 00A6	  _TEXT	
+  time_lp  . . . . . . . . . . .	L Near	 00B3	  _TEXT	
+  time_er  . . . . . . . . . . .	L Near	 016B	  _TEXT	
+  time_end . . . . . . . . . . .	L Near	 0176	  _TEXT	
+  len_lp . . . . . . . . . . . .	L Near	 0190	  _TEXT	
+  len_er . . . . . . . . . . . .	L Near	 0248	  _TEXT	
+  len_end  . . . . . . . . . . .	L Near	 0253	  _TEXT	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 0000h	 
+@DataSize  . . . . . . . . . . .	Number	 0000h	 
+@Interface . . . . . . . . . . .	Number	 0000h	 
+@Model . . . . . . . . . . . . .	Number	 0002h	 
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 DGROUP
+@fardata?  . . . . . . . . . . .	Text   	 FAR_BSS
+@fardata . . . . . . . . . . . .	Text   	 FAR_DATA
+@stack . . . . . . . . . . . . .	Text   	 DGROUP
+CR . . . . . . . . . . . . . . .	Number	 000Dh	 
+END_STR  . . . . . . . . . . . .	Number	 0024h	 
+LF . . . . . . . . . . . . . . .	Number	 000Ah	 
+bten . . . . . . . . . . . . . .	Byte	 000B	  _DATA	
+daylst . . . . . . . . . . . . .	Word	 001B	  _DATA	
+dayn . . . . . . . . . . . . . .	Byte	 000D	  _DATA	
+days_size  . . . . . . . . . . .	Byte	 02DF	  _DATA	
+days . . . . . . . . . . . . . .	Byte	 028B	  _DATA	
+err_r_len  . . . . . . . . . . .	Byte	 01C2	  _DATA	
+err_r_name . . . . . . . . . . .	Byte	 00E1	  _DATA	
+err_r_stday  . . . . . . . . . .	Byte	 0125	  _DATA	
+err_r_sttm . . . . . . . . . . .	Byte	 0174	  _DATA	
+newline  . . . . . . . . . . . .	Byte	 0000	  _DATA	
+num  . . . . . . . . . . . . . .	Word	 0004	  _DATA	
+ok_fl  . . . . . . . . . . . . .	Byte	 0003	  _DATA	
+pm_rlen  . . . . . . . . . . . .	Byte	 00C1	  _DATA	
+pm_rnam  . . . . . . . . . . . .	Byte	 005B	  _DATA	
+pm_rstd  . . . . . . . . . . . .	Byte	 006E	  _DATA	
+pm_rsttm . . . . . . . . . . . .	Byte	 009D	  _DATA	
+print_time . . . . . . . . . . .	Byte	 000E	  _DATA	
+r_title1 . . . . . . . . . . . .	Byte	 024F	  _DATA	
+r_title2 . . . . . . . . . . . .	Byte	 0263	  _DATA	
+r_title3 . . . . . . . . . . . .	Byte	 0277	  _DATA	
+race_hdr . . . . . . . . . . . .	Byte	 0211	  _DATA	
+rd_buff  . . . . . . . . . . . .	Byte	 0040	  _DATA	
+rd_chrd  . . . . . . . . . . . .	Byte	 0042	  _DATA	
+rd_rd  . . . . . . . . . . . . .	Byte	 0041	  _DATA	
+rl_buff  . . . . . . . . . . . .	Byte	 0050	  _DATA	
+rl_chrd  . . . . . . . . . . . .	Byte	 0052	  _DATA	
+rl_rd  . . . . . . . . . . . . .	Byte	 0051	  _DATA	
+rn_buff  . . . . . . . . . . . .	Byte	 0029	  _DATA	
+rn_chrd  . . . . . . . . . . . .	Byte	 002B	  _DATA	
+rn_rd  . . . . . . . . . . . . .	Byte	 002A	  _DATA	
+rt_buff  . . . . . . . . . . . .	Byte	 0045	  _DATA	
+rt_chrd  . . . . . . . . . . . .	Byte	 0047	  _DATA	
+rt_rd  . . . . . . . . . . . . .	Byte	 0046	  _DATA	
+seven  . . . . . . . . . . . . .	Byte	 000C	  _DATA	
+ten  . . . . . . . . . . . . . .	Word	 0009	  _DATA	
+tmp_time . . . . . . . . . . . .	Byte	 0006	  _DATA	
+
+	   0 Warnings
+	   0 Errors

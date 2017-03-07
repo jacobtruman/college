@@ -1,0 +1,58 @@
+CSC 218, Section 01, 02
+Homework,  Asst. #12
+
+Purpose:   Become familiar with the MS-DOS system services.
+Due:       Wednesday   (11/02)
+Points:    155   (125 - program and 30 - documentation / coding style)
+
+
+Assignment:
+Write a program that will read one file, add lines numbers and write
+the information to another file.  The program should read both file
+names from the command line.  An example command line is: 
+
+     c:\temp> ln_nums  file.txt  nfile.txt
+
+The program must handle one or more spaces between the command line
+arguments.  The file names need only accommodate MS DOS file names
+(maximum 8 characters file name with 3 character extensions).
+
+The line numbers must be 6 characters (with leading 0's), terminated
+in a ":" and include 1 space.  For example, if the original file line
+was "Hello World", the new line to be written into the new file would
+be "000001: Hello World".  The maximum line number the program must
+handle is 655000 (which implies the line number must be a double-word).
+
+The program must perform error checking.  If no command line input was
+entered, invalid/incorrect file names were entered, or no files matching
+the specification was entered an appropriate error message should be
+generated.  After an error message is printed, the program can be
+terminated.
+
+For simplicity, you may assume that the text input files have no more
+than 255 characters per line.   A series of test files will be provided.
+You do not have to handle files that do not conform.  You will be
+provided a series of example files for testing  To ensure overall
+efficiency, the program must perform buffered I/O with a buffer
+size of 8192.
+
+You must use the provided main routine.  The main program must not be
+changed in any way.  All your procedures must be in a separate,
+independently assembled source file.
+
+Refer to Chapter 13 of the on-line text for additional information of
+the various system services required to find files in the directory and
+obtain file information (13.3.8.8 and 12.3.8.9).  Refer to Chapter
+13 (13.3.11) and the class web page for information regarding the
+command line processing. 
+
+
+
+Submission:
+When complete, submit a copy of the source file(s) via the class web
+page (assignment submission link) before Wednesday 4:00pm on
+November 2, 2005.   Assignments received after 4:00pm will not  be
+accepted!  Do not submit a hard-copy.  Do not submit the provided main.
+
+
+

@@ -1,0 +1,23 @@
+Input: a set of points S = {P = (P.x,P.y)}
+
+    Select the rightmost lowest point P0 in S.
+    Sort S angularly about P0 as a center.
+        For ties, discard the closer points.
+    Let P[N] be the sorted array of points.
+
+    Push P[0]=P0 and P[1] onto a stack W.
+
+    while i < N
+    {
+        Let PT1 = the top point on W
+        Let PT2 = the second top point on W
+        if (P[i] is strictly left of the line PT2 to PT1) { 
+            Push P[i] onto W
+            i++    // increment i
+        }
+        else
+            Pop the top point PT1 off the stack
+        
+    }
+
+    Output: W = the convex hull of S.

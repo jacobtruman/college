@@ -1,0 +1,33 @@
+Bakery Algorithm
+----------------
+
+choosing[i] = time;
+number[i] = max(number[0], number[1]...., number[n-1]) + 1;
+choosing[i] = false;
+
+for(j = 0; j < n; j++){
+	while(choosing[j])
+		do skip
+	while((number[j] != 0) && (number[j],j) < (number[i],i))
+		do skip
+	}
+
+number[i] = 0;
+
+
+
+-------------------------
+
+waiting[i] = true;
+key = time;
+while(waiting[i] && key)
+	key = TSL(lock)
+waiting[i] = false;
+
+j = i + 1 % n;
+while((j != i) && waiting[j])
+	j = j + 1 % n;
+if(j==)
+	lock = false;
+else
+	waiting[j] = false;	

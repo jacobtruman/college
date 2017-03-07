@@ -1,0 +1,99 @@
+CSC 218, Section 01, 02
+Homework,  Asst. #4
+
+Purpose:    Learn to use arithmetic instructions, control instructions,
+            compare instructions, and conditional jump instructions.
+
+Due:        Monday   (09/19)
+
+Points:     45
+
+
+Assignment:
+Write a simple assembly language program to find the
+
+maximum
+minimum
+sum
+integer average
+
+of a list of numbers.  The program should also find the
+
+sum
+count
+integer average
+
+for the odd values (assume zero is even).  The program should also find the
+
+sum
+count
+integer average
+
+for all numbers evenly divisible by 10 (and >0).  Do not change
+the data types (words/bytes) as defined below.
+
+Declare the values:
+
+  list		dw	14, 45, 42, 43, 75, 34, 46, 22, 56, 63
+		dw	17,  5, 26, 40, 65, 11, 54, 28, 13, 22
+		dw	11, 25, 65, 12, 90, 22, 11, 29, 15, 24
+		dw	17, 24, 80, 17, 24, 25, 16, 62, 18, 92
+		dw	32, 35, 64, 15, 10, 65, 54, 67, 15, 56
+		dw	22, 21, 56, 27, 27, 27, 82, 65, 55, 35
+		dw	25, 19, 34, 45, 67,  5, 61, 35, 56, 53
+		dw	32, 35, 64, 15, 10, 65, 54, 67, 15, 56
+		dw	92, 25, 25, 12, 25, 17, 98, 77, 75, 34
+		dw	23, 83, 73, 50, 15, 35, 25, 18, 13, 25
+  lst_len	dw	100
+
+  lst_min	dw	?
+  lst_max	dw	?
+  lst_sum	dw	?
+  lst_ave	dw	?
+
+  odd_cnt	dw	?
+  odd_sum	dw	?
+  odd_ave	dw	?
+
+  ten_cnt	dw	?
+  ten_sum	dw	?
+  ten_ave	dw	?
+
+
+You may declare additional variables if needed.
+
+Submit the following:
+   1) Printout of the assembler list file.
+   2) Printout of the debugger results (showing all variables after
+      execution).
+
+
+Debugger Commands:
+
+The below commands should be utilized to display the variables within the
+CodeView command window for assignment #4.
+
+
+mdi list l100
+mdi lst_len l1
+
+mdi lst_min l1
+mdi lst_max l1
+mdi lst_sum l1
+mdi lst_ave l1
+
+mdi odd_cnt l1
+mdi odd_sum l1
+mdi odd_ave l1
+
+mdi ten_cnt l1
+mdi ten_sum l1
+mdi ten_ave l1
+
+
+Note, to determine if a number is evenly divisible by 10, divide the number
+by 10 and check the remainder.  A remainder of 0 means that the number is
+evenly divisible by 10 and a non-zero remainder means the number is not
+evenly divisible by 10.
+
+

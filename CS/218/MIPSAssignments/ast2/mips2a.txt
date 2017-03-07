@@ -1,0 +1,78 @@
+CSC 218, Section 01, 02
+Homework, MIPS Asst. #2
+
+Purpose:  Become familiar with the MIPS Architecture, the MIPS
+          Instruction Set, and SPIM.
+Due:      Wednesday  (11/23)
+Points:   35
+
+
+Assignment:
+Write a MIPS assembly language program to compute the area of right
+triangles.  The sides should be read from"a_side" and "b_side" arrays.
+The result must be stored into the"areas" array.  Below is the formula
+to calculate the area of a right triangle:
+
+     areas(n) = ( a_sides(n) * b_sides(n) ) / 2
+
+The program should display each number in the areas list 5 per line.
+After the areas array is created, the program should find the maximum,
+median, minimum, sum, average.  The average should be calculated as
+an integer value.
+
+a_sides:
+	.word  1112, 1119, 1125, 1129, 1131, 1135, 1139, 1142, 1144, 1149
+	.word  2241, 2243, 2246, 2249, 2251, 2252, 2254, 2258, 2261, 2265
+	.word  3457, 3487, 3499, 3501, 3523, 3524, 3525, 3526, 3575, 3594
+	.word  4634, 4652, 4674, 4686, 4697, 4704, 4716, 4720, 4736, 4753
+	.word  5501, 5513, 5524, 5536, 5540, 5556, 5575, 5587, 5590, 5596
+b_sides:
+	.word  1206, 1212, 1222, 1231, 1246, 1250, 1254, 1278, 1288, 1292
+	.word  2332, 2351, 2376, 2387, 2390, 2400, 2411, 2423, 2432, 2445
+	.word  3369, 3374, 3377, 3379, 3382, 3384, 3386, 3388, 3392, 3393
+	.word  4400, 4404, 4406, 4407, 4424, 4425, 4426, 4429, 4448, 4492
+	.word  5782, 5795, 5807, 5812, 5827, 5847, 5867, 5879, 5888, 5894
+areas:	.space 200
+len:	.word  50
+min:	.word  0
+med:	.word  0
+max:	.word  0
+sum:	.word  0
+ave:	.word  0
+
+
+The program should display the results to the console window. The output
+should look something like the following (with the correct answers
+displayed):
+
+
+  --------------------------------------------------------------------
+ |  Program to calculate right triangle areas:                        |
+ |    areas(n) = ( a_sides(n) * b_sides(n) ) / 2                      |
+ |  Then find min, mid, max, sum, and average for areas.              |
+ |                                                                    |
+ |  Right Triangle Areas:                                             |
+ |  1341072   1356228   1374750   1389799   1409226                   |
+ |  1418750   1428306   1459476   1473472   1484508                   |
+ |  5226012   5273293   5336496   5368363   5379890                   |
+ |  ???????   ???????   ???????   ???????   ???????                   |
+ |    [display all 50 numbers...]                                     |
+ |                                                                    |
+ |     Areas min =                                                    |
+ |     Areas med =                                                    |
+ |     Areas max =                                                    |
+ |     Areas sum =                                                    |
+ |     Areas ave =                                                    |
+ |                                                                    |
+ |                                                                    |
+ |                                                                    |
+  --------------------------------------------------------------------
+
+
+
+Submission:
+When complete, submit a copy of 1) the source file(s) and 2) the SPIM Log
+File via the class web page (assignment submission link) on Wednesday,
+11/23/2005 before 4:00pm.   Do not submit a hard-copy.
+
+

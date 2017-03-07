@@ -1,0 +1,702 @@
+Microsoft (R) Macro Assembler Version 6.15.8803		    09/20/05 16:47:08
+ast5.asm						     Page 1 - 1
+
+
+				;   Jacob Truman Section 02
+				;   Assignment 5
+
+				.model medium
+				.486
+
+				; --------------------------------------------------------------
+				;  Macro to find area of right triangle.
+				;	areas(n) = ( a(n) * b(n) ) / 2
+
+				rtri_areas	macro	a_side, b_side, len, areas
+					local area_lp
+
+					mov cx, len
+					lea si, a_side
+					lea di, b_side
+					lea bx, areas
+					
+				area_lp:
+					mov dx, 0
+					mov al, byte ptr[si]
+					mul byte ptr[di]
+					div btwo
+					mov byte ptr[bx], al
+					inc si
+					inc di
+					inc bx
+					loop area_lp
+
+				endm
+
+				; --------------------------------------------------------------
+				;  Macro to calculate the below formula:
+				;	r_pnt(n) = ( areas(n) * ( a(n)^2 + b(n)^2 ) ) / 3
+
+				rtri_ppnt	macro	a_side, b_side, areas, len, r_pnt
+					local ppnt_lp
+
+					mov cx, len
+					lea di, r_pnt
+					mov si, 0
+					
+				ppnt_lp:
+					lea bx, a_side
+					mov al, byte ptr[bx][si]
+					mul al
+					mov dx, ax
+					
+					lea bx, b_side
+					mov al, byte ptr[bx][si]
+					mul al
+					add ax, dx
+					
+					lea bx, areas
+					mov dl, byte ptr[bx][si]
+					mul dx
+					div wfifteen
+
+					mov word ptr[di], ax
+					inc si
+					add di, 2
+					mov ax, 0
+					mov dx, 0
+					loop ppnt_lp
+
+				endm
+
+				; --------------------------------------------------------------
+				;  Macro to find the sum and average for right triangles arrays.
+
+				rtri_a_stats	macro	areas, len, asum, aave
+					local astats_lp
+
+					mov cx, len
+					lea bx, areas
+					mov asum, 0
+					mov ax, 0
+					mov dx, 0
+					
+				astats_lp:
+					mov al, byte ptr[bx]
+					add asum, ax
+					inc bx
+					loop astats_lp
+
+				mov ax, asum
+				div len
+				mov aave, al
+
+				endm
+
+				; --------------------------------------------------------------
+				;  Macro to find the sum and average “r_pnt” array.
+
+				rtri_r_stats	macro	r_pnt, len, rsum, rave
+					local rstats_lp
+
+					mov cx, len
+					lea bx, r_pnt
+					mov rsum, 0
+					mov ax, 0
+					mov dx, 0
+					
+				rstats_lp:
+					mov ax, word ptr[bx]
+					add rsum, ax
+					add bx, 2
+					loop rstats_lp
+
+				mov ax, rsum
+				div len
+				mov rave, ax
+
+				endm
+
+				; --------------------------------------------------------------
+
+ 0000				.data
+
+ 0000 0A 0F 0A 0D 0E 11		a_side1		db	10, 15, 10, 13, 14, 17, 10,  6, 13, 11
+       0A 06 0D 0B
+ 000A 0F 02 0D 06 0C 10		b_side1		db	15,  2, 13,  6, 12, 16,  7, 12, 10, 12
+       07 0C 0A 0C
+ 0014  000A [			areas1		db	10 dup (?)
+        00
+       ]
+ 001E  000A [			r_pnt1		dw	10 dup (?)
+        0000
+       ]
+ 0032 000A			len1		dw	10
+ 0034 0000			asum1		dw	?
+ 0036 00			aave1		db	?
+ 0037 0000			rsum1		dw	?
+ 0039 0000			rave1		dw	?
+
+ 003B 0E 09 0E 0D 0C 0A		a_side2		db	14,  9, 14, 13, 12, 10, 13, 12, 12, 12
+       0D 0C 0C 0C
+ 0045  03 0B 0C 05 0A 0C			db	 3, 11, 12,  5, 10, 12
+ 004B 0F 0E 0D 10 0E 0C		b_side2		db	15, 14, 13, 16, 14, 12, 11, 17, 13, 15
+       0B 11 0D 0F
+ 0055  0E 09 0E 0D 0C 0E			db	14,  9, 14, 13, 12, 14
+ 005B  0010 [			areas2		db	16 dup (?)
+        00
+       ]
+ 006B  0010 [			r_pnt2		dw	16 dup (?)
+        0000
+       ]
+ 008B 0010			len2		dw	16
+ 008D 0000			asum2		dw	?
+ 008F 00			aave2		db	?
+ 0090 0000			rsum2		dw	?
+ 0092 0000			rave2		dw	?
+
+ 0094 0D 04 0D 0B 0C 0E		a_side3		db	13,  4, 13, 11, 12, 14, 13, 14,  6, 15
+       0D 0E 06 0F
+ 009E  04 0C 0B 03 08 0C			db	 4, 12, 11,  3,  8, 12, 14, 13, 18
+       0E 0D 12
+ 00A7 0C 12 0B 0E 10 0B		b_side3		db	12, 18, 11, 14, 16, 11, 13, 13,  4, 11
+       0D 0D 04 0B
+ 00B1  04 0C 0D 0C 0D 02			db	 4, 12, 13, 12, 13,  2, 14,  7, 18
+       0E 07 12
+ 00BA  0013 [			areas3		db	19 dup (?)
+        00
+       ]
+ 00CD  0013 [			r_pnt3		dw	19 dup (?)
+        0000
+       ]
+ 00F3 0013			len3		dw	19
+ 00F5 0000			asum3		dw	?
+ 00F7 00			aave3		db	?
+ 00F8 0000			rsum3		dw	?
+ 00FA 0000			rave3		dw	?
+
+ 00FC 0B 0D 0F 0D 10 0E		a_side4		db	11, 13, 15, 13, 16, 14, 13, 10,  1, 15
+       0D 0A 01 0F
+ 0106  0E 04 0D 0B 0B 04			db	14,  4, 13, 11, 11,  4, 13,  9,  7, 13
+       0D 09 07 0D
+ 0110 0A 0D 05 0F 0C 11		b_side4		db	10, 13,  5, 15, 12, 17, 10, 21, 14, 15
+       0A 15 0E 0F
+ 011A  0C 11 12 0D 0A 0B			db	12, 17, 18, 13, 10, 11, 12, 11, 15, 13
+       0C 0B 0F 0D
+ 0124  0014 [			areas4		db	20 dup (?)
+        00
+       ]
+ 0138  0014 [			r_pnt4		dw	20 dup (?)
+        0000
+       ]
+ 0160 0014			len4		dw	20
+ 0162 0000			asum4		dw	?
+ 0164 00			aave4		db	?
+ 0165 0000			rsum4		dw	?
+ 0167 0000			rave4		dw	?
+
+ 0169 0A 0E 0D 07 0E 0E		a_side5		db	10, 14, 13,  7, 14, 14, 13, 10, 11, 16
+       0D 0A 0B 10
+ 0173  0E 03 0E 13 02 11			db	14,  3, 14, 19,  2, 17, 11, 13,  2, 10
+       0B 0D 02 0A
+ 017D  09 0B 04 0B 0F				db	 9, 11,  4, 11, 15
+ 0182 0C 0B 10 0B 01 04		b_side5		db	12, 11, 16, 11,  1,  4, 17, 12, 17, 15
+       11 0C 11 0F
+ 018C  0B 03 10 07 0F 0B			db	11,  3, 16,  7, 15, 11, 10, 18,  2, 12
+       0A 12 02 0C
+ 0196  09 0B 0E 05 0C				db	 9, 11, 14,  5, 12
+ 019B  0019 [			areas5		db	25 dup (?)
+        00
+       ]
+ 01B4  0019 [			r_pnt5		dw	25 dup (?)
+        0000
+       ]
+ 01E6 0019			len5		dw	25
+ 01E8 0000			asum5		dw	?
+ 01EA 00			aave5		db	?
+ 01EB 0000			rsum5		dw	?
+ 01ED 0000			rave5		dw	?
+
+
+				; -----
+
+ 01EF 02			btwo		db	2
+ 01F0 000F			wfifteen	dw	15
+
+
+				; --------------------------------------------------------------
+
+				.stack
+
+ 0000				.code
+ 0000				main	proc	far
+ 0000  B8 ---- R			mov	ax, @data
+ 0003  8E D8				mov	ds, ax
+
+				; -----
+				;  Invoke macro for each set of data.
+				;  Note, the order of invoking the macro's does not matter.
+
+					rtri_areas	a_side1, b_side1, len1, areas1
+ 0005  8B 0E 0032 R	     1		mov cx, len1
+ 0009  8D 36 0000 R	     1		lea si, a_side1
+ 000D  8D 3E 000A R	     1		lea di, b_side1
+ 0011  8D 1E 0014 R	     1		lea bx, areas1
+ 0015			     1	??0000:
+ 0015  BA 0000		     1		mov dx, 0
+ 0018  8A 04		     1		mov al, byte ptr[si]
+ 001A  F6 25		     1		mul byte ptr[di]
+ 001C  F6 36 01EF R	     1		div btwo
+ 0020  88 07		     1		mov byte ptr[bx], al
+ 0022  46		     1		inc si
+ 0023  47		     1		inc di
+ 0024  43		     1		inc bx
+ 0025  E2 EE		     1		loop ??0000
+					rtri_ppnt	a_side1, b_side1, areas1, len1, r_pnt1
+ 0027  8B 0E 0032 R	     1		mov cx, len1
+ 002B  8D 3E 001E R	     1		lea di, r_pnt1
+ 002F  BE 0000		     1		mov si, 0
+ 0032			     1	??0001:
+ 0032  8D 1E 0000 R	     1		lea bx, a_side1
+ 0036  8A 00		     1		mov al, byte ptr[bx][si]
+ 0038  F6 E0		     1		mul al
+ 003A  8B D0		     1		mov dx, ax
+ 003C  8D 1E 000A R	     1		lea bx, b_side1
+ 0040  8A 00		     1		mov al, byte ptr[bx][si]
+ 0042  F6 E0		     1		mul al
+ 0044  03 C2		     1		add ax, dx
+ 0046  8D 1E 0014 R	     1		lea bx, areas1
+ 004A  8A 10		     1		mov dl, byte ptr[bx][si]
+ 004C  F7 E2		     1		mul dx
+ 004E  F7 36 01F0 R	     1		div wfifteen
+ 0052  89 05		     1		mov word ptr[di], ax
+ 0054  46		     1		inc si
+ 0055  83 C7 02		     1		add di, 2
+ 0058  B8 0000		     1		mov ax, 0
+ 005B  BA 0000		     1		mov dx, 0
+ 005E  E2 D2		     1		loop ??0001
+					rtri_a_stats	areas1, len1, asum1, aave1
+ 0060  8B 0E 0032 R	     1		mov cx, len1
+ 0064  8D 1E 0014 R	     1		lea bx, areas1
+ 0068  C7 06 0034 R 0000     1		mov asum1, 0
+ 006E  B8 0000		     1		mov ax, 0
+ 0071  BA 0000		     1		mov dx, 0
+ 0074			     1	??0002:
+ 0074  8A 07		     1		mov al, byte ptr[bx]
+ 0076  01 06 0034 R	     1		add asum1, ax
+ 007A  43		     1		inc bx
+ 007B  E2 F7		     1		loop ??0002
+ 007D  A1 0034 R	     1	mov ax, asum1
+ 0080  F7 36 0032 R	     1	div len1
+ 0084  A2 0036 R	     1	mov aave1, al
+					rtri_r_stats	r_pnt1, len1, rsum1, rave1
+ 0087  8B 0E 0032 R	     1		mov cx, len1
+ 008B  8D 1E 001E R	     1		lea bx, r_pnt1
+ 008F  C7 06 0037 R 0000     1		mov rsum1, 0
+ 0095  B8 0000		     1		mov ax, 0
+ 0098  BA 0000		     1		mov dx, 0
+ 009B			     1	??0003:
+ 009B  8B 07		     1		mov ax, word ptr[bx]
+ 009D  01 06 0037 R	     1		add rsum1, ax
+ 00A1  83 C3 02		     1		add bx, 2
+ 00A4  E2 F5		     1		loop ??0003
+ 00A6  A1 0037 R	     1	mov ax, rsum1
+ 00A9  F7 36 0032 R	     1	div len1
+ 00AD  A3 0039 R	     1	mov rave1, ax
+
+					rtri_areas	a_side2, b_side2, len2, areas2
+ 00B0  8B 0E 008B R	     1		mov cx, len2
+ 00B4  8D 36 003B R	     1		lea si, a_side2
+ 00B8  8D 3E 004B R	     1		lea di, b_side2
+ 00BC  8D 1E 005B R	     1		lea bx, areas2
+ 00C0			     1	??0004:
+ 00C0  BA 0000		     1		mov dx, 0
+ 00C3  8A 04		     1		mov al, byte ptr[si]
+ 00C5  F6 25		     1		mul byte ptr[di]
+ 00C7  F6 36 01EF R	     1		div btwo
+ 00CB  88 07		     1		mov byte ptr[bx], al
+ 00CD  46		     1		inc si
+ 00CE  47		     1		inc di
+ 00CF  43		     1		inc bx
+ 00D0  E2 EE		     1		loop ??0004
+					rtri_ppnt	a_side2, b_side2, areas2, len2, r_pnt2
+ 00D2  8B 0E 008B R	     1		mov cx, len2
+ 00D6  8D 3E 006B R	     1		lea di, r_pnt2
+ 00DA  BE 0000		     1		mov si, 0
+ 00DD			     1	??0005:
+ 00DD  8D 1E 003B R	     1		lea bx, a_side2
+ 00E1  8A 00		     1		mov al, byte ptr[bx][si]
+ 00E3  F6 E0		     1		mul al
+ 00E5  8B D0		     1		mov dx, ax
+ 00E7  8D 1E 004B R	     1		lea bx, b_side2
+ 00EB  8A 00		     1		mov al, byte ptr[bx][si]
+ 00ED  F6 E0		     1		mul al
+ 00EF  03 C2		     1		add ax, dx
+ 00F1  8D 1E 005B R	     1		lea bx, areas2
+ 00F5  8A 10		     1		mov dl, byte ptr[bx][si]
+ 00F7  F7 E2		     1		mul dx
+ 00F9  F7 36 01F0 R	     1		div wfifteen
+ 00FD  89 05		     1		mov word ptr[di], ax
+ 00FF  46		     1		inc si
+ 0100  83 C7 02		     1		add di, 2
+ 0103  B8 0000		     1		mov ax, 0
+ 0106  BA 0000		     1		mov dx, 0
+ 0109  E2 D2		     1		loop ??0005
+					rtri_a_stats	areas2, len2, asum2, aave2
+ 010B  8B 0E 008B R	     1		mov cx, len2
+ 010F  8D 1E 005B R	     1		lea bx, areas2
+ 0113  C7 06 008D R 0000     1		mov asum2, 0
+ 0119  B8 0000		     1		mov ax, 0
+ 011C  BA 0000		     1		mov dx, 0
+ 011F			     1	??0006:
+ 011F  8A 07		     1		mov al, byte ptr[bx]
+ 0121  01 06 008D R	     1		add asum2, ax
+ 0125  43		     1		inc bx
+ 0126  E2 F7		     1		loop ??0006
+ 0128  A1 008D R	     1	mov ax, asum2
+ 012B  F7 36 008B R	     1	div len2
+ 012F  A2 008F R	     1	mov aave2, al
+					rtri_r_stats	r_pnt2, len2, rsum2, rave2
+ 0132  8B 0E 008B R	     1		mov cx, len2
+ 0136  8D 1E 006B R	     1		lea bx, r_pnt2
+ 013A  C7 06 0090 R 0000     1		mov rsum2, 0
+ 0140  B8 0000		     1		mov ax, 0
+ 0143  BA 0000		     1		mov dx, 0
+ 0146			     1	??0007:
+ 0146  8B 07		     1		mov ax, word ptr[bx]
+ 0148  01 06 0090 R	     1		add rsum2, ax
+ 014C  83 C3 02		     1		add bx, 2
+ 014F  E2 F5		     1		loop ??0007
+ 0151  A1 0090 R	     1	mov ax, rsum2
+ 0154  F7 36 008B R	     1	div len2
+ 0158  A3 0092 R	     1	mov rave2, ax
+
+					rtri_areas	a_side3, b_side3, len3, areas3
+ 015B  8B 0E 00F3 R	     1		mov cx, len3
+ 015F  8D 36 0094 R	     1		lea si, a_side3
+ 0163  8D 3E 00A7 R	     1		lea di, b_side3
+ 0167  8D 1E 00BA R	     1		lea bx, areas3
+ 016B			     1	??0008:
+ 016B  BA 0000		     1		mov dx, 0
+ 016E  8A 04		     1		mov al, byte ptr[si]
+ 0170  F6 25		     1		mul byte ptr[di]
+ 0172  F6 36 01EF R	     1		div btwo
+ 0176  88 07		     1		mov byte ptr[bx], al
+ 0178  46		     1		inc si
+ 0179  47		     1		inc di
+ 017A  43		     1		inc bx
+ 017B  E2 EE		     1		loop ??0008
+					rtri_ppnt	a_side3, b_side3, areas3, len3, r_pnt3
+ 017D  8B 0E 00F3 R	     1		mov cx, len3
+ 0181  8D 3E 00CD R	     1		lea di, r_pnt3
+ 0185  BE 0000		     1		mov si, 0
+ 0188			     1	??0009:
+ 0188  8D 1E 0094 R	     1		lea bx, a_side3
+ 018C  8A 00		     1		mov al, byte ptr[bx][si]
+ 018E  F6 E0		     1		mul al
+ 0190  8B D0		     1		mov dx, ax
+ 0192  8D 1E 00A7 R	     1		lea bx, b_side3
+ 0196  8A 00		     1		mov al, byte ptr[bx][si]
+ 0198  F6 E0		     1		mul al
+ 019A  03 C2		     1		add ax, dx
+ 019C  8D 1E 00BA R	     1		lea bx, areas3
+ 01A0  8A 10		     1		mov dl, byte ptr[bx][si]
+ 01A2  F7 E2		     1		mul dx
+ 01A4  F7 36 01F0 R	     1		div wfifteen
+ 01A8  89 05		     1		mov word ptr[di], ax
+ 01AA  46		     1		inc si
+ 01AB  83 C7 02		     1		add di, 2
+ 01AE  B8 0000		     1		mov ax, 0
+ 01B1  BA 0000		     1		mov dx, 0
+ 01B4  E2 D2		     1		loop ??0009
+					rtri_a_stats	areas3, len3, asum3, aave3
+ 01B6  8B 0E 00F3 R	     1		mov cx, len3
+ 01BA  8D 1E 00BA R	     1		lea bx, areas3
+ 01BE  C7 06 00F5 R 0000     1		mov asum3, 0
+ 01C4  B8 0000		     1		mov ax, 0
+ 01C7  BA 0000		     1		mov dx, 0
+ 01CA			     1	??000A:
+ 01CA  8A 07		     1		mov al, byte ptr[bx]
+ 01CC  01 06 00F5 R	     1		add asum3, ax
+ 01D0  43		     1		inc bx
+ 01D1  E2 F7		     1		loop ??000A
+ 01D3  A1 00F5 R	     1	mov ax, asum3
+ 01D6  F7 36 00F3 R	     1	div len3
+ 01DA  A2 00F7 R	     1	mov aave3, al
+					rtri_r_stats	r_pnt3, len3, rsum3, rave3
+ 01DD  8B 0E 00F3 R	     1		mov cx, len3
+ 01E1  8D 1E 00CD R	     1		lea bx, r_pnt3
+ 01E5  C7 06 00F8 R 0000     1		mov rsum3, 0
+ 01EB  B8 0000		     1		mov ax, 0
+ 01EE  BA 0000		     1		mov dx, 0
+ 01F1			     1	??000B:
+ 01F1  8B 07		     1		mov ax, word ptr[bx]
+ 01F3  01 06 00F8 R	     1		add rsum3, ax
+ 01F7  83 C3 02		     1		add bx, 2
+ 01FA  E2 F5		     1		loop ??000B
+ 01FC  A1 00F8 R	     1	mov ax, rsum3
+ 01FF  F7 36 00F3 R	     1	div len3
+ 0203  A3 00FA R	     1	mov rave3, ax
+
+					rtri_areas	a_side4, b_side4, len4, areas4
+ 0206  8B 0E 0160 R	     1		mov cx, len4
+ 020A  8D 36 00FC R	     1		lea si, a_side4
+ 020E  8D 3E 0110 R	     1		lea di, b_side4
+ 0212  8D 1E 0124 R	     1		lea bx, areas4
+ 0216			     1	??000C:
+ 0216  BA 0000		     1		mov dx, 0
+ 0219  8A 04		     1		mov al, byte ptr[si]
+ 021B  F6 25		     1		mul byte ptr[di]
+ 021D  F6 36 01EF R	     1		div btwo
+ 0221  88 07		     1		mov byte ptr[bx], al
+ 0223  46		     1		inc si
+ 0224  47		     1		inc di
+ 0225  43		     1		inc bx
+ 0226  E2 EE		     1		loop ??000C
+					rtri_ppnt	a_side4, b_side4, areas4, len4, r_pnt4
+ 0228  8B 0E 0160 R	     1		mov cx, len4
+ 022C  8D 3E 0138 R	     1		lea di, r_pnt4
+ 0230  BE 0000		     1		mov si, 0
+ 0233			     1	??000D:
+ 0233  8D 1E 00FC R	     1		lea bx, a_side4
+ 0237  8A 00		     1		mov al, byte ptr[bx][si]
+ 0239  F6 E0		     1		mul al
+ 023B  8B D0		     1		mov dx, ax
+ 023D  8D 1E 0110 R	     1		lea bx, b_side4
+ 0241  8A 00		     1		mov al, byte ptr[bx][si]
+ 0243  F6 E0		     1		mul al
+ 0245  03 C2		     1		add ax, dx
+ 0247  8D 1E 0124 R	     1		lea bx, areas4
+ 024B  8A 10		     1		mov dl, byte ptr[bx][si]
+ 024D  F7 E2		     1		mul dx
+ 024F  F7 36 01F0 R	     1		div wfifteen
+ 0253  89 05		     1		mov word ptr[di], ax
+ 0255  46		     1		inc si
+ 0256  83 C7 02		     1		add di, 2
+ 0259  B8 0000		     1		mov ax, 0
+ 025C  BA 0000		     1		mov dx, 0
+ 025F  E2 D2		     1		loop ??000D
+					rtri_a_stats	areas4, len4, asum4, aave4
+ 0261  8B 0E 0160 R	     1		mov cx, len4
+ 0265  8D 1E 0124 R	     1		lea bx, areas4
+ 0269  C7 06 0162 R 0000     1		mov asum4, 0
+ 026F  B8 0000		     1		mov ax, 0
+ 0272  BA 0000		     1		mov dx, 0
+ 0275			     1	??000E:
+ 0275  8A 07		     1		mov al, byte ptr[bx]
+ 0277  01 06 0162 R	     1		add asum4, ax
+ 027B  43		     1		inc bx
+ 027C  E2 F7		     1		loop ??000E
+ 027E  A1 0162 R	     1	mov ax, asum4
+ 0281  F7 36 0160 R	     1	div len4
+ 0285  A2 0164 R	     1	mov aave4, al
+					rtri_r_stats	r_pnt4, len4, rsum4, rave4
+ 0288  8B 0E 0160 R	     1		mov cx, len4
+ 028C  8D 1E 0138 R	     1		lea bx, r_pnt4
+ 0290  C7 06 0165 R 0000     1		mov rsum4, 0
+ 0296  B8 0000		     1		mov ax, 0
+ 0299  BA 0000		     1		mov dx, 0
+ 029C			     1	??000F:
+ 029C  8B 07		     1		mov ax, word ptr[bx]
+ 029E  01 06 0165 R	     1		add rsum4, ax
+ 02A2  83 C3 02		     1		add bx, 2
+ 02A5  E2 F5		     1		loop ??000F
+ 02A7  A1 0165 R	     1	mov ax, rsum4
+ 02AA  F7 36 0160 R	     1	div len4
+ 02AE  A3 0167 R	     1	mov rave4, ax
+
+					rtri_areas	a_side5, b_side5, len5, areas5
+ 02B1  8B 0E 01E6 R	     1		mov cx, len5
+ 02B5  8D 36 0169 R	     1		lea si, a_side5
+ 02B9  8D 3E 0182 R	     1		lea di, b_side5
+ 02BD  8D 1E 019B R	     1		lea bx, areas5
+ 02C1			     1	??0010:
+ 02C1  BA 0000		     1		mov dx, 0
+ 02C4  8A 04		     1		mov al, byte ptr[si]
+ 02C6  F6 25		     1		mul byte ptr[di]
+ 02C8  F6 36 01EF R	     1		div btwo
+ 02CC  88 07		     1		mov byte ptr[bx], al
+ 02CE  46		     1		inc si
+ 02CF  47		     1		inc di
+ 02D0  43		     1		inc bx
+ 02D1  E2 EE		     1		loop ??0010
+					rtri_ppnt	a_side5, b_side5, areas5, len5, r_pnt5
+ 02D3  8B 0E 01E6 R	     1		mov cx, len5
+ 02D7  8D 3E 01B4 R	     1		lea di, r_pnt5
+ 02DB  BE 0000		     1		mov si, 0
+ 02DE			     1	??0011:
+ 02DE  8D 1E 0169 R	     1		lea bx, a_side5
+ 02E2  8A 00		     1		mov al, byte ptr[bx][si]
+ 02E4  F6 E0		     1		mul al
+ 02E6  8B D0		     1		mov dx, ax
+ 02E8  8D 1E 0182 R	     1		lea bx, b_side5
+ 02EC  8A 00		     1		mov al, byte ptr[bx][si]
+ 02EE  F6 E0		     1		mul al
+ 02F0  03 C2		     1		add ax, dx
+ 02F2  8D 1E 019B R	     1		lea bx, areas5
+ 02F6  8A 10		     1		mov dl, byte ptr[bx][si]
+ 02F8  F7 E2		     1		mul dx
+ 02FA  F7 36 01F0 R	     1		div wfifteen
+ 02FE  89 05		     1		mov word ptr[di], ax
+ 0300  46		     1		inc si
+ 0301  83 C7 02		     1		add di, 2
+ 0304  B8 0000		     1		mov ax, 0
+ 0307  BA 0000		     1		mov dx, 0
+ 030A  E2 D2		     1		loop ??0011
+					rtri_a_stats	areas5, len5, asum5, aave5
+ 030C  8B 0E 01E6 R	     1		mov cx, len5
+ 0310  8D 1E 019B R	     1		lea bx, areas5
+ 0314  C7 06 01E8 R 0000     1		mov asum5, 0
+ 031A  B8 0000		     1		mov ax, 0
+ 031D  BA 0000		     1		mov dx, 0
+ 0320			     1	??0012:
+ 0320  8A 07		     1		mov al, byte ptr[bx]
+ 0322  01 06 01E8 R	     1		add asum5, ax
+ 0326  43		     1		inc bx
+ 0327  E2 F7		     1		loop ??0012
+ 0329  A1 01E8 R	     1	mov ax, asum5
+ 032C  F7 36 01E6 R	     1	div len5
+ 0330  A2 01EA R	     1	mov aave5, al
+					rtri_r_stats	r_pnt5, len5, rsum5, rave5
+ 0333  8B 0E 01E6 R	     1		mov cx, len5
+ 0337  8D 1E 01B4 R	     1		lea bx, r_pnt5
+ 033B  C7 06 01EB R 0000     1		mov rsum5, 0
+ 0341  B8 0000		     1		mov ax, 0
+ 0344  BA 0000		     1		mov dx, 0
+ 0347			     1	??0013:
+ 0347  8B 07		     1		mov ax, word ptr[bx]
+ 0349  01 06 01EB R	     1		add rsum5, ax
+ 034D  83 C3 02		     1		add bx, 2
+ 0350  E2 F5		     1		loop ??0013
+ 0352  A1 01EB R	     1	mov ax, rsum5
+ 0355  F7 36 01E6 R	     1	div len5
+ 0359  A3 01ED R	     1	mov rave5, ax
+
+
+				; -----
+				;  Done, terminate program.
+
+ 035C				last:
+ 035C  B4 4C				mov	ah, 4ch
+ 035E  CD 21				int	21h
+ 0360				main endp
+
+				end	main
+
+Microsoft (R) Macro Assembler Version 6.15.8803		    09/20/05 16:47:08
+ast5.asm						     Symbols 2 - 1
+
+
+
+
+Macros:
+
+                N a m e                 Type
+
+rtri_a_stats . . . . . . . . . .	Proc
+rtri_areas . . . . . . . . . . .	Proc
+rtri_ppnt  . . . . . . . . . . .	Proc
+rtri_r_stats . . . . . . . . . .	Proc
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+AST5_TEXT  . . . . . . . . . . .	16 Bit	 0360	  Word	  Public  'CODE'	
+DGROUP . . . . . . . . . . . . .	GROUP
+_DATA  . . . . . . . . . . . . .	16 Bit	 01F2	  Word	  Public  'DATA'	
+STACK  . . . . . . . . . . . . .	16 Bit	 0400	  Para	  Stack	  'STACK'	 
+
+
+Procedures,  parameters and locals:
+
+                N a m e                 Type     Value    Attr
+
+main . . . . . . . . . . . . . .	P Far	 0000	  AST5_TEXT	Length= 0360 Public
+  ??0000 . . . . . . . . . . . .	L Near	 0015	  AST5_TEXT	
+  ??0001 . . . . . . . . . . . .	L Near	 0032	  AST5_TEXT	
+  ??0002 . . . . . . . . . . . .	L Near	 0074	  AST5_TEXT	
+  ??0003 . . . . . . . . . . . .	L Near	 009B	  AST5_TEXT	
+  ??0004 . . . . . . . . . . . .	L Near	 00C0	  AST5_TEXT	
+  ??0005 . . . . . . . . . . . .	L Near	 00DD	  AST5_TEXT	
+  ??0006 . . . . . . . . . . . .	L Near	 011F	  AST5_TEXT	
+  ??0007 . . . . . . . . . . . .	L Near	 0146	  AST5_TEXT	
+  ??0008 . . . . . . . . . . . .	L Near	 016B	  AST5_TEXT	
+  ??0009 . . . . . . . . . . . .	L Near	 0188	  AST5_TEXT	
+  ??000A . . . . . . . . . . . .	L Near	 01CA	  AST5_TEXT	
+  ??000B . . . . . . . . . . . .	L Near	 01F1	  AST5_TEXT	
+  ??000C . . . . . . . . . . . .	L Near	 0216	  AST5_TEXT	
+  ??000D . . . . . . . . . . . .	L Near	 0233	  AST5_TEXT	
+  ??000E . . . . . . . . . . . .	L Near	 0275	  AST5_TEXT	
+  ??000F . . . . . . . . . . . .	L Near	 029C	  AST5_TEXT	
+  ??0010 . . . . . . . . . . . .	L Near	 02C1	  AST5_TEXT	
+  ??0011 . . . . . . . . . . . .	L Near	 02DE	  AST5_TEXT	
+  ??0012 . . . . . . . . . . . .	L Near	 0320	  AST5_TEXT	
+  ??0013 . . . . . . . . . . . .	L Near	 0347	  AST5_TEXT	
+  last . . . . . . . . . . . . .	L Near	 035C	  AST5_TEXT	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 0001h	 
+@DataSize  . . . . . . . . . . .	Number	 0000h	 
+@Interface . . . . . . . . . . .	Number	 0000h	 
+@Model . . . . . . . . . . . . .	Number	 0004h	 
+@code  . . . . . . . . . . . . .	Text   	 AST5_TEXT
+@data  . . . . . . . . . . . . .	Text   	 DGROUP
+@fardata?  . . . . . . . . . . .	Text   	 FAR_BSS
+@fardata . . . . . . . . . . . .	Text   	 FAR_DATA
+@stack . . . . . . . . . . . . .	Text   	 DGROUP
+a_side1  . . . . . . . . . . . .	Byte	 0000	  _DATA	
+a_side2  . . . . . . . . . . . .	Byte	 003B	  _DATA	
+a_side3  . . . . . . . . . . . .	Byte	 0094	  _DATA	
+a_side4  . . . . . . . . . . . .	Byte	 00FC	  _DATA	
+a_side5  . . . . . . . . . . . .	Byte	 0169	  _DATA	
+aave1  . . . . . . . . . . . . .	Byte	 0036	  _DATA	
+aave2  . . . . . . . . . . . . .	Byte	 008F	  _DATA	
+aave3  . . . . . . . . . . . . .	Byte	 00F7	  _DATA	
+aave4  . . . . . . . . . . . . .	Byte	 0164	  _DATA	
+aave5  . . . . . . . . . . . . .	Byte	 01EA	  _DATA	
+areas1 . . . . . . . . . . . . .	Byte	 0014	  _DATA	
+areas2 . . . . . . . . . . . . .	Byte	 005B	  _DATA	
+areas3 . . . . . . . . . . . . .	Byte	 00BA	  _DATA	
+areas4 . . . . . . . . . . . . .	Byte	 0124	  _DATA	
+areas5 . . . . . . . . . . . . .	Byte	 019B	  _DATA	
+asum1  . . . . . . . . . . . . .	Word	 0034	  _DATA	
+asum2  . . . . . . . . . . . . .	Word	 008D	  _DATA	
+asum3  . . . . . . . . . . . . .	Word	 00F5	  _DATA	
+asum4  . . . . . . . . . . . . .	Word	 0162	  _DATA	
+asum5  . . . . . . . . . . . . .	Word	 01E8	  _DATA	
+b_side1  . . . . . . . . . . . .	Byte	 000A	  _DATA	
+b_side2  . . . . . . . . . . . .	Byte	 004B	  _DATA	
+b_side3  . . . . . . . . . . . .	Byte	 00A7	  _DATA	
+b_side4  . . . . . . . . . . . .	Byte	 0110	  _DATA	
+b_side5  . . . . . . . . . . . .	Byte	 0182	  _DATA	
+btwo . . . . . . . . . . . . . .	Byte	 01EF	  _DATA	
+len1 . . . . . . . . . . . . . .	Word	 0032	  _DATA	
+len2 . . . . . . . . . . . . . .	Word	 008B	  _DATA	
+len3 . . . . . . . . . . . . . .	Word	 00F3	  _DATA	
+len4 . . . . . . . . . . . . . .	Word	 0160	  _DATA	
+len5 . . . . . . . . . . . . . .	Word	 01E6	  _DATA	
+r_pnt1 . . . . . . . . . . . . .	Word	 001E	  _DATA	
+r_pnt2 . . . . . . . . . . . . .	Word	 006B	  _DATA	
+r_pnt3 . . . . . . . . . . . . .	Word	 00CD	  _DATA	
+r_pnt4 . . . . . . . . . . . . .	Word	 0138	  _DATA	
+r_pnt5 . . . . . . . . . . . . .	Word	 01B4	  _DATA	
+rave1  . . . . . . . . . . . . .	Word	 0039	  _DATA	
+rave2  . . . . . . . . . . . . .	Word	 0092	  _DATA	
+rave3  . . . . . . . . . . . . .	Word	 00FA	  _DATA	
+rave4  . . . . . . . . . . . . .	Word	 0167	  _DATA	
+rave5  . . . . . . . . . . . . .	Word	 01ED	  _DATA	
+rsum1  . . . . . . . . . . . . .	Word	 0037	  _DATA	
+rsum2  . . . . . . . . . . . . .	Word	 0090	  _DATA	
+rsum3  . . . . . . . . . . . . .	Word	 00F8	  _DATA	
+rsum4  . . . . . . . . . . . . .	Word	 0165	  _DATA	
+rsum5  . . . . . . . . . . . . .	Word	 01EB	  _DATA	
+wfifteen . . . . . . . . . . . .	Word	 01F0	  _DATA	
+
+	   0 Warnings
+	   0 Errors

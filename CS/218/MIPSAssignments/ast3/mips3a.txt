@@ -1,0 +1,118 @@
+CSC 218
+Homework, MIPS Asst. #3
+Purpose:  Become familiar with the MIPS procedure calling convention.
+Due:      Wednesday  (11/30)
+Points:   65
+
+
+Assignment:
+Use the provided MIPS assembly language main program and the
+following procedures:
+
+  * Write a MIPS assembly language procedure, rnd_nums, to create a
+    series of random numbers, which are stored in an array.  The address
+    of the array and the count of numbers to generate are provided.
+    To generate a pseudo random number, use the linear congruential
+    generator method.  The next random number is generated from the
+    previous one by:
+
+          R(n+1) = (A * R(n) + B) mod 2^16
+
+    The initial random number Rn (on which the rest are based on is
+    referred to as the "seed").  The value for A must be a prime number.
+    For our purposes, set A=9421 and B=1.  The seed should
+    be set to 9.
+
+  * Write a MIPS assembly language procedure, disp_lst, to display the
+    array of numbers.  The numbers should be printed 6 per line.  The
+    numbers must be right justified (i.e., lined up on right side).
+    You may assume that the largest number is 5 digits.
+
+  * Write a MIPS assembly language procedure, shk_sort, to sort a list
+    of numbers into ascending order (small to large).  Use the following
+    Use the following shaker sort algorithm:
+
+    moved = false
+    curmin = 0
+    curmax = (len-1)
+    do {
+       moved = false
+       for (i=curmin; i <= curmax-1; i++)
+         if ( list(i) > list(i+1) ) {
+            swap ( list(i), list(i+1) )
+            moved = true
+         }
+       curmax = curmax - 1
+       for (i=curmax-1; i >= curmin; i--)
+         if ( list(i) > list(i+1) ) {
+            swap ( list(i), list(i+1) )
+            moved = true
+         }
+       curmin = curmin + 1
+    } while (moved)
+
+    You must use the shaker sort algorithm above (i.e., do not use other
+    sorts).  Note, the algorithm assumes array index's start at 0.
+
+  * Write a MIPS assembly language procedure, lst_stats, that will find
+    the maximum, median, sum, and average of the list.  You can find the
+    maximum after the list is sorted (i.e, max=list(len-1)).  The average
+    should be calculated as a floating point value.
+
+  * Write a MIPS assembly language procedure, disp_stats, to display the
+    lst_stats (max, med, sum, and ave) results in the format shown below.
+
+Do not change the data types of the provided data.
+You may define additional variables as required. 
+
+
+
+Example Output:
+---------------
+The program must display the results to the console window.  The output
+should look something like the following (with all of the correct
+answers displayed for all data sets):
+
+
+
+  ------------------------------------------------------------
+ |                                                            |
+ | Assignment #3                                              |
+ |                                                            |
+ | ---------------------------                                |
+ |  Unsorted List:                                            |
+ |                                                            |
+ |   19254  53823  14452  34021  40802  27003                 |
+ |   50048  36225  29774   6775  60748  46557                 |
+ |   46586  57651  33240  23033   4198  31151                 |
+ |    3364  38357  61330  24555  56112  17777                 |
+ |   32638                                                    |
+ |                                                            |
+ |  Sorted List:                                              |
+ |                                                            |
+ |    3364   4198   6775  14452  17777  19254                 |
+ |   23033  24555  27003  29774  31151  32638                 |
+ |   33240  34021  36225  38357  40802  46557                 |
+ |   46586  50048  53823  56112  57651  60748                 |
+ |   61330                                                    |
+ |                                                            |
+ |  max = ?                                                   |
+ |  med = ?                                                   |
+ |  sum = ?                                                   |
+ |  ave = ?                                                   |
+ |                                                            |
+ |                                                            |
+ |                                                            |
+  ------------------------------------------------------------
+
+
+
+Submission:
+-----------
+When complete, submit a copy of the source file(s) and the SPIM Log File
+via the class web page (assignment submission link) on Wednesday,
+November 30, 2005 before 4:00pm.   Assignments received after 4:00pm
+will not  be accepted!  Do not submit a hard-copy.
+
+
+

@@ -1,0 +1,19 @@
+draw border:
+------------
+TRUE equ 1
+FALSE equ 2
+
+BLUE equ 1
+GREEN equ 2
+
+mov ah, 0ch
+mov al, GREEN
+mov bx, 0
+; mov cx, 320		; pixel in the
+; mov dx, 240		; center of screen
+mov cx, si			; 0 - 639
+mov dx, di			; 0 - 3 & 477 - 479
+int 10h
+
+; top and bottom lines
+; need to do sides as well

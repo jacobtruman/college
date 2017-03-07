@@ -1,0 +1,63 @@
+;  ASST #9 - PROVIDED STRING DEFINITIONS
+
+;  Note, must use these string definitions to ensure
+;        the error checking will work.
+
+; Cut and paste these definitions into the source file.
+
+
+
+; -----
+; Constants.
+
+LF	equ	10			; line feed
+CR	equ	13			; carridge return
+END_STR	equ	"$"			; end of string
+
+
+; -----
+;  String definitions for read_race_info procedure.
+
+
+pm_rnam		db	" Enter Race Name: ", END_STR
+pm_rstd		db	" Enter Race Start Day"
+		db	" (Su/Mo/Tu/We/Th/Fr/Sa): ", END_STR
+pm_rsttm	db	" Enter Race Start Time (hh:mm:ss): ", END_STR
+pm_rlen		db	" Enter Race Length (hh:mm:ss): ", END_STR
+
+err_r_name	db	CR, LF, " *Error, must enter race name "
+		db	"(4 char min).", CR, LF
+		db	"  Please re-enter.", CR, LF, END_STR
+err_r_stday	db	CR, LF, " *Error, must enter valid day"
+		db	" (Su/Mo/Tu/We/Th/Fr/Sa): ", CR, LF
+		db	"  Please re-enter.", CR, LF, END_STR
+err_r_sttm	db	CR, LF, " *Error, must enter valid race start "
+		db	"time (hh:mm:ss):", CR, LF
+		db	"  Please re-enter.", CR, LF, END_STR
+err_r_len	db	CR, LF, " *Error, must enter valid race length "
+		db	"time (hh:mm:ss):", CR, LF
+		db	"  Please re-enter.", CR, LF, END_STR
+
+
+; -----
+;  String definitions for disp_race_info procedure.
+
+race_hdr	db	CR, LF, "------------------------------------"
+		db	CR, LF, "Race Information:"
+		db	CR, LF, CR, LF, END_STR
+
+r_title1	db	" Race Name       : ", END_STR
+r_title2	db	" Race Start Time : ", END_STR
+r_title3	db	" Race End Time   : ", END_STR
+
+days		db	"Sunday, $   "
+		db	"Monday, $   "
+		db	"Tuesday, $  "
+		db	"Wednesday, $"
+		db	"Thursday, $ "
+		db	"Friday, $   "
+		db	"Saturday, $ "
+days_size	db	12
+
+
+

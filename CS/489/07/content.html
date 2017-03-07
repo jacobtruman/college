@@ -1,0 +1,185 @@
+<!--
+  --      file: content.html
+  --  function: HTML src for Web Page that
+  --    author: Roy H. Ogawa <rho@cs.unlv.edu>
+  -- copyright: Roy H. Ogawa, Computer Science, UNLV
+  --      date: 9/25/2006
+  -->
+<html>
+<head>
+<title>
+Assignment 07
+</title>
+</head>
+
+<body bgcolor=white>
+<table width='75%'>
+<tbody>
+<tr>
+<td>
+
+<center>
+<p>
+<h2>
+Bioinformatics<br/>
+Assignment 07
+</h2>
+</p>
+</center>
+
+<p>
+<h3>
+Chapter 6, Jones and Pevzner
+</h3>
+</p>
+
+<p>
+Due at the beginning of class on Monday, November 20.
+</p>
+
+<p>
+<ol>
+<li> 6.31
+<li> 6.34
+<li> 6.38
+<li> 6.41
+<li> 6.52
+<li> 6.58
+</ol>
+</p>
+
+<p>
+Due on Sunday, November 19, at Midnight.
+</p>
+
+<p>
+Write a single program that will:
+<ol>
+<li> Convert the codons in the a group of cds records into
+     Amino Acid letter codes and write them to a file with appropriate
+     FASTA headers.  For example the cds records for Gibberellin.
+     Each codon represents an amino acid, which is encoded as a single
+     letter (akin to the A, C, G, and T for DNA.)  The codon list
+     and the single letter codes may be found online at wikipedia under
+     the entry <a href="http://en.wikipedia.org/wiki/Genetic_code">
+     Genetic Code</a>.
+
+<br><font color='red'>This table shows the 20 standard amino acids used in proteins, and the codons that code for each amino acid.</font>
+
+<table border='1' cellpadding='0' cellspacing='0'>
+<tr>
+<td align="center" valign="top"><b>Ala</b></td>
+<td valign="top">A</td>
+<td valign="top">GCU, GCC, GCA, GCG</td>
+<td align="center" valign="top"><b>Leu</b></td>
+<td valign="top">L</td>
+<td valign="top">UUA, UUG, CUU, CUC, CUA, CUG</td>
+</tr>
+<tr>
+<td align="center" valign="top"><b>Arg</b></td>
+
+<td valign="top">R</td>
+<td valign="top">CGU, CGC, CGA, CGG, AGA, AGG</td>
+<td align="center" valign="top"><b>Lys</b></td>
+<td valign="top">K</td>
+<td valign="top">AAA, AAG</td>
+</tr>
+<tr>
+<td align="center" valign="top"><b>Asn</b></td>
+<td valign="top">N</td>
+<td valign="top">AAU, AAC</td>
+
+<td align="center" valign="top"><b>Met</b></td>
+<td valign="top">M</td>
+<td valign="top">AUG</td>
+</tr>
+<tr>
+<td align="center" valign="top"><b>Asp</b></td>
+<td valign="top">D</td>
+<td valign="top">GAU, GAC</td>
+<td align="center" valign="top"><b>Phe</b></td>
+<td valign="top">F</td>
+
+<td valign="top">UUU, UUC</td>
+</tr>
+<tr>
+<td align="center" valign="top"><b>Cys</b></td>
+<td valign="top">C</td>
+<td valign="top">UGU, UGC</td>
+<td align="center" valign="top"><b>Pro</b></td>
+<td valign="top">P</td>
+<td valign="top">CCU, CCC, CCA, CCG</td>
+</tr>
+
+<tr>
+<td align="center" valign="top"><b>Gln</b></td>
+<td valign="top">Q</td>
+<td valign="top">CAA, CAG</td>
+<td align="center" valign="top"><b>Ser</b></td>
+<td valign="top">S</td>
+<td valign="top">UCU, UCC, UCA, UCG, AGU,AGC</td>
+</tr>
+<tr>
+<td align="center" valign="top"><b>Glu</b></td>
+
+<td valign="top">E</td>
+<td valign="top">GAA, GAG</td>
+<td align="center" valign="top"><b>Thr</b></td>
+<td valign="top">T</td>
+<td valign="top">ACU, ACC, ACA, ACG</td>
+</tr>
+<tr>
+<td align="center" valign="top"><b>Gly</b></td>
+<td valign="top">G</td>
+<td valign="top">GGU, GGC, GGA, GGG</td>
+
+<td align="center" valign="top"><b>Trp</b></td>
+<td valign="top">W</td>
+<td valign="top">UGG</td>
+</tr>
+<tr>
+<td align="center" valign="top"><b>His</b></td>
+<td valign="top">H</td>
+<td valign="top">CAU, CAC</td>
+<td align="center" valign="top"><b>Tyr</b></td>
+<td valign="top">Y</td>
+
+<td valign="top">UAU, UAC</td>
+</tr>
+<tr>
+<td align="center" valign="top"><b>Ile</b></td>
+<td valign="top">I</td>
+<td valign="top">AUU, AUC, AUA</td>
+<td align="center" valign="top"><b>Val</b></td>
+<td valign="top">V</td>
+<td valign="top">GUU, GUC, GUA, GUG</td>
+</tr>
+
+<tr>
+<td colspan="2" align="left" valign="top"><i><b>Start</b></i></td>
+<td valign="top">AUG</td>
+<td colspan="2" align="left" valign="top"><i><b>Stop</b></i></td>
+<td valign="top">UAG, UGA, UAA</td>
+</tr>
+</table>
+
+	 
+	 No single-letter code is given for the stop
+     codons.  Use 'Z' for the stop codons.
+<li> Find and write to a file, global alignments between the amino
+     acid sequences, the protein sequences corresponding to each.
+     record.
+<li> As an example apply the program to the Gibberellin cds records.
+     Pass the name of the file with input gibberellin cds on the command
+     line.  Pass the name of the output file for protein sequences on
+     the command line.  Pass the name of the output file for the 
+     alignments to the command line.
+</ol>
+
+</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

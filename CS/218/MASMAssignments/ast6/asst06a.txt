@@ -1,0 +1,118 @@
+CSC 218, Section 01, 02
+Homework,  Asst. #6
+
+Purpose:   Write some simple assembly language macros to convert integers
+           to ASCII (displayed in ASCII format).  Become familiar with
+           data conversion, addressing modes, and assembly language macro's.
+
+Due:       Monday  (9/26)
+
+Points:        65
+
+
+Assignment:
+Write a simple assembly language program to convert integers to ASCII and
+output the ASCII strings to the screen (using the provided routine).
+
+Write a macro, "i_to_a", that will convert each integer into an ASCII
+string and store it into another array (right justified, signed, blank
+filled, "$" terminated).  Write a macro "ilst_to_alst" that will invoke
+"i_to_a" macro for each element of a list.  Each element of the string
+array is 9 bytes.  For example, 436 would be  "     436$"  (5 blanks,
+"4", "3", "6", and "$").  Note, you will need to add the "$"'s at the
+end of each string.
+
+For example, given the following data set:
+
+      STR_SIZE   equ  9
+     
+      ilst0      dd     12,     345,    6789,   12345,  123456
+      len0       dw     5
+      alst0      db     5 dup ( STR_SIZE dup (20h) )
+
+Use the provided main, which will invoke the macros as follows:
+
+      ilst_to_alst     ilst0, alst0, len0, str_siz
+      prt_strings      alst0, len0, str_siz
+
+Note, the "ilst_to_alst" macro will invoke the  "i_to_a" macro 5 times,
+once for each element of the lst0 array.    The macro would set  alst0
+and to the following:
+
+  alst0 = "      12$", "     345$", "    6789$", "   12345$", "  123456$"
+
+Based on the data declarations, you may assume that all elements of the
+ASCII string are already to blank.  No error checking is required, all
+data provided is valid for the assignment.  Do not change the definitions
+of the provided data.  You may add additional variables as needed.
+
+
+Use the provided main program to invoke the macro code a total of 7 times
+using the provided data sets on the following page.  Assemble the program
+and turn in the assembler list file.  Use the debugger and execute the
+program.  Submit a print-out of the all the variables after program
+execution.
+
+
+
+
+Assignment #6  - Data
+
+
+STR_SIZE	equ	9
+
+ilst0		dd	    12,     345,    6789,   12345,  123456
+len0		dw	5
+alst0		db	5 dup ( STR_SIZE dup (20h) )
+
+ilst1		dd	152432,   61740,   10300,   25000,  110000
+		dd	 54321,      32,  101010,  121201,     312
+len1		dw	10
+alst1		db	10 dup ( STR_SIZE dup (20h) )
+
+ilst2		dd	115997,   12360,   13230,   21234,  111111
+		dd	 11795,    6312,     420,    5532,   15533
+len2		dw	10
+alst2		db	10 dup ( STR_SIZE dup (20h) )
+
+ilst3		dd	112627,   11622,   19110,   10669,   36516
+		dd	111512,   14552,   11344,   10134,   18208
+		dd	134112,    1231,    8765,   87312,  100012
+		dd	112808,  112344
+len3		dw	17
+alst3		db	17 dup ( STR_SIZE dup (20h) )
+
+ilst4		dd	111512,   14552,   11344,   10134,   18208
+		dd	112808,  112344,     214,  111212,  111115
+		dd	  1265,  112130,      85,  112233
+len4		dw	14
+alst4		db	14 dup ( STR_SIZE dup (20h) )
+
+ilst5		dd	117864,    1068,   11721,   26000,  123584
+		dd	   129,   31212,     117,   132163,   2112
+		dd	 11345,   11068,   11721,   26000,  123584
+len5		dw	15
+alst5		db	15 dup ( STR_SIZE dup (20h) )
+
+ilst6		dd	168795,    3110,      20,   13332,  110022
+		dd	  7560,   12313,   11760,    4312,    7865
+		dd	123241,   98231,      80,    4313,   31233
+		dd	118637,   34513,    1691,   11312,    8551
+		dd	 12241,   13231,    3280,    7653,   45127
+len6		dw	25
+alst6		db	25 dup ( STR_SIZE dup (20h) )
+
+
+
+
+Debugger Commands:
+The below commands can be utilized to display the variables within
+the CodeView command window.  Note, the"mda" is used to display ASCII
+strings.  The "l45" is used since there are 5 elements, each 9 bytes
+large (5*9=45).
+
+     mdl lst0a l5
+     mdi len0 l1
+     mda alst0 l45
+
+

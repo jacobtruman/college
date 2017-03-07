@@ -1,0 +1,496 @@
+Microsoft (R) Macro Assembler Version 6.15.8803		    10/19/05 15:05:36
+10_proc.asm						     Page 1 - 1
+
+
+				;   Jacob Truman Section 02
+				;   Assignment 10
+
+
+				.model small
+				.486
+
+
+ 0000				.data
+
+ = 000D				CR		equ	13
+ = 000A				LF		equ	10
+ = 0024				END_STR	equ	"$"
+
+ 0000 0D 0A 54 68 65 20		msg		db	CR, LF, "The qualifiers were: ", END_STR
+       71 75 61 6C 69 66
+       69 65 72 73 20 77
+       65 72 65 3A 20 24
+ 0018 0D 0A 49 6E 76 61		msg1	db	CR, LF, "Invalid command line argument"
+       6C 69 64 20 63 6F
+       6D 6D 61 6E 64 20
+       6C 69 6E 65 20 61
+       72 67 75 6D 65 6E
+       74
+ 0037  0D 0A 24					db	CR, LF, END_STR
+
+ 003A  0050 [			chrs	db	80 dup (?)
+        00
+       ]
+
+ 008A 0000			psp		dw	?
+ 008C 000A			ten		dw	10
+ 008E 0003			three	dw	3
+ 0090 0002			two		dw	2
+ 0092 24CD			r_A		dw	9421
+ 0094 0001			r_B		dw	1
+ 0096 0000			c_high	dw	?
+ 0098 0000			c_low	dw	?
+ 009A 0000			d_high	dw	?
+ 009C 0000			d_low	dw	?
+ 009E 0000			r_num	dw	?
+ 00A0 0000			c_sum	dw	?
+ 00A2 0000			c_rad	dw	?
+
+ 00A4 0000			c_a		dw	?
+ 00A6 0000			c_y		dw	?
+ 00A8 0000			c_f		dw	?
+ 00AA 0000			c_b		dw	?
+
+ 0000				.code
+
+ 0000				get_arg	proc	near
+ 0000  55			push bp
+ 0001  8B EC			mov  bp, sp
+ 0003  50			push ax
+ 0004  53			push bx
+ 0005  51			push cx
+ 0006  52			push dx
+ 0007  56			push si
+ 0008  57			push di
+ 0009  06			push es
+
+				;-----------------------------------
+				;- Get the PSP address from system -
+				;-----------------------------------
+ 000A  B4 51				mov	ah, 51h
+ 000C  CD 21				int	21h
+ 000E  89 1E 008A R			mov	psp, bx
+
+				;------------------------------------
+				;- See if proper chars were entered -
+				;------------------------------------
+
+ 0012  A1 008A R			mov	ax, psp
+ 0015  8E C0				mov	es, ax			; set ES to PSP addr
+
+ 0017  26: A0 0080			mov	al, byte ptr es:0080h	; number of chars entered
+
+ 001B  3C 00				cmp	al, 0			; if 0 entered, print a message
+ 001D  7E 6F				jle	do_no_msg
+
+ 001F  98				cbw
+ 0020  8B C8				mov	cx, ax			; number of chars entered
+
+ 0022  8D 1E 003A R			lea	bx, chrs
+ 0026  B9 0000				mov	cx, 0
+ 0029  89 0E 00A0 R			mov c_sum, cx
+ 002D  BE 0081				mov	si, 81h
+					
+ 0030				spaces_lp:
+ 0030  26: 8A 04			mov  al, byte ptr es:[si]
+ 0033  3C 20				cmp  al, 20h
+ 0035  75 02				jne  chk_slash
+ 0037  EB 48				jmp  spaces_next
+ 0039						chk_slash:
+ 0039  3C 2F						cmp  al, 2fh
+ 003B  74 02						je   chk_p
+ 003D  EB 4F						jmp  do_no_msg
+ 003F						chk_p:
+ 003F  46						inc  si
+ 0040  26: 8A 04					mov  al, byte ptr es:[si]
+ 0043  3C 70						cmp  al, 70h
+ 0045  74 02						je   chk_equ
+ 0047  EB 45						jmp  do_no_msg
+ 0049						chk_equ:
+ 0049  46						inc  si
+ 004A  26: 8A 04					mov  al, byte ptr es:[si]
+ 004D  3C 3D						cmp  al, 3dh
+ 004F  74 02						je   chk_num
+ 0051  EB 3B						jmp  do_no_msg
+ 0053						chk_num:
+ 0053  46						inc  si
+ 0054  B8 0000						mov  ax, 0
+ 0057  26: 8A 0C					mov	 cl, byte ptr es:[si]
+ 005A  80 F9 0D						cmp  cl, CR
+ 005D  74 25						je   end_slp
+ 005F  80 F9 30						cmp  cl, "0"
+ 0062  7C 2A						jl   do_no_msg			
+ 0064  80 F9 39						cmp  cl, "9"
+ 0067  7F 25						jg   do_no_msg
+ 0069  80 E9 30						sub  cl, 30h
+ 006C  B5 00						mov	 ch, 0
+ 006E  A1 00A0 R					mov  ax, c_sum
+ 0071  F7 2E 008C R					imul ten
+ 0075  03 C1						add  ax, cx
+ 0077  3D 2710						cmp  ax, 10000
+ 007A  7F 12						jg   do_no_msg
+ 007C  A3 00A0 R					mov  c_sum, ax
+ 007F  EB D2						jmp  chk_num
+
+ 0081						spaces_next:
+ 0081  46				inc	 si
+ 0082  EB AC				jmp  spaces_lp
+					
+ 0084					end_slp:
+
+
+				;-----------------------------------
+				;- Copy chars to the data segement -
+				;-----------------------------------
+					
+ 0084  A1 00A0 R			mov  ax, c_sum
+ 0087  8B 5E 04				mov  bx, word ptr 4[bp]
+ 008A  89 07				mov	 word ptr [bx], ax
+
+ 008C  EB 0C				jmp	end_get_arg		; done...
+
+
+				; ----
+				;  No characters entered on command line, so print message.
+
+ 008E				do_no_msg:
+ 008E  B4 09				mov	ah, 09h
+ 0090  8D 16 0018 R			lea	dx, msg1
+ 0094  CD 21				int	21h
+
+ 0096  B4 4C				mov	ah, 4ch
+ 0098  CD 21				int	21h
+
+ 009A				end_get_arg:
+
+ 009A  07			pop  es
+ 009B  5F			pop  di
+ 009C  5E			pop  si
+ 009D  5A			pop  dx
+ 009E  59			pop  cx
+ 009F  5B			pop  bx
+ 00A0  58			pop  ax
+ 00A1  5D			pop  bp
+
+ 00A2  C2 0002			ret 2
+ 00A5				get_arg endp
+
+
+				;---------------------------------------
+				;- Generates randum number (up to MAX) -
+				;- Rn+1 = (A * Rn + B) mod MAX         -
+				;- A=9421 and B=1                      -
+				;---------------------------------------
+
+ 00A5				rand	proc	near
+
+ 00A5  55			push bp
+ 00A6  8B EC			mov  bp, sp
+ 00A8  50			push ax
+ 00A9  53			push bx
+ 00AA  51			push cx
+ 00AB  52			push dx
+ 00AC  57			push di
+
+ 00AD  BF 0000			mov  di, 0
+ 00B0  BA 0000			mov  dx, 0
+ 00B3  B8 0000			mov  ax, 0
+ 00B6  8B 7E 04			mov  di, word ptr 4[bp]
+ 00B9  83 3E 009E R 00		cmp  r_num, 0
+ 00BE  74 02			je   first_seed
+ 00C0  EB 0F			jmp  next_seed
+
+ 00C2				first_seed:
+ 00C2  B4 2C				mov  ah, 2ch		; get time
+ 00C4  CD 21				int  21h
+ 00C6  B8 0000				mov  ax, 0
+ 00C9  8A C6				mov  al, dh			; get seconds
+ 00CB  BA 0000				mov  dx, 0
+ 00CE  A3 009E R			mov  r_num, ax
+
+ 00D1				next_seed:
+ 00D1  A1 009E R			mov  ax, r_num
+ 00D4  48				dec  ax
+ 00D5  F7 2E 0092 R			imul r_A
+ 00D9  03 06 0094 R			add  ax, r_B
+ 00DD  F7 F7				div  di
+ 00DF  89 16 009E R			mov  r_num, dx
+
+ 00E3  8B 5E 06			mov	 bx, word ptr 6[bp]
+ 00E6  89 17			mov  word ptr [bx], dx
+
+
+ 00E8  5F			pop  di
+ 00E9  5A			pop  dx
+ 00EA  59			pop  cx
+ 00EB  5B			pop  bx
+ 00EC  58			pop  ax
+ 00ED  5D			pop  bp
+
+ 00EE  C2 0004			ret  4
+
+ 00F1				rand endp
+
+
+				;---------------------------------------------
+				;- Draws a 3 pixel wide border around screen -
+				;---------------------------------------------
+
+ 00F1				draw_border	proc	near
+
+ 00F1  55			push bp
+ 00F2  8B EC			mov  bp, sp
+ 00F4  50			push ax
+ 00F5  53			push bx
+ 00F6  51			push cx
+ 00F7  52			push dx
+
+ 00F8  8B 76 08				mov	 si, word ptr 8[bp]		; width
+ 00FB  8B 7E 06				mov	 di, word ptr 6[bp]		; height
+ 00FE  8B 46 04				mov	 ax, word ptr 4[bp]		; color
+ 0101  B4 0C				mov  ah, 0ch
+ 0103  B9 0000				mov  cx, 0
+
+ 0106					tbdr_lp:
+ 0106  BB 0000					mov  bx, 0
+ 0109  BA 0000					mov  dx, 0
+ 010C  CD 10					int  10h
+ 010E  42					inc  dx
+ 010F  CD 10					int  10h
+ 0111  42					inc  dx
+ 0112  CD 10					int  10h
+ 0114  8B D7					mov  dx, di
+ 0116  4A					dec  dx
+ 0117  CD 10					int  10h
+ 0119  4A					dec  dx
+ 011A  CD 10					int  10h
+ 011C  4A					dec  dx
+ 011D  CD 10					int  10h
+ 011F  41					inc  cx
+ 0120  3B CE					cmp  cx, si
+ 0122  7E E2					jle  tbdr_lp
+						
+ 0124  BA 0000				mov  dx, 0
+ 0127					bbdr_lp:
+ 0127  BB 0000					mov  bx, 0
+ 012A  B9 0000					mov  cx, 0
+ 012D  CD 10					int  10h
+ 012F  41					inc  cx
+ 0130  CD 10					int  10h
+ 0132  41					inc  cx
+ 0133  CD 10					int  10h
+ 0135  8B CE					mov  cx, si
+ 0137  49					dec  cx
+ 0138  CD 10					int  10h
+ 013A  49					dec  cx
+ 013B  CD 10					int  10h
+ 013D  49					dec  cx
+ 013E  CD 10					int  10h
+ 0140  42					inc  dx
+ 0141  3B D7					cmp  dx, di
+ 0143  7E E2					jle  bbdr_lp
+
+ 0145  5A			pop  dx
+ 0146  59			pop  cx
+ 0147  5B			pop  bx
+ 0148  58			pop  ax
+ 0149  5D			pop  bp
+
+ 014A  C2 0006			ret 6
+
+ 014D				draw_border endp
+
+
+				;------------------
+				;- Draws a circle -
+				;------------------
+
+ 014D				draw_circle	proc	near
+
+ 014D  55			push bp
+ 014E  8B EC			mov  bp, sp
+ 0150  50			push ax
+ 0151  53			push bx
+ 0152  51			push cx
+ 0153  52			push dx
+
+ 0154  8B 76 0A				mov	 si, word ptr 10[bp]	; x_center
+ 0157  8B 7E 08				mov	 di, word ptr 8[bp]		; y_center
+ 015A  8B 5E 06				mov	 bx, word ptr 6[bp]		; radius
+ 015D  89 1E 00A2 R			mov  c_rad, bx
+ 0161  B8 FFFE				mov  ax, -2
+ 0164  F7 2E 00A2 R			imul c_rad
+ 0168  40				inc  ax
+ 0169  A3 00A4 R			mov  c_a, ax
+ 016C  BB 0001				mov  bx, 1
+ 016F  89 1E 00AA R			mov  c_b, bx
+ 0173  BB 0000				mov  bx, 0
+ 0176  89 1E 00A6 R			mov  c_y, bx
+ 017A  89 1E 00A8 R			mov  c_f, bx
+ 017E  8B 46 04				mov	 ax, word ptr 4[bp]		; color
+ 0181  B4 0C				mov  ah, 0ch
+
+ 0183					crl_lp:
+ 0183  8B D6					mov  dx, si
+ 0185  03 16 00A2 R				add  dx, c_rad
+ 0189  89 16 009A R				mov  d_high, dx
+ 018D  8B CF					mov  cx, di
+ 018F  03 0E 00A6 R				add  cx, c_y
+ 0193  CD 10					int  10h
+ 0195  8B D6					mov  dx, si
+ 0197  2B 16 00A2 R				sub  dx, c_rad
+ 019B  89 16 009C R				mov  d_low, dx
+ 019F  8B CF					mov  cx, di
+ 01A1  2B 0E 00A6 R				sub  cx, c_y
+ 01A5  CD 10					int  10h
+ 01A7						lline_lp:
+ 01A7  FF 06 009C R					inc  d_low
+ 01AB  8B 16 009C R					mov  dx, d_low
+ 01AF  CD 10						int  10h
+ 01B1  3B 16 009A R					cmp  dx, d_high
+ 01B5  7C F0						jl   lline_lp
+ 01B7  8B D6					mov  dx, si
+ 01B9  03 16 00A2 R				add  dx, c_rad
+ 01BD  8B CF					mov  cx, di
+ 01BF  2B 0E 00A6 R				sub  cx, c_y
+ 01C3  89 16 009A R				mov  d_high, dx
+ 01C7  CD 10					int  10h
+ 01C9  8B D6					mov  dx, si
+ 01CB  2B 16 00A2 R				sub  dx, c_rad
+ 01CF  8B CF					mov  cx, di
+ 01D1  03 0E 00A6 R				add  cx, c_y
+ 01D5  89 16 009C R				mov  d_low, dx
+ 01D9  CD 10					int  10h
+ 01DB						rline_lp:
+ 01DB  FF 06 009C R					inc  d_low
+ 01DF  8B 16 009C R					mov  dx, d_low
+ 01E3  CD 10						int  10h
+ 01E5  3B 16 009A R					cmp  dx, d_high
+ 01E9  7C F0						jl   rline_lp
+						
+ 01EB  BA 0000					mov  dx, 0
+ 01EE  8B 16 00A8 R				mov  dx, c_f
+ 01F2  3B 16 00A2 R				cmp  dx, c_rad
+ 01F6  7E 24					jle  cir_f
+ 01F8  BA 0000					mov  dx, 0
+ 01FB  FF 0E 00A2 R				dec  c_rad
+ 01FF  8B 16 00A8 R				mov  dx, c_f
+ 0203  03 16 00A4 R				add  dx, c_a
+ 0207  89 16 00A8 R				mov  c_f, dx
+ 020B  BA 0000					mov  dx, 0
+ 020E  8B 16 00A4 R				mov  dx, c_a
+ 0212  03 16 0090 R				add  dx, two
+ 0216  89 16 00A4 R				mov  c_a, dx
+ 021A  EB 22					jmp  endc_f
+ 021C						cir_f:
+ 021C  BA 0000						mov  dx, 0
+ 021F  FF 06 00A6 R					inc  c_y
+ 0223  8B 16 00A8 R					mov  dx, c_f
+ 0227  03 16 00AA R					add  dx, c_b
+ 022B  89 16 00A8 R					mov  c_f, dx
+ 022F  BA 0000						mov  dx, 0
+ 0232  8B 16 00AA R					mov  dx, c_b
+ 0236  03 16 008E R					add  dx, three
+ 023A  89 16 00AA R					mov  c_b, dx
+ 023E						endc_f:
+ 023E  83 3E 00A2 R 00				cmp  c_rad, 0
+ 0243  7E 03					jle  end_clp
+ 0245  E9 FF3B					jmp  crl_lp
+						
+ 0248				end_clp:
+
+ 0248  5A			pop  dx
+ 0249  59			pop  cx
+ 024A  5B			pop  bx
+ 024B  58			pop  ax
+ 024C  5D			pop  bp
+
+ 024D  C2 0008			ret 8
+
+ 0250				draw_circle endp
+
+				; Note, use end with no entry point.
+				end
+Microsoft (R) Macro Assembler Version 6.15.8803		    10/19/05 15:05:36
+10_proc.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+DGROUP . . . . . . . . . . . . .	GROUP
+_DATA  . . . . . . . . . . . . .	16 Bit	 00AC	  Word	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	16 Bit	 0250	  Word	  Public  'CODE'	
+
+
+Procedures,  parameters and locals:
+
+                N a m e                 Type     Value    Attr
+
+draw_border  . . . . . . . . . .	P Near	 00F1	  _TEXT	Length= 005C Public
+  tbdr_lp  . . . . . . . . . . .	L Near	 0106	  _TEXT	
+  bbdr_lp  . . . . . . . . . . .	L Near	 0127	  _TEXT	
+draw_circle  . . . . . . . . . .	P Near	 014D	  _TEXT	Length= 0103 Public
+  crl_lp . . . . . . . . . . . .	L Near	 0183	  _TEXT	
+  lline_lp . . . . . . . . . . .	L Near	 01A7	  _TEXT	
+  rline_lp . . . . . . . . . . .	L Near	 01DB	  _TEXT	
+  cir_f  . . . . . . . . . . . .	L Near	 021C	  _TEXT	
+  endc_f . . . . . . . . . . . .	L Near	 023E	  _TEXT	
+  end_clp  . . . . . . . . . . .	L Near	 0248	  _TEXT	
+get_arg  . . . . . . . . . . . .	P Near	 0000	  _TEXT	Length= 00A5 Public
+  spaces_lp  . . . . . . . . . .	L Near	 0030	  _TEXT	
+  chk_slash  . . . . . . . . . .	L Near	 0039	  _TEXT	
+  chk_p  . . . . . . . . . . . .	L Near	 003F	  _TEXT	
+  chk_equ  . . . . . . . . . . .	L Near	 0049	  _TEXT	
+  chk_num  . . . . . . . . . . .	L Near	 0053	  _TEXT	
+  spaces_next  . . . . . . . . .	L Near	 0081	  _TEXT	
+  end_slp  . . . . . . . . . . .	L Near	 0084	  _TEXT	
+  do_no_msg  . . . . . . . . . .	L Near	 008E	  _TEXT	
+  end_get_arg  . . . . . . . . .	L Near	 009A	  _TEXT	
+rand . . . . . . . . . . . . . .	P Near	 00A5	  _TEXT	Length= 004C Public
+  first_seed . . . . . . . . . .	L Near	 00C2	  _TEXT	
+  next_seed  . . . . . . . . . .	L Near	 00D1	  _TEXT	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 0000h	 
+@DataSize  . . . . . . . . . . .	Number	 0000h	 
+@Interface . . . . . . . . . . .	Number	 0000h	 
+@Model . . . . . . . . . . . . .	Number	 0002h	 
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 DGROUP
+@fardata?  . . . . . . . . . . .	Text   	 FAR_BSS
+@fardata . . . . . . . . . . . .	Text   	 FAR_DATA
+@stack . . . . . . . . . . . . .	Text   	 DGROUP
+CR . . . . . . . . . . . . . . .	Number	 000Dh	 
+END_STR  . . . . . . . . . . . .	Number	 0024h	 
+LF . . . . . . . . . . . . . . .	Number	 000Ah	 
+c_a  . . . . . . . . . . . . . .	Word	 00A4	  _DATA	
+c_b  . . . . . . . . . . . . . .	Word	 00AA	  _DATA	
+c_f  . . . . . . . . . . . . . .	Word	 00A8	  _DATA	
+c_high . . . . . . . . . . . . .	Word	 0096	  _DATA	
+c_low  . . . . . . . . . . . . .	Word	 0098	  _DATA	
+c_rad  . . . . . . . . . . . . .	Word	 00A2	  _DATA	
+c_sum  . . . . . . . . . . . . .	Word	 00A0	  _DATA	
+c_y  . . . . . . . . . . . . . .	Word	 00A6	  _DATA	
+chrs . . . . . . . . . . . . . .	Byte	 003A	  _DATA	
+d_high . . . . . . . . . . . . .	Word	 009A	  _DATA	
+d_low  . . . . . . . . . . . . .	Word	 009C	  _DATA	
+msg1 . . . . . . . . . . . . . .	Byte	 0018	  _DATA	
+msg  . . . . . . . . . . . . . .	Byte	 0000	  _DATA	
+psp  . . . . . . . . . . . . . .	Word	 008A	  _DATA	
+r_A  . . . . . . . . . . . . . .	Word	 0092	  _DATA	
+r_B  . . . . . . . . . . . . . .	Word	 0094	  _DATA	
+r_num  . . . . . . . . . . . . .	Word	 009E	  _DATA	
+ten  . . . . . . . . . . . . . .	Word	 008C	  _DATA	
+three  . . . . . . . . . . . . .	Word	 008E	  _DATA	
+two  . . . . . . . . . . . . . .	Word	 0090	  _DATA	
+
+	   0 Warnings
+	   0 Errors

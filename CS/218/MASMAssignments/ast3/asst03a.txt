@@ -1,0 +1,97 @@
+CSC 218, Section 01, 02
+Homework,  Asst. #3
+
+Purpose:    Write simple assembly language program.  Become familiar with
+            the assembler, linker, and debugger.  Display values in memory
+            and begin to use and learn basic arithmetic instructions.
+
+Due:        Wednesday   (09/14)
+
+Points:     30
+
+
+Assignment:
+Write a simple assembly language program to compute the following
+calculations:
+
+       an1 = nm1 + nm3
+       an2 = nm2 + nm4
+       an3 = nm1 - nm3
+       an4 = nm2 - nm4
+       an5 = nm1 * nm3
+       an6 = nm2 * nm4
+       an7 = nm1 / nm4
+       an8 = nm4 / nm3
+
+Declare the word-sized values as follows:
+
+	nm1	dw	21
+	nm2	dw	12
+	nm3	dw	8
+	nm4	dw	13
+	an1	dw	?
+	an2	dw	?
+	an3	dw	?
+	an4	dw	?
+	an5	dw	?
+	an6	dw	?
+	an7	dw	?
+	an8	dw	?
+
+Assemble the program and submit the assembler list file.
+
+Run the program with the debugger and submit a printout of the final
+results (after program execution).  Use the debugger memory dump commands
+to display the values as they appear in memory for:   nm1, nm2, nm3, nm4,
+an1, an2, an3, an4, an5, an6, an7, and an8.
+
+
+Refer to the on-line text (Section 6.5, Arithmetic Instructions) for
+information and examples of the addition, subtraction, multiplication,
+and division instructions.
+
+
+
+Debugger Commands
+
+Assignment #3 requires:
+
+  * Execute program.
+  * Display values (after execution).
+
+Note, all variables are word-size (2-bytes), and the correct memory
+display command is "mdi".  Please refer to the on-line help facility
+within the CodeView debugger for additional commands.
+
+The memory display commands for assignment #3 would be:
+
+mdi nm1 l1
+mdi nm2 l1
+mdi nm3 l1
+mdi nm4 l1
+mdi an1 l1
+mdi an2 l1
+mdi an3 l1
+mdi an4 l1
+mdi an5 l1
+mdi an6 l1
+mdi an7 l1
+mdi an8 l1
+
+Note, for future assignments you will need to select the correct command
+to display the data based on the defined size and any guidance from the
+assignment.
+
+
+
+Hint:
+The CodeView debugger is capable of reading commands from a file.  As such,
+the above commands can be placed into a file and, when ready, executed from
+the file.  For example, if the above commands are placed into a file named
+"a3in.txt", within the debugger, the command   <a3in.txt will read and
+execute the commands in the file.  Thus, you can display the data (via the
+"<"), execute the program, and then re-display the data (via the "<").
+This can save typing and speed the displaying of the final results.
+
+
+

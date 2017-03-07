@@ -1,0 +1,4 @@
+Minimum Spanning Tree:
+Boac,SantaCruz 15
+SantaCruz,Torrijos 14
+Cost = 29

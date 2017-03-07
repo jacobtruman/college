@@ -1,0 +1,35 @@
+Type the number of integers you would like to be inserted into the bag.
+30
+
+Here are your sorted numbers
+4
+11
+30
+45
+57
+78
+117
+145
+195
+251
+287
+350
+389
+456
+523
+563
+629
+668
+693
+730
+787
+820
+868
+910
+932
+962
+976
+983
+992
+999
+jacob@beckyruxpin:/www/ivlost/docs/cprogs/cs202/bag>

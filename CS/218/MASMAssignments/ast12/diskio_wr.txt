@@ -1,0 +1,142 @@
+;  CSC218 - Example program to demonstrate file I/O.
+
+;  This example will open/create a file, write
+;  some information to the file, and close the file.
+
+;  The file name and write message are hard-coded
+;  for the example.
+
+
+.model small
+
+; -------------------------------------------------------
+
+.data
+
+NULL		equ	0
+CR		equ	13
+LF		equ	10
+END_STR		equ	"$"
+
+
+file_name	db	"test.txt", NULL
+
+wr_msg		db	"Hello World", CR, LF
+		db	"Line 2", CR, LF
+		db	CR, LF
+		db	"Last Line.", CR, LF
+		db	NULL
+
+file_handle	dw	?
+
+
+err_opn		db	"Error opening file.", CR, LF, END_STR
+err_wrt		db	"Error writing to file.", CR, LF, END_STR
+err_clo		db	"Error closing file.", CR, LF, END_STR
+
+
+; -------------------------------------------------------
+
+.stack
+
+.code
+
+main	proc	far
+	mov	ax, @data
+	mov	ds, ax
+
+; -----
+;  Open and create a file.
+;  If the file already exists, this system service will
+;   overwrite any previous information in the file!
+
+;  System File Open/Create:
+;	AH = 3ch
+;	DX = address of file name (NULL terminated)
+
+	mov	ah, 3ch				; Open outut file
+	mov	al, 0
+	lea	dx, file_name
+	mov	cl, 0
+	int	21h
+
+	jc	err_on_opn
+
+	mov	file_handle, ax
+
+; -----
+; Count characters to write.
+
+	lea	bx, wr_msg
+	mov	cx, 0
+cnt_lp:
+	cmp	byte ptr [bx], NULL
+	je	wrt_chrs
+	inc	bx
+	inc	cx
+	jmp	cnt_lp
+
+; -----
+;  Write characters to file.
+
+;  System File Write:
+;	AH = 40h
+;	BX = file handle
+;	CX = count of characters to write
+;	DX = address of characters
+
+;  Note, in this example, CX is set from previous loop.
+
+wrt_chrs:
+	mov	ah, 40h
+	mov	bx, file_handle
+	lea	dx, wr_msg
+	int	21h
+
+	jc	err_on_wrt
+
+
+; -----
+;  Close file.
+
+;  System Close File:
+;	AH = 3eh
+;	BX = file handle
+
+	mov	ah, 3eh				; close file
+	mov	bx, file_handle
+	int	21h
+
+	jc	err_on_clo
+
+
+	jmp	end_example
+
+; -----
+;  Display appropriate error messages.
+
+err_on_opn:
+	lea	dx, err_opn
+	jmp	prt_err_msg
+
+err_on_wrt:
+	lea	dx, err_wrt
+	jmp	prt_err_msg
+
+err_on_clo:
+	lea	dx, err_clo
+
+prt_err_msg:
+	mov	ah, 09h
+	int	21h
+
+; -----
+; Done, so end program.
+
+end_example:
+	mov	ah, 4ch
+	int	21h
+
+main	endp
+
+end	main

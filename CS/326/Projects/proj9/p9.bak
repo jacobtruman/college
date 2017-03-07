@@ -1,0 +1,51 @@
+;; ----------------------------------
+; Project #9
+
+
+
+
+;; -----------------------------------
+; Tests
+
+; Test squares
+(format "---------------------")
+(format "Tests - squares")
+(square 4)
+(square 9)
+
+; Test rarea
+(format "Tests - rarea")
+(rarea 3 5)
+(rarea 13 22)
+
+(format "Tests - poly1")
+(poly1 5)
+(poly1 9)
+
+(format "Tests - poly2")
+(poly2 5)
+(poly2 9)
+
+(format "Tests - payment")
+(payment 10000 10 10)
+(payment 5000 5 7)
+
+(format "Tests - fact")
+(fact 5)
+(fact 10)
+
+(format "Tests - fib")
+(fib 13)
+(fib 28)
+
+(format "Tests - harmonic")
+(harmonic 3)
+(harmonic 7)
+(harmonic 5)
+(harmonic 10)
+
+(format "Tests - ack")
+(ack 1 2)
+(ack 2 3)
+(ack 3 4)
+

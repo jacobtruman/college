@@ -1,0 +1,85 @@
+CSC 218, Section 01, 02
+Homework, MIPS Asst. #5
+
+Purpose:  Become familiar with the MIPS Instruction Set, and the MIPS
+          procedure calling convention, and recursion.
+Due:      Thursday  (12/08)
+Points:   75
+
+Assignment:
+Write two simple assembly language procedures compute the find the great
+common divisor (GCD) using two different recursive algorithms.  Use the
+provided main routine.
+
+   * Write a MIPS assembly language procedure, get_data, to read the
+     initial m and n values.  The procedure must ensure that (m >= n > 0).
+
+   * Write a MIPS assembly language procedure, fnd_gcd1, to compute the
+     greatest common divisor (GCD) function via Euclid's Algorithm.
+     Euclid's Algorithm is defined as follows:
+
+          gcd(m,n) =
+               n  if mod(m,n)=0
+               gcd(n,remainder(m/n)) 
+
+     Additionally, the fnd_gcd1 function should count the number of times
+     it is called (by incrementing a globally defined counter).
+
+   * Write a MIPS assembly language procedure, fnd_gcd2, to compute the
+     greatest common divisor (GCD) function via Dijkstra's Algorithm.
+     Dijkstra's Algorithm is defined as follows:
+
+          gcd(m,n) =
+               m - if m=n
+               gcd(m-n,n)  - if m>n
+               gcd(m,n-m)  - if m<n
+
+     Additionally, the fnd_gcd2 function should count the number of times
+     it is called (by incrementing a globally defined counter).
+
+   * Write a MIPS assembly language procedure, prt_resuslts, to display
+     the M, N, GCD(1), GCD(2), GCD(1) Count, and GCD(2) Count.
+
+Do not change the data types of the provided data.  You may define
+additional variables as required
+
+
+
+
+Submission:
+-----------
+When complete, submit a copy of the source file(s) and the SPIM Log File
+via the class web page (assignment submission link) on Thursday,
+December 08, 2004 before midnight.   Assignments received after midnight
+will not  be accepted!  Do not submit a hard-copy.
+
+
+
+
+
+Example Output:
+---------------
+
+
+MIPS Assignment #5
+Find Greatest Common Divisor (GCD)
+
+
+Enter M = 468
+Enter N = 24
+
+
+---------------
+
+M value: 468
+N Value:  24
+
+GCD(1): 12
+GCD(2): 12
+
+GCD(1) - Count: 2
+GCD(2) - Count: 21
+
+
+
+

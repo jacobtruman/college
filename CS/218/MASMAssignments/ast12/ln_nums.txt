@@ -1,0 +1,197 @@
+;  CSC218 - Assignment #12
+;  Provided Main.
+
+
+;  This program will open a text file, read the text
+;   information, add a line number, and write the new line
+;   (with line number) to a new file.
+
+;  The input and output file names are read from
+;   the command line.
+
+;  To ensure overall efficiency, the program performs
+;   buffered I/O with a buffer size of 8192.
+
+;  The program performs basic error checking and issues
+;   appropriate error messages.
+
+
+.model	small
+.386
+
+
+; -------------------------------------------------------
+
+.data
+
+; -----
+;  Constants
+
+TRUE		equ	1
+FALSE		equ	-1
+
+CR		equ	13
+LF		equ	10
+NULL		equ	0
+
+
+; -----
+;  Variables for main.
+
+rd_fhan		dw	?
+wr_fhan		dw	?
+
+in_line		db	201 dup (0)
+out_line	db	210 dup (0)
+
+ln_number	dd	0
+
+done		dw	FALSE
+
+
+; -------------------------------------------------------
+
+.stack
+
+.code
+
+extrn	get_cli:near
+extrn	get_ln:near
+extrn	add_ln_num:near
+extrn	wrt_ln:near
+
+
+; --------------------------------------------
+;  Main program.
+
+;  * Read & verify the command line qualifiers
+;     (includes opening the files).
+;
+;  * Main processing loop
+;     - read line
+;     - add line number
+;     - write new line
+;
+;  * Close files.
+
+
+; -----
+; Calls four procedures.
+
+;  1) get_cli
+;	Get command line arguments (two file names),
+;	performs appropriate error checking, opens files,
+;	and returns the file handles.  If any errors in
+;	command line arguments, display appropriate error
+;	message, and terminate program.
+
+;  2) get_ln
+;	Get a single line of text (which is expected to be
+;	no more than 255 characters).  Returned line should
+;	be in ASCII-Z format (terminated with an NULL).
+;	Note, this routine must perform all buffer management.
+;	That is, the large buffer (8192) must be filled and
+;	each line obtained from the large buffer.  The get_ln
+;	procedure must track the current location within the
+;	large buffer.  When, empty, the get_ln procedure must
+;	re-fill the large buffer.  When all characters have been
+;	returned, the get_ln proceudre should set the appropriate flag.
+
+;  3) add_ln_num
+;       Create a line with the line number and the contents
+;	of the old string.  Requires integer to ASCII conversion
+;	of double-word line number.
+
+;  4) wrt_ln
+;	Write a line of text to the output file.  The line of text
+;	must be in ASCII-Z format (i.e., terminated with a NULL).
+;	The wrt_ln procedure must count the characters and write
+;	those characters to the file.
+
+
+; -----
+
+main	proc	far
+	mov	ax, @data
+	mov	ds, ax
+
+; -----
+;  Get and verify command line information.
+;   If arguments are not OK, prints error and ends program.
+;   If arguments are OK, returns two file handles
+;   (one file for reading and the other for writting).
+
+	lea	ax, rd_fhan
+	push	ax
+	lea	ax, wr_fhan
+	push	ax
+	call	get_cli
+
+
+; -----
+;  Main processing loop.
+;    1) Get a line of text.
+;    2) add line number.
+;    3) Write the line to the output file.
+
+;  All I/O buffering is done inside of the get_ln routine.
+
+	mov	done, FALSE
+
+next_line:
+
+	push	rd_fhan				; arg #1, input file handle
+	lea	ax, in_line
+	push	ax				; arg #2, addr line buff
+	lea	ax, done
+	push	ax				; arg #3, addr done flag
+	call	get_ln
+
+	cmp	done, TRUE
+	je	close_files
+
+
+	inc	ln_number
+
+
+	lea	ax, in_line
+	push	ax				; arg #1, addr line buff
+	lea	ax, out_line
+	push	ax				; arg #2, addr new line buff
+	lea	ax, ln_number
+	push	ax				; arg #3, addr DD line number
+	call	add_ln_num
+
+
+	push	wr_fhan				; arg #2, output file handle
+	lea	ax, out_line
+	push	ax				; arg #2, addr new line buff
+	call	wrt_ln
+
+	jmp	next_line
+
+; -----
+;  Done, close files.
+
+close_files:
+	mov	ah, 3eh				; close input file
+	mov	bx, rd_fhan
+	int	21h
+
+	mov	ah, 3eh				; close output file
+	mov	bx, wr_fhan
+	int	21h
+
+; -----
+;  Done, end program.
+
+last:
+	mov	ah, 4ch
+	int	21h
+main	endp
+
+
+; -------------------------------------------------------
+
+end	main
+

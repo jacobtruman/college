@@ -1,0 +1,6 @@
+>LOC_Os08g174001|11978.t01610.m05859|exon_1-intron_1 unspliced-genomic hypothetical protein
+TCTCCTGCATTTGCGGTGAGTGGTGCCATT
+>LOC_Os08g174001|11978.t01610.m05859|exon_2-intron_2 unspliced-genomic hypothetical protein
+TCAGCCAAAACGAAGGTGAATTGTAGTACT
+>LOC_Os08g174001|11978.t01610.m05859|exon_3-intron_3 unspliced-genomic hypothetical protein
+AAATCCAAACCCTAGGTATGAATTGGTATC

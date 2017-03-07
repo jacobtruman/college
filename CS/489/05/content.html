@@ -1,0 +1,98 @@
+<!--
+  --      file: content.html
+  --  function: HTML src for Web Page that
+  --    author: Roy H. Ogawa <rho@cs.unlv.edu>
+  -- copyright: Roy H. Ogawa, Computer Science, UNLV
+  --      date: 9/25/2006
+  -->
+<html>
+<head>
+<title>
+
+</title>
+</head>
+
+<body bgcolor=white>
+<table>
+<tbody>
+<tr>
+<td width="50"> &nbsp; </td>
+<td width="475">
+
+<center>
+<p>
+<h2>
+Bioinformatics<br/>
+Assignment 5
+</h2>
+</p>
+
+<p>
+<h3>
+Find Locations Within the Rice Pseudomolecule Data Files <br/>
+Do Some Comparison
+</h3>
+</p>
+</center>
+
+<ol>
+<li> <p>
+     <em>Gibberellin</em> is one of 5 known types of plant hormones.
+     (The others are Auxin, Absissic Acid, Cytokinin, and Ethylene)  Find
+     all the records in the whole rice genome that has the word 'Gibberellin'
+     in it, capitalized, upper and lower case.  Do this for the .seq and the
+     .1kUpstream files, creating two files, all.gibberellin.1kUpstream and
+     all.gibberellin.seq.
+     The genes that have the word 'Gibberellin' in their tags split into two
+     types:
+     One for Gibberellin itself, and the other for other genes for whose
+     expression Gibberellin acts as a regulator or a responder.  Leave only
+     the ones for Gibberellin in the files.  Remove the others by hand if
+     necessary.
+     </p> </li>
+<li> <p>
+     Write a program that uses the .seq and the .1kUpstream files as input
+     for each gene in .seq, and in .1kUpstream.  The .seq file records, here
+     called 'seqRecord', starts at the first exon of a gene while the
+     .1kUpstream
+     records, here called '1kUpstreamRecord', contains the beginning of the 
+     first exon at its tail.  (The sequences that start at the beginning of a
+     record are called its <em>prefixes</em> and the sequences that are the
+     tail of a record are called its <em>suffixes</em>.)  A prefix of the
+     seqRecord data is contained as a suffix of the 1kUpstreamRecord data.
+     In some cases, there is no 5'UTR data for the gene and so the
+     seqRecord data starts at the last 'ATG' of the 1kUpstreamRecord data.
+     The 'ATG' is a prefix of the seqRecord and the overlap sequence contains
+     only this 'ATG'.
+     </p> </li>
+     <p>
+     Find the point where the seqRecord data begins in the 1kUpstreamRecord
+     data.  Use 35 base pairs of the 1kUpstreamRecord data before that point
+     (upstream of that point) as the data sequence for a new record that has
+     the same form of header as that of the 1kUpstream file except that the
+     '1kUpstream' is replaced by 'PromoterTail' and the coordinates of the
+     35 base pair sequence replaces the coordinates of the 1kUpstream data.
+     Put this into a file named 'searchString.dat'.  If the 1kUpstreamRecord
+     data does not include 35 base pairs before the beginning of the seqRecord
+     start point, fill it by adding a prefix of 'N' to make 35 bp.
+     </p> </li>
+     <p>
+     <li>
+     Write a program that finds the median string of length 7 with the search
+     strings as input.
+     </p> </li>
+     <li>
+     <p>
+     Turn it in as before, in a tar'd gzip'd file under the directory 
+     '&lt;your-name&gt;/05' by Midnight, Sunday, 10/29/2006.
+     </p> </li>
+</ol>
+
+
+</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

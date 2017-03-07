@@ -1,0 +1,398 @@
+Messages
+=========================
+SPIM Version Version 7.1 of January 2, 2005
+Copyright 1990-2004 by James R. Larus (larus@cs.wisc.edu).
+All Rights Reserved.
+DOS and Windows ports by David A. Carley (dac@cs.wisc.edu).
+Copyright 1997 by Morgan Kaufmann Publishers, Inc.
+See the file README for a full copyright notice.
+Loaded: C:\Program Files\PCSpim\exceptions.s
+SPIM Version Version 7.1 of January 2, 2005
+Copyright 1990-2004 by James R. Larus (larus@cs.wisc.edu).
+All Rights Reserved.
+DOS and Windows ports by David A. Carley (dac@cs.wisc.edu).
+Copyright 1997 by Morgan Kaufmann Publishers, Inc.
+See the file README for a full copyright notice.
+Loaded: C:\Program Files\PCSpim\exceptions.s
+Memory and registers cleared and the simulator reinitialized.
+
+C:\donotmove\CS218\MIPSAssignments\ast2\ast2.asm successfully loaded
+
+
+Registers
+=========================
+ PC      = 00000000   EPC     = 00000000   Cause   = 00000000   BadVAddr= 00000000
+ Status  = 3000ff10   HI      = 00000000   LO      = 005ec5ea
+                                 General Registers
+R0  (r0) = 00000000  R8  (t0) = 100100c8  R16 (s0) = 100100c8  R24 (t8) = 00000000
+R1  (at) = 10010000  R9  (t1) = 00096f20  R17 (s1) = 00000032  R25 (t9) = 100101f4
+R2  (v0) = 0000000a  R10 (t2) = 005ec5ea  R18 (s2) = 000015dc  R26 (k0) = 00000000
+R3  (v1) = 00000000  R11 (t3) = 00eeea88  R19 (s3) = 000015dc  R27 (k1) = 00000000
+R4  (a0) = 10010306  R12 (t4) = 1559def0  R20 (s4) = 00eeea88  R28 (gp) = 10008000
+R5  (a1) = 7fffef84  R13 (t5) = 006d5142  R21 (s5) = 00000005  R29 (sp) = 7fffef80
+R6  (a2) = 7fffef88  R14 (t6) = 005ecccc  R22 (s6) = 000000c4  R30 (s8) = 00000000
+R7  (a3) = 00000000  R15 (t7) = 00000000  R23 (s7) = 00000064  R31 (ra) = 00400018
+
+ FIR    = 00009800    FCSR    = 00000000    FCCR   = 00000000   FEXR    = 00000000
+ FENR   = 00000000
+                              Double Floating Point Registers
+FP0  = 0.000000      FP8  = 0.000000      FP16 = 0.000000      FP24 = 0.000000     
+FP2  = 0.000000      FP10 = 0.000000      FP18 = 0.000000      FP26 = 0.000000     
+FP4  = 0.000000      FP12 = 0.000000      FP20 = 0.000000      FP28 = 0.000000     
+FP6  = 0.000000      FP14 = 0.000000      FP22 = 0.000000      FP30 = 0.000000     
+                              Single Floating Point Registers
+FP0  = 0.000000      FP8  = 0.000000      FP16 = 0.000000      FP24 = 0.000000     
+FP1  = 0.000000      FP9  = 0.000000      FP17 = 0.000000      FP25 = 0.000000     
+FP2  = 0.000000      FP10 = 0.000000      FP18 = 0.000000      FP26 = 0.000000     
+FP3  = 0.000000      FP11 = 0.000000      FP19 = 0.000000      FP27 = 0.000000     
+FP4  = 0.000000      FP12 = 0.000000      FP20 = 0.000000      FP28 = 0.000000     
+FP5  = 0.000000      FP13 = 0.000000      FP21 = 0.000000      FP29 = 0.000000     
+FP6  = 0.000000      FP14 = 0.000000      FP22 = 0.000000      FP30 = 0.000000     
+FP7  = 0.000000      FP15 = 0.000000      FP23 = 0.000000      FP31 = 0.000000     
+
+
+Console
+=========================
+
+Program to calculate right triangle areas:
+   Areas(n) = ( a_sides(n) * b_sides(n) ) / 2
+ Then find the min, med, max, sum, and average for areas.
+
+Right Triangle Areas:
+618272  626080  632812  637320  639580  
+644112  648660  652082  654368  660100  
+2511040  2515524  2522258  2529000  2533500  
+2535752  2540258  2549282  2556060  2565112  
+5975424  6079584  6121500  6128500  6205764  
+6209288  6212812  6216338  6390312  6458418  
+10736978  10820552  10923138  10979298  11030904  
+11063808  11120328  11139200  11214848  11295504  
+15130500  15196584  15257288  15323648  15345800  
+15434568  15540312  15607284  15624050  15657608  
+
+
+    Areas min = 618272
+    Areas med = 6211050
+    Areas max = 15657608
+    Areas sum = 358211312
+    Areas ave = 7164226
+
+
+Text Segment
+=========================
+[0x00400000]        0x8fa40000  lw $4, 0($29)                   ; 174: lw $a0 0($sp)                # argc
+[0x00400004]        0x27a50004  addiu $5, $29, 4                ; 175: addiu $a1 $sp 4                # argv
+[0x00400008]        0x24a60004  addiu $6, $5, 4                 ; 176: addiu $a2 $a1 4                # envp
+[0x0040000c]        0x00041080  sll $2, $4, 2                   ; 177: sll $v0 $a0 2
+[0x00400010]        0x00c23021  addu $6, $6, $2                 ; 178: addu $a2 $a2 $v0
+[0x00400014]        0x0c100009  jal 0x00400024 [main]           ; 179: jal main
+[0x00400018]        0x00000000  nop                             ; 180: nop
+[0x0040001c]        0x3402000a  ori $2, $0, 10                  ; 182: li $v0 10
+[0x00400020]        0x0000000c  syscall                         ; 183: syscall                        # syscall 10 (exit)
+[0x00400024]        0x3c011001  lui $1, 4097 [hdr]              ; 73: la        $a0, hdr
+[0x00400028]        0x34240270  ori $4, $1, 624 [hdr]
+[0x0040002c]        0x34020004  ori $2, $0, 4                   ; 74: li        $v0, 4
+[0x00400030]        0x0000000c  syscall                         ; 75: syscall                                # print header
+[0x00400034]        0x3c011001  lui $1, 4097 [ars_msg]          ; 81: la        $a0, ars_msg
+[0x00400038]        0x3424030b  ori $4, $1, 779 [ars_msg]
+[0x0040003c]        0x34020004  ori $2, $0, 4                   ; 82: li        $v0, 4
+[0x00400040]        0x0000000c  syscall                         ; 83: syscall                                # print "ars_msg"
+[0x00400044]        0x3c011001  lui $1, 4097 [new_ln]           ; 85: la        $a0, new_ln                # print a newline
+[0x00400048]        0x34240306  ori $4, $1, 774 [new_ln]
+[0x0040004c]        0x34020004  ori $2, $0, 4                   ; 86: li        $v0, 4
+[0x00400050]        0x0000000c  syscall                         ; 87: syscall
+[0x00400054]        0x3c081001  lui $8, 4097 [a_sides]          ; 89: la        $t0, a_sides        # set $t0 addr of a_sides
+[0x00400058]        0x3c101001  lui $16, 4097 [a_sides]         ; 90: la        $s0, a_sides        # set $s0 addr of b_sides
+[0x0040005c]        0x3c011001  lui $1, 4097 [areas]            ; 91: la        $t9, areas                # set $t9 addr of areas
+[0x00400060]        0x34390190  ori $25, $1, 400 [areas]
+[0x00400064]        0x3c011001  lui $1, 4097                    ; 92: lw        $s1, len                # set $s1 to length
+[0x00400068]        0x8c310258  lw $17, 600($1)
+[0x0040006c]        0x34150005  ori $21, $0, 5                  ; 93: li  $s5, 5                        # set 5 counter to 5
+[0x00400070]        0x340c0000  ori $12, $0, 0                  ; 94: li  $t4, 0                        # set Areas sum to 0
+[0x00400074]        0x34140000  ori $20, $0, 0                  ; 97: li  $s4, 0                        # set surrent area to 0
+[0x00400078]        0x8d120000  lw $18, 0($8)                   ; 98: lw        $s2, ($t0)                # get a_sides[n]
+[0x0040007c]        0x8e130000  lw $19, 0($16)                  ; 99: lw        $s3, ($s0)                # get a_sides[n]
+[0x00400080]        0x7253a002  mul $20, $18, $19               ; 101: mul $s4, $s2, $s3
+[0x00400084]        0x34010002  ori $1, $0, 2                   ; 102: div $s4, $s4, 2
+[0x00400088]        0x0281001a  div $20, $1
+[0x0040008c]        0x0000a012  mflo $20
+[0x00400090]        0xaf340000  sw $20, 0($25)                  ; 103: sw        $s4, ($t9)
+[0x00400094]        0x01946020  add $12, $12, $20               ; 105: add $t4, $t4, $s4        # add area to sum
+[0x00400098]        0x00142021  addu $4, $0, $20                ; 107: move        $a0, $s4
+[0x0040009c]        0x34020001  ori $2, $0, 1                   ; 108: li        $v0, 1
+[0x004000a0]        0x0000000c  syscall                         ; 109: syscall                                # print area
+[0x004000a4]        0x3c011001  lui $1, 4097 [spcs]             ; 111: la        $a0, spcs                # print spaces
+[0x004000a8]        0x34240308  ori $4, $1, 776 [spcs]
+[0x004000ac]        0x34020004  ori $2, $0, 4                   ; 112: li        $v0, 4
+[0x004000b0]        0x0000000c  syscall                         ; 113: syscall
+[0x004000b4]        0x22b5ffff  addi $21, $21, -1               ; 115: add $s5, $s5, -1
+[0x004000b8]        0x16a00005  bne $21, $0, 20 [skip_nl-0x004000b8]; 116: bnez $s5, skip_nl
+[0x004000bc]        0x3c011001  lui $1, 4097 [new_ln]           ; 118: la        $a0, new_ln                # print a newline
+[0x004000c0]        0x34240306  ori $4, $1, 774 [new_ln]
+[0x004000c4]        0x34020004  ori $2, $0, 4                   ; 119: li        $v0, 4
+[0x004000c8]        0x0000000c  syscall                         ; 120: syscall
+[0x004000cc]        0x2aa10001  slti $1, $21, 1                 ; 123: bge        $s5, 1, skip_s5
+[0x004000d0]        0x10200002  beq $1, $0, 8 [skip_s5-0x004000d0]
+[0x004000d4]        0x34150005  ori $21, $0, 5                  ; 124: li  $s5, 5                        # set 5 counter to 5
+[0x004000d8]        0x2231ffff  addi $17, $17, -1               ; 127: add        $s1, $s1, -1                # decrement counter
+[0x004000dc]        0x21080004  addi $8, $8, 4                  ; 128: add        $t0, $t0, 4                        # increment addr by word
+[0x004000e0]        0x22100004  addi $16, $16, 4                ; 129: add        $s0, $s0, 4                        # increment addr by word
+[0x004000e4]        0x23390004  addi $25, $25, 4                ; 130: add        $t9, $t9, 4                        # increment addr by word
+[0x004000e8]        0x1620ffe3  bne $17, $0, -116 [a_loop-0x004000e8]; 131: bnez $s1, a_loop
+[0x004000ec]        0x3c011001  lui $1, 4097 [new_ln]           ; 134: la        $a0, new_ln                # print a newline
+[0x004000f0]        0x34240306  ori $4, $1, 774 [new_ln]
+[0x004000f4]        0x34020004  ori $2, $0, 4                   ; 135: li        $v0, 4
+[0x004000f8]        0x0000000c  syscall                         ; 136: syscall
+[0x004000fc]        0x3c011001  lui $1, 4097 [new_ln]           ; 138: la        $a0, new_ln                # print a newline
+[0x00400100]        0x34240306  ori $4, $1, 774 [new_ln]
+[0x00400104]        0x34020004  ori $2, $0, 4                   ; 139: li        $v0, 4
+[0x00400108]        0x0000000c  syscall                         ; 140: syscall
+[0x0040010c]        0x3c011001  lui $1, 4097 [areas]            ; 146: la        $t9, areas                # set $t9 addr of areas
+[0x00400110]        0x34390190  ori $25, $1, 400 [areas]
+[0x00400114]        0x3c011001  lui $1, 4097                    ; 147: lw        $s1, len                # set $s1 to length
+[0x00400118]        0x8c310258  lw $17, 600($1)
+[0x0040011c]        0x8f290000  lw $9, 0($25)                   ; 148: lw        $t1, ($t9)                # set min, $t1 to areas[0]
+[0x00400120]        0x34010004  ori $1, $0, 4                   ; 149: mul $s6, $s1, 4
+[0x00400124]        0x7221b002  mul $22, $17, $1
+[0x00400128]        0x22d6fffc  addi $22, $22, -4               ; 150: sub $s6, $s6, 4
+[0x0040012c]        0x0336c820  add $25, $25, $22               ; 151: add        $t9, $t9, $s6
+[0x00400130]        0x8f2b0000  lw $11, 0($25)                  ; 152: lw        $t3, ($t9)                # set max, $t3 to areas[0]
+[0x00400134]        0x3c011001  lui $1, 4097 [areas]            ; 153: la        $t9, areas
+[0x00400138]        0x34390190  ori $25, $1, 400 [areas]
+[0x0040013c]        0x16200002  bne $17, $0, 8                  ; 154: div $t5, $t4, $s1
+[0x00400140]        0x0000000d  break $0
+[0x00400144]        0x0191001a  div $12, $17
+[0x00400148]        0x00006812  mflo $13
+[0x0040014c]        0x34010002  ori $1, $0, 2                   ; 156: div $s7, $s1, 2
+[0x00400150]        0x0221001a  div $17, $1
+[0x00400154]        0x0000b812  mflo $23
+[0x00400158]        0x34010004  ori $1, $0, 4                   ; 157: mul $s7, $s7, 4
+[0x0040015c]        0x72e1b802  mul $23, $23, $1
+[0x00400160]        0x0337c820  add $25, $25, $23               ; 158: add $t9, $t9, $s7
+[0x00400164]        0x8f2a0000  lw $10, 0($25)                  ; 159: lw  $t2, ($t9)                # get lower number in middle
+[0x00400168]        0x8f2e0004  lw $14, 4($25)                  ; 160: lw  $t6, 4($t9)                # get higher number in middle
+[0x0040016c]        0x014e5020  add $10, $10, $14               ; 161: add $t2, $t2, $t6        # add lower and higher together
+[0x00400170]        0x34010002  ori $1, $0, 2                   ; 162: div $t2, $t2, 2                # divide by two for med
+[0x00400174]        0x0141001a  div $10, $1
+[0x00400178]        0x00005012  mflo $10
+[0x0040017c]        0x3c011001  lui $1, 4097 [min_msg]          ; 171: la        $a0, min_msg
+[0x00400180]        0x34240321  ori $4, $1, 801 [min_msg]
+[0x00400184]        0x34020004  ori $2, $0, 4                   ; 172: li        $v0, 4
+[0x00400188]        0x0000000c  syscall                         ; 173: syscall                                # print "Areas min = "
+[0x0040018c]        0x00092021  addu $4, $0, $9                 ; 175: move        $a0, $t1
+[0x00400190]        0x34020001  ori $2, $0, 1                   ; 176: li        $v0, 1
+[0x00400194]        0x0000000c  syscall                         ; 177: syscall                                # print min
+[0x00400198]        0x3c011001  lui $1, 4097 [new_ln]           ; 179: la        $a0, new_ln                # print a newline
+[0x0040019c]        0x34240306  ori $4, $1, 774 [new_ln]
+[0x004001a0]        0x34020004  ori $2, $0, 4                   ; 180: li        $v0, 4
+[0x004001a4]        0x0000000c  syscall                         ; 181: syscall
+[0x004001a8]        0x3c011001  lui $1, 4097 [med_msg]          ; 183: la        $a0, med_msg
+[0x004001ac]        0x34240332  ori $4, $1, 818 [med_msg]
+[0x004001b0]        0x34020004  ori $2, $0, 4                   ; 184: li        $v0, 4
+[0x004001b4]        0x0000000c  syscall                         ; 185: syscall                                # print "Areas med = "
+[0x004001b8]        0x000a2021  addu $4, $0, $10                ; 187: move        $a0, $t2
+[0x004001bc]        0x34020001  ori $2, $0, 1                   ; 188: li        $v0, 1
+[0x004001c0]        0x0000000c  syscall                         ; 189: syscall                                # print med
+[0x004001c4]        0x3c011001  lui $1, 4097 [new_ln]           ; 191: la        $a0, new_ln                # print a n        ewline
+[0x004001c8]        0x34240306  ori $4, $1, 774 [new_ln]
+[0x004001cc]        0x34020004  ori $2, $0, 4                   ; 192: li        $v0, 4
+[0x004001d0]        0x0000000c  syscall                         ; 193: syscall
+[0x004001d4]        0x3c011001  lui $1, 4097 [max_msg]          ; 195: la        $a0, max_msg
+[0x004001d8]        0x34240343  ori $4, $1, 835 [max_msg]
+[0x004001dc]        0x34020004  ori $2, $0, 4                   ; 196: li        $v0, 4
+[0x004001e0]        0x0000000c  syscall                         ; 197: syscall                                # print "Areas max = "
+[0x004001e4]        0x000b2021  addu $4, $0, $11                ; 199: move        $a0, $t3
+[0x004001e8]        0x34020001  ori $2, $0, 1                   ; 200: li        $v0, 1
+[0x004001ec]        0x0000000c  syscall                         ; 201: syscall                                # print max
+[0x004001f0]        0x3c011001  lui $1, 4097 [new_ln]           ; 203: la        $a0, new_ln                # print a newline
+[0x004001f4]        0x34240306  ori $4, $1, 774 [new_ln]
+[0x004001f8]        0x34020004  ori $2, $0, 4                   ; 204: li        $v0, 4
+[0x004001fc]        0x0000000c  syscall                         ; 205: syscall
+[0x00400200]        0x3c011001  lui $1, 4097 [sum_msg]          ; 207: la        $a0, sum_msg
+[0x00400204]        0x34240354  ori $4, $1, 852 [sum_msg]
+[0x00400208]        0x34020004  ori $2, $0, 4                   ; 208: li        $v0, 4
+[0x0040020c]        0x0000000c  syscall                         ; 209: syscall                                # print "Areas sum = "
+[0x00400210]        0x000c2021  addu $4, $0, $12                ; 211: move        $a0, $t4
+[0x00400214]        0x34020001  ori $2, $0, 1                   ; 212: li        $v0, 1
+[0x00400218]        0x0000000c  syscall                         ; 213: syscall                                # print sum
+[0x0040021c]        0x3c011001  lui $1, 4097 [new_ln]           ; 215: la        $a0, new_ln                # print a newline
+[0x00400220]        0x34240306  ori $4, $1, 774 [new_ln]
+[0x00400224]        0x34020004  ori $2, $0, 4                   ; 216: li        $v0, 4
+[0x00400228]        0x0000000c  syscall                         ; 217: syscall
+[0x0040022c]        0x3c011001  lui $1, 4097 [ave_msg]          ; 219: la        $a0, ave_msg
+[0x00400230]        0x34240365  ori $4, $1, 869 [ave_msg]
+[0x00400234]        0x34020004  ori $2, $0, 4                   ; 220: li        $v0, 4
+[0x00400238]        0x0000000c  syscall                         ; 221: syscall                                # print "Areas ave = "
+[0x0040023c]        0x000d2021  addu $4, $0, $13                ; 223: move        $a0, $t5
+[0x00400240]        0x34020001  ori $2, $0, 1                   ; 224: li        $v0, 1
+[0x00400244]        0x0000000c  syscall                         ; 225: syscall                                # print ave
+[0x00400248]        0x3c011001  lui $1, 4097 [new_ln]           ; 227: la        $a0, new_ln                # print a newline
+[0x0040024c]        0x34240306  ori $4, $1, 774 [new_ln]
+[0x00400250]        0x34020004  ori $2, $0, 4                   ; 228: li        $v0, 4
+[0x00400254]        0x0000000c  syscall                         ; 229: syscall
+[0x00400258]        0x3402000a  ori $2, $0, 10                  ; 234: li        $v0, 10
+[0x0040025c]        0x0000000c  syscall                         ; 235: syscall                                # all done!
+
+        KERNEL
+[0x80000180]        0x0001d821  addu $27, $0, $1                ; 82: move $k1 $at                # Save $at
+[0x80000184]        0x3c019000  lui $1, -28672                  ; 84: sw $v0 s1                # Not re-entrant and we can't trust $sp
+[0x80000188]        0xac220200  sw $2, 512($1)
+[0x8000018c]        0x3c019000  lui $1, -28672                  ; 85: sw $a0 s2                # But we need to use these registers
+[0x80000190]        0xac240204  sw $4, 516($1)
+[0x80000194]        0x401a6800  mfc0 $26, $13                   ; 87: mfc0 $k0 $13                # Cause register
+[0x80000198]        0x001a2082  srl $4, $26, 2                  ; 88: srl $a0 $k0 2                # Extract ExcCode Field
+[0x8000019c]        0x3084001f  andi $4, $4, 31                 ; 89: andi $a0 $a0 0x1f
+[0x800001a0]        0x34020004  ori $2, $0, 4                   ; 93: li $v0 4                # syscall 4 (print_str)
+[0x800001a4]        0x3c049000  lui $4, -28672 [__m1_]          ; 94: la $a0 __m1_
+[0x800001a8]        0x0000000c  syscall                         ; 95: syscall
+[0x800001ac]        0x34020001  ori $2, $0, 1                   ; 97: li $v0 1                # syscall 1 (print_int)
+[0x800001b0]        0x001a2082  srl $4, $26, 2                  ; 98: srl $a0 $k0 2                # Extract ExcCode Field
+[0x800001b4]        0x3084001f  andi $4, $4, 31                 ; 99: andi $a0 $a0 0x1f
+[0x800001b8]        0x0000000c  syscall                         ; 100: syscall
+[0x800001bc]        0x34020004  ori $2, $0, 4                   ; 102: li $v0 4                # syscall 4 (print_str)
+[0x800001c0]        0x3344003c  andi $4, $26, 60                ; 103: andi $a0 $k0 0x3c
+[0x800001c4]        0x3c019000  lui $1, -28672                  ; 104: lw $a0 __excp($a0)
+[0x800001c8]        0x00240821  addu $1, $1, $4
+[0x800001cc]        0x8c240180  lw $4, 384($1)
+[0x800001d0]        0x00000000  nop                             ; 105: nop
+[0x800001d4]        0x0000000c  syscall                         ; 106: syscall
+[0x800001d8]        0x34010018  ori $1, $0, 24                  ; 108: bne $k0 0x18 ok_pc        # Bad PC exception requires special checks
+[0x800001dc]        0x143a0008  bne $1, $26, 32 [ok_pc-0x800001dc]
+[0x800001e0]        0x00000000  nop                             ; 109: nop
+[0x800001e4]        0x40047000  mfc0 $4, $14                    ; 111: mfc0 $a0 $14                # EPC
+[0x800001e8]        0x30840003  andi $4, $4, 3                  ; 112: andi $a0 $a0 0x3        # Is EPC word-aligned?
+[0x800001ec]        0x10040004  beq $0, $4, 16 [ok_pc-0x800001ec]; 113: beq $a0 0 ok_pc
+[0x800001f0]        0x00000000  nop                             ; 114: nop
+[0x800001f4]        0x3402000a  ori $2, $0, 10                  ; 116: li $v0 10                # Exit on really bad PC
+[0x800001f8]        0x0000000c  syscall                         ; 117: syscall
+[0x800001fc]        0x34020004  ori $2, $0, 4                   ; 120: li $v0 4                # syscall 4 (print_str)
+[0x80000200]        0x3c019000  lui $1, -28672 [__m2_]          ; 121: la $a0 __m2_
+[0x80000204]        0x3424000d  ori $4, $1, 13 [__m2_]
+[0x80000208]        0x0000000c  syscall                         ; 122: syscall
+[0x8000020c]        0x001a2082  srl $4, $26, 2                  ; 124: srl $a0 $k0 2                # Extract ExcCode Field
+[0x80000210]        0x3084001f  andi $4, $4, 31                 ; 125: andi $a0 $a0 0x1f
+[0x80000214]        0x14040002  bne $0, $4, 8 [ret-0x80000214]  ; 126: bne $a0 0 ret                # 0 means exception was an interrupt
+[0x80000218]        0x00000000  nop                             ; 127: nop
+[0x8000021c]        0x401a7000  mfc0 $26, $14                   ; 137: mfc0 $k0 $14                # Bump EPC register
+[0x80000220]        0x275a0004  addiu $26, $26, 4               ; 138: addiu $k0 $k0 4                # Skip faulting instruction
+[0x80000224]        0x409a7000  mtc0 $26, $14                   ; 140: mtc0 $k0 $14
+[0x80000228]        0x001b0821  addu $1, $0, $27                ; 146: move $at $k1                # Restore $at
+[0x8000022c]        0x3c019000  lui $1, -28672                  ; 148: lw $v0 s1                # Restore other registers
+[0x80000230]        0x8c220200  lw $2, 512($1)
+[0x80000234]        0x3c019000  lui $1, -28672                  ; 149: lw $a0 s2
+[0x80000238]        0x8c240204  lw $4, 516($1)
+[0x8000023c]        0x40806800  mtc0 $0, $13                    ; 151: mtc0 $0 $13                # Clear Cause register
+[0x80000240]        0x401a6000  mfc0 $26, $12                   ; 153: mfc0 $k0 $12                # Set Status register
+[0x80000244]        0x375a0001  ori $26, $26, 1                 ; 154: ori  $k0 0x1                # Interrupts enabled
+[0x80000248]        0x409a6000  mtc0 $26, $12                   ; 155: mtc0 $k0 $12
+[0x8000024c]        0x42000018  eret                            ; 158: eret
+
+
+Data Segment
+=========================
+        DATA
+[0x10000000]...[0x10010000]        0x00000000
+[0x10010000]                        0x00000458  0x0000045f  0x00000465  0x00000469
+[0x10010010]                        0x0000046b  0x0000046f  0x00000473  0x00000476
+[0x10010020]                        0x00000478  0x0000047d  0x000008c1  0x000008c3
+[0x10010030]                        0x000008c6  0x000008c9  0x000008cb  0x000008cc
+[0x10010040]                        0x000008ce  0x000008d2  0x000008d5  0x000008d9
+[0x10010050]                        0x00000d81  0x00000d9f  0x00000dab  0x00000dad
+[0x10010060]                        0x00000dc3  0x00000dc4  0x00000dc5  0x00000dc6
+[0x10010070]                        0x00000df7  0x00000e0a  0x0000121a  0x0000122c
+[0x10010080]                        0x00001242  0x0000124e  0x00001259  0x00001260
+[0x10010090]                        0x0000126c  0x00001270  0x00001280  0x00001291
+[0x100100a0]                        0x0000157d  0x00001589  0x00001594  0x000015a0
+[0x100100b0]                        0x000015a4  0x000015b4  0x000015c7  0x000015d3
+[0x100100c0]                        0x000015d6  0x000015dc  0x000004b6  0x000004bc
+[0x100100d0]                        0x000004c6  0x000004cf  0x000004de  0x000004e2
+[0x100100e0]                        0x000004e6  0x000004fe  0x00000508  0x0000050c
+[0x100100f0]                        0x0000091c  0x0000092f  0x00000948  0x00000953
+[0x10010100]                        0x00000956  0x00000960  0x0000096b  0x00000977
+[0x10010110]                        0x00000980  0x0000098d  0x00000d29  0x00000d2e
+[0x10010120]                        0x00000d31  0x00000d33  0x00000d36  0x00000d38
+[0x10010130]                        0x00000d3a  0x00000d3c  0x00000d40  0x00000d41
+[0x10010140]                        0x00001130  0x00001134  0x00001136  0x00001137
+[0x10010150]                        0x00001148  0x00001149  0x0000114a  0x0000114d
+[0x10010160]                        0x00001160  0x0000118c  0x00001696  0x000016a3
+[0x10010170]                        0x000016af  0x000016b4  0x000016c3  0x000016d7
+[0x10010180]                        0x000016eb  0x000016f7  0x00001700  0x00001706
+[0x10010190]                        0x00096f20  0x00098da0  0x0009a7ec  0x0009b988
+[0x100101a0]                        0x0009c25c  0x0009d410  0x0009e5d4  0x0009f332
+[0x100101b0]                        0x0009fc20  0x000a1284  0x002650c0  0x00266244
+[0x100101c0]                        0x00267c92  0x002696e8  0x0026a87c  0x0026b148
+[0x100101d0]                        0x0026c2e2  0x0026e622  0x0027009c  0x002723f8
+[0x100101e0]                        0x005b2d80  0x005cc460  0x005d681c  0x005d8374
+[0x100101f0]                        0x005eb144  0x005ebf08  0x005ecccc  0x005eda92
+[0x10010200]                        0x00618228  0x00628c32  0x00a3d552  0x00a51bc8
+[0x10010210]                        0x00a6ac82  0x00a787e2  0x00a85178  0x00a8d200
+[0x10010220]                        0x00a9aec8  0x00a9f880  0x00ab2000  0x00ac5b10
+[0x10010230]                        0x00e6df84  0x00e7e1a8  0x00e8cec8  0x00e9d200
+[0x10010240]                        0x00ea2888  0x00eb8348  0x00ed2058  0x00ee25f4
+[0x10010250]                        0x00ee6772  0x00eeea88  0x00000032  0x00000000
+[0x10010260]...[0x10010270]        0x00000000
+[0x10010270]                        0x6f72500a  0x6d617267  0x206f7420  0x636c6163
+[0x10010280]                        0x74616c75  0x69722065  0x20746867  0x61697274
+[0x10010290]                        0x656c676e  0x65726120  0x0a3a7361  0x41202020
+[0x100102a0]                        0x73616572  0x20296e28  0x2028203d  0x69735f61
+[0x100102b0]                        0x28736564  0x2a20296e  0x735f6220  0x73656469
+[0x100102c0]                        0x20296e28  0x202f2029  0x54200a32  0x206e6568
+[0x100102d0]                        0x646e6966  0x65687420  0x6e696d20  0x656d202c
+[0x100102e0]                        0x6d202c64  0x202c7861  0x2c6d7573  0x646e6120
+[0x100102f0]                        0x65766120  0x65676172  0x726f6620  0x65726120
+[0x10010300]                        0x0a2e7361  0x000a000a  0x52002020  0x74686769
+[0x10010310]                        0x69725420  0x6c676e61  0x72412065  0x3a736165
+[0x10010320]                        0x20202000  0x65724120  0x6d207361  0x3d206e69
+[0x10010330]                        0x20200020  0x72412020  0x20736165  0x2064656d
+[0x10010340]                        0x2000203d  0x41202020  0x73616572  0x78616d20
+[0x10010350]                        0x00203d20  0x20202020  0x61657241  0x75732073
+[0x10010360]                        0x203d206d  0x20202000  0x65724120  0x61207361
+[0x10010370]                        0x3d206576  0x00000020  0x00000000  0x00000000
+[0x10010380]...[0x10040000]        0x00000000
+
+        STACK
+[0x7fffef80]                        0x00000000  0x00000000  0x7fffefc1  0x7fffef80
+[0x7fffef90]                        0x7fffef6d  0x7fffef3c  0x7fffef29  0x7fffef05
+[0x7fffefa0]                        0x7fffeef1  0x7fffeee4  0x7fffeeb5  0x7fffeea1
+[0x7fffefb0]                        0x7fffee8a  0x7fffee7c  0x7fffee1d  0x7fffede4
+[0x7fffefc0]                        0x7fffedc9  0x7fffed85  0x7fffed72  0x7fffed5a
+[0x7fffefd0]                        0x7fffed3c  0x7fffed28  0x7fffed19  0x7fffed03
+[0x7fffefe0]                        0x7fffecd7  0x7fffecac  0x7fffec9b  0x7fffec8a
+[0x7fffeff0]                        0x7fffec56  0x7fffec44  0x00000000  0x00000000
+
+        KERNEL DATA
+[0x90000000]                        0x78452020  0x74706563  0x206e6f69  0x636f2000
+[0x90000010]                        0x72727563  0x61206465  0x6920646e  0x726f6e67
+[0x90000020]                        0x000a6465  0x495b2020  0x7265746e  0x74707572
+[0x90000030]                        0x2000205d  0x4c545b20  0x20005d42  0x4c545b20
+[0x90000040]                        0x20005d42  0x4c545b20  0x20005d42  0x64415b20
+[0x90000050]                        0x73657264  0x72652073  0x20726f72  0x69206e69
+[0x90000060]                        0x2f74736e  0x61746164  0x74656620  0x205d6863
+[0x90000070]                        0x5b202000  0x72646441  0x20737365  0x6f727265
+[0x90000080]                        0x6e692072  0x6f747320  0x205d6572  0x5b202000
+[0x90000090]                        0x20646142  0x74736e69  0x74637572  0x206e6f69
+[0x900000a0]                        0x72646461  0x5d737365  0x20200020  0x6461425b
+[0x900000b0]                        0x74616420  0x64612061  0x73657264  0x00205d73
+[0x900000c0]                        0x455b2020  0x726f7272  0x206e6920  0x63737973
+[0x900000d0]                        0x5d6c6c61  0x20200020  0x6572425b  0x6f706b61
+[0x900000e0]                        0x5d746e69  0x20200020  0x7365525b  0x65767265
+[0x900000f0]                        0x6e692064  0x75727473  0x6f697463  0x00205d6e
+[0x90000100]                        0x5b202000  0x74697241  0x74656d68  0x6f206369
+[0x90000110]                        0x66726576  0x5d776f6c  0x20200020  0x6172545b
+[0x90000120]                        0x00205d70  0x5b202000  0x616f6c46  0x676e6974
+[0x90000130]                        0x696f7020  0x205d746e  0x20000000  0x6f435b20
+[0x90000140]                        0x636f7270  0x005d3220  0x20000000  0x444d5b20
+[0x90000150]                        0x005d584d  0x575b2020  0x68637461  0x2020005d
+[0x90000160]                        0x63614d5b  0x656e6968  0x65686320  0x005d6b63
+[0x90000170]                        0x00000000  0x5b202000  0x68636143  0x00005d65
+[0x90000180]                        0x90000024  0x90000033  0x9000003b  0x90000043
+[0x90000190]                        0x9000004b  0x90000071  0x9000008d  0x900000aa
+[0x900001a0]                        0x900000c0  0x900000d6  0x900000e6  0x90000100
+[0x900001b0]                        0x90000101  0x9000011a  0x90000124  0x90000125
+[0x900001c0]                        0x90000139  0x9000013a  0x9000013b  0x90000148
+[0x900001d0]                        0x90000149  0x9000014a  0x9000014b  0x90000154
+[0x900001e0]                        0x9000015e  0x90000170  0x90000171  0x90000172
+[0x900001f0]                        0x90000173  0x90000174  0x90000175  0x9000017f
+[0x90000200]...[0x90010000]        0x00000000
+
+

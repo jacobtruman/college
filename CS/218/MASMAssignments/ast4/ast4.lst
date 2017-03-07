@@ -1,0 +1,305 @@
+Microsoft (R) Macro Assembler Version 6.15.8803		    09/17/05 09:55:56
+ast4.asm						     Page 1 - 1
+
+
+				;   Jacob Truman Section 02
+				;   Assignment 3
+
+
+				.model medium
+				.486
+
+
+				; ----------------------------------------------
+				;	   
+ 0000				.data
+
+ 0000 000E 002D 002A 002B	  list		dw	14, 45, 42, 43, 75, 34, 46, 22, 56, 63
+       004B 0022 002E
+       0016 0038 003F
+ 0014  0011 0005 001A					dw	17,  5, 26, 40, 65, 11, 54, 28, 13, 22
+       0028 0041 000B
+       0036 001C 000D
+       0016
+ 0028  000B 0019 0041					dw	11, 25, 65, 12, 90, 22, 11, 29, 15, 24
+       000C 005A 0016
+       000B 001D 000F
+       0018
+ 003C  0011 0018 0050					dw	17, 24, 80, 17, 24, 25, 16, 62, 18, 92
+       0011 0018 0019
+       0010 003E 0012
+       005C
+ 0050  0020 0023 0040					dw	32, 35, 64, 15, 10, 65, 54, 67, 15, 56
+       000F 000A 0041
+       0036 0043 000F
+       0038
+ 0064  0016 0015 0038					dw	22, 21, 56, 27, 27, 27, 82, 65, 55, 35
+       001B 001B 001B
+       0052 0041 0037
+       0023
+ 0078  0019 0013 0022					dw	25, 19, 34, 45, 67,  5, 61, 35, 56, 53
+       002D 0043 0005
+       003D 0023 0038
+       0035
+ 008C  0020 0023 0040					dw	32, 35, 64, 15, 10, 65, 54, 67, 15, 56
+       000F 000A 0041
+       0036 0043 000F
+       0038
+ 00A0  005C 0019 0019					dw	92, 25, 25, 12, 25, 17, 98, 77, 75, 34
+       000C 0019 0011
+       0062 004D 004B
+       0022
+ 00B4  0017 0053 0049					dw	23, 83, 73, 50, 15, 35, 25, 18, 13, 25
+       0032 000F 0023
+       0019 0012 000D
+       0019
+
+ 00C8 0064			  lst_len	dw	100
+ 00CA 0002			  two		dw	2
+ 00CC 000A			  ten		dw	10
+ 00CE 0000			  tst		dw	?
+
+ 00D0 0000			  lst_min	dw	?
+ 00D2 0000			  lst_max	dw	?
+ 00D4 0000			  lst_sum	dw	?
+ 00D6 0000			  lst_ave	dw	?
+
+ 00D8 0000			  odd_cnt	dw	?
+ 00DA 0000			  odd_sum	dw	?
+ 00DC 0000			  odd_ave	dw	?
+
+ 00DE 0000			  ten_cnt	dw	?
+ 00E0 0000			  ten_sum	dw	?
+ 00E2 0000			  ten_ave	dw	?
+
+				; ----------------------------------------------
+
+				.stack
+
+ 0000				.code
+
+ 0000				main proc far
+ 0000  B8 ---- R			mov  ax, @data
+ 0003  8E D8				mov  ds, ax
+
+				; -----
+				;	lst_min = list min value
+
+ 0005  8B 0E 00C8 R			mov cx, lst_len
+ 0009  8D 1E 0000 R			lea bx, list
+ 000D  8B 07				mov ax, word ptr [bx]
+ 000F  A3 00D0 R			mov lst_min, ax
+ 0012  BE 0002				mov si, 2
+					
+ 0015				minend:
+
+ 0015  A3 00D0 R			mov lst_min, ax
+
+ 0018				lmin:
+
+ 0018  8B 00				mov ax, word ptr [si][bx]
+ 001A  3B 06 00D0 R			cmp ax, lst_min
+ 001E  7C F5				jl minend
+ 0020  83 C6 02				add si, 2
+
+ 0023  E2 F3			loop lmin
+
+				; -----
+				;	lst_max = list max value
+
+ 0025  8B 0E 00C8 R			mov cx, lst_len
+ 0029  49				dec cx
+ 002A  8D 1E 0000 R			lea bx, list
+ 002E  8B 07				mov ax, word ptr [bx]
+ 0030  A3 00D2 R			mov lst_max, ax
+ 0033  BE 0002				mov si, 2
+					
+ 0036				maxend:
+
+ 0036  A3 00D2 R			mov lst_max, ax
+
+ 0039				lmax:
+
+ 0039  8B 00				mov ax, word ptr [si][bx]
+ 003B  3B 06 00D2 R			cmp ax, lst_max
+ 003F  7F F5				jg maxend
+ 0041  83 C6 02				add si, 2
+
+ 0044  E2 F3			loop lmax
+
+				; -----
+				;	lst_sum = list sum
+
+ 0046  8B 0E 00C8 R			mov cx, lst_len
+ 004A  8D 1E 0000 R			lea bx, list
+ 004E  C7 06 00D4 R 0000		mov lst_sum, 0
+ 0054  BE 0000				mov si, 0
+
+ 0057				lsum:
+						
+ 0057  8B 00				mov ax, word ptr [si][bx]
+ 0059  01 06 00D4 R			add lst_sum, ax
+ 005D  83 C6 02				add si, 2
+					
+ 0060  E2 F5			loop lsum
+
+				; -----
+				;	lst_ave = list average
+
+ 0062  A1 00D4 R			mov ax, lst_sum
+ 0065  99				cwd
+ 0066  F7 36 00C8 R			div lst_len
+ 006A  A3 00D6 R			mov lst_ave, ax
+
+				; -----
+				;	odd_cnt = count of odd numbers in list
+				;	odd_sum = sum of odd numbers in list
+
+ 006D  8B 0E 00C8 R			mov cx, lst_len
+ 0071  8D 1E 0000 R			lea bx, list
+ 0075  C7 06 00D8 R FFFF		mov odd_cnt, -1
+ 007B  C7 06 00DA R 0000		mov odd_sum, 0
+ 0081  BE 0000				mov si, 0
+ 0084  B8 0000				mov ax, 0
+
+ 0087				oddend:
+
+ 0087  FF 06 00D8 R			inc odd_cnt
+ 008B  01 06 00DA R			add odd_sum, ax
+
+ 008F				lodd:
+
+ 008F  BA 0000				mov dx, 0
+ 0092  8B 00				mov ax, word ptr [si][bx]
+ 0094  99				cwd
+ 0095  F7 36 00CA R			div two
+ 0099  8B 00				mov ax, word ptr [si][bx]
+ 009B  83 C6 02				add si, 2
+ 009E  49				dec cx
+ 009F  83 FA 00				cmp dx, 0
+ 00A2  7F E3			jg oddend
+ 00A4  83 F9 00				cmp cx, 0
+ 00A7  7F E6			jg lodd
+
+				; -----
+				;	odd_ave = average of odd numbers in list
+
+ 00A9  A1 00DA R			mov ax, odd_sum
+ 00AC  99				cwd
+ 00AD  F7 36 00D8 R			div odd_cnt
+ 00B1  A3 00DC R			mov odd_ave, ax
+
+				; -----
+				;	ten_cnt = count of nums div by 10
+				;	ten_sum = sum of nums div by 10
+
+ 00B4  8B 0E 00C8 R			mov cx, lst_len
+ 00B8  8D 1E 0000 R			lea bx, list
+ 00BC  C7 06 00DE R FFFF		mov ten_cnt, -1
+ 00C2  BE 0000				mov si, 0
+ 00C5  B8 0000				mov ax, 0
+
+ 00C8				tenend:
+
+ 00C8  FF 06 00DE R			inc ten_cnt
+ 00CC  01 06 00E0 R			add ten_sum, ax
+
+ 00D0				lten:
+
+ 00D0  BA 0000				mov dx, 0
+ 00D3  8B 00				mov ax, word ptr [si][bx]
+ 00D5  99				cwd
+ 00D6  F7 36 00CC R			div ten
+ 00DA  8B 00				mov ax, word ptr [si][bx]
+ 00DC  83 C6 02				add si, 2
+ 00DF  49				dec cx
+ 00E0  83 FA 00				cmp dx, 0
+ 00E3  74 E3			je tenend
+ 00E5  83 F9 00				cmp cx, 0
+ 00E8  7F E6			jg lten
+
+ 00EA				tenav:
+
+				; -----
+				;	ten_ave = average of nums div by 10
+
+ 00EA  A1 00E0 R			mov ax, ten_sum
+ 00ED  99				cwd
+ 00EE  F7 36 00DE R			div ten_cnt
+ 00F2  A3 00E2 R			mov ten_ave, ax
+
+				; -----
+				;	Done, terminate program.
+
+ 00F5				last:
+ 00F5  B4 4C				mov  ah, 4ch
+ 00F7  CD 21				int  21h
+ 00F9				main endp
+
+				end main
+
+Microsoft (R) Macro Assembler Version 6.15.8803		    09/17/05 09:55:56
+ast4.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+AST4_TEXT  . . . . . . . . . . .	16 Bit	 00F9	  Word	  Public  'CODE'	
+DGROUP . . . . . . . . . . . . .	GROUP
+_DATA  . . . . . . . . . . . . .	16 Bit	 00E4	  Word	  Public  'DATA'	
+STACK  . . . . . . . . . . . . .	16 Bit	 0400	  Para	  Stack	  'STACK'	 
+
+
+Procedures,  parameters and locals:
+
+                N a m e                 Type     Value    Attr
+
+main . . . . . . . . . . . . . .	P Far	 0000	  AST4_TEXT	Length= 00F9 Public
+  minend . . . . . . . . . . . .	L Near	 0015	  AST4_TEXT	
+  lmin . . . . . . . . . . . . .	L Near	 0018	  AST4_TEXT	
+  maxend . . . . . . . . . . . .	L Near	 0036	  AST4_TEXT	
+  lmax . . . . . . . . . . . . .	L Near	 0039	  AST4_TEXT	
+  lsum . . . . . . . . . . . . .	L Near	 0057	  AST4_TEXT	
+  oddend . . . . . . . . . . . .	L Near	 0087	  AST4_TEXT	
+  lodd . . . . . . . . . . . . .	L Near	 008F	  AST4_TEXT	
+  tenend . . . . . . . . . . . .	L Near	 00C8	  AST4_TEXT	
+  lten . . . . . . . . . . . . .	L Near	 00D0	  AST4_TEXT	
+  tenav  . . . . . . . . . . . .	L Near	 00EA	  AST4_TEXT	
+  last . . . . . . . . . . . . .	L Near	 00F5	  AST4_TEXT	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 0001h	 
+@DataSize  . . . . . . . . . . .	Number	 0000h	 
+@Interface . . . . . . . . . . .	Number	 0000h	 
+@Model . . . . . . . . . . . . .	Number	 0004h	 
+@code  . . . . . . . . . . . . .	Text   	 AST4_TEXT
+@data  . . . . . . . . . . . . .	Text   	 DGROUP
+@fardata?  . . . . . . . . . . .	Text   	 FAR_BSS
+@fardata . . . . . . . . . . . .	Text   	 FAR_DATA
+@stack . . . . . . . . . . . . .	Text   	 DGROUP
+list . . . . . . . . . . . . . .	Word	 0000	  _DATA	
+lst_ave  . . . . . . . . . . . .	Word	 00D6	  _DATA	
+lst_len  . . . . . . . . . . . .	Word	 00C8	  _DATA	
+lst_max  . . . . . . . . . . . .	Word	 00D2	  _DATA	
+lst_min  . . . . . . . . . . . .	Word	 00D0	  _DATA	
+lst_sum  . . . . . . . . . . . .	Word	 00D4	  _DATA	
+odd_ave  . . . . . . . . . . . .	Word	 00DC	  _DATA	
+odd_cnt  . . . . . . . . . . . .	Word	 00D8	  _DATA	
+odd_sum  . . . . . . . . . . . .	Word	 00DA	  _DATA	
+ten_ave  . . . . . . . . . . . .	Word	 00E2	  _DATA	
+ten_cnt  . . . . . . . . . . . .	Word	 00DE	  _DATA	
+ten_sum  . . . . . . . . . . . .	Word	 00E0	  _DATA	
+ten  . . . . . . . . . . . . . .	Word	 00CC	  _DATA	
+tst  . . . . . . . . . . . . . .	Word	 00CE	  _DATA	
+two  . . . . . . . . . . . . . .	Word	 00CA	  _DATA	
+
+	   0 Warnings
+	   0 Errors

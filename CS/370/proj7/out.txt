@@ -1,0 +1,188 @@
+INPUT:
+
+3
+1024
+256
+0 n 0 500 100 150
+1 r 200 300 300 300
+88 r 200 300 300 300
+-3 n 300 300
+
+
+OUTPUT:
+
+T[0] - Process[0] arrived in queue [12]: T-100 P-120
+T[0] - Process[0] begins execution 
+T[1] - Process[0] Non Swap Page Fault, moves to page fault queue, Page 0 moved to memory
+T[101] - Process[0] Finishes PageFault queue and moves to Active queue [12]: T-100 P-120
+T[101] - Process[0] begins execution 
+T[200] - Process[1] arrived in queue [0]: P-1
+T[200] - Process[2] arrived in queue [8]: P-88
+T[200] - Process[0] got preempted and moves to Active queue [12]: T-1 P-120
+T[200] - Process[1] begins execution 
+T[201] - Process[1] Non Swap Page Fault, moves to page fault queue, Page 3 moved to memory
+T[201] - Process[2] begins execution 
+T[202] - Process[2] Non Swap Page Fault, moves to page fault queue, Page 6 moved to memory
+T[202] - Process[0] begins execution 
+T[203] - Process[0]'s timeslice is out and moves to Expired queue [12]:  T-95 P-121
+T[203] - swiched queues
+New active queue's bitmap: 0 0 0 0 0 0 0 0 0 0 0 0 1 0 
+T[203] - Process[0] begins execution 
+T[298] - Process[0]'s timeslice is out and moves to Expired queue [12]:  T-90 P-122
+T[298] - swiched queues
+New active queue's bitmap: 0 0 0 0 0 0 0 0 0 0 0 0 1 0 
+T[298] - Process[0] begins execution 
+T[300] - Process[3] arrived in queue [11]: T-115 P-117
+T[300] - Process[0] got preempted and moves to Active queue [12]: T-88 P-122
+T[300] - Process[3] begins execution 
+T[301] - Process[1] Finishes PageFault queue and moves to Active queue [0]: P-1
+T[301] - Process[3] Non Swap Page Fault, moves to page fault queue, Page 9 moved to memory
+T[301] - Process[1] begins execution 
+T[302] - Process[2] Finishes PageFault queue and moves to Active queue [8]: P-88
+T[401] - Process[3] Finishes PageFault queue and moves to Active queue [11]: T-115 P-117
+T[558] - Process[1] Page Fault Swap Required, moves to page fault queue, Page 4 swapped with 6
+T[558] - Process[2] begins execution 
+T[559] - Process[2] Page Fault Swap Required, moves to page fault queue, Page 6 swapped with 0
+T[559] - Process[3] begins execution 
+T[674] - Process[3]'s timeslice is out and moves to Expired queue [11]:  T-110 P-118
+T[674] - Process[0] begins execution 
+T[675] - Process[0] Page Fault Swap Required, moves to page fault queue, Page 0 swapped with 3
+T[675] - swiched queues
+New active queue's bitmap: 0 0 0 0 0 0 0 0 0 0 0 1 0 0 
+T[675] - Process[3] begins execution 
+T[758] - Process[1] Finishes PageFault queue and moves to Active queue [0]: P-1
+T[758] - Process[3] got preempted and moves to Active queue [11]: T-27 P-118
+T[758] - Process[1] begins execution 
+T[759] - Process[2] Finishes PageFault queue and moves to Active queue [8]: P-88
+T[802] - Process[1] finish CPU burst and moves to Wait queue
+T[802] - Process[2] begins execution 
+T[875] - Process[0] Finishes PageFault queue and moves to Active queue [12]: T-88 P-122
+T[1059] - Process[2] Page Fault Swap Required, moves to page fault queue, Page 7 swapped with 0
+T[1059] - Process[3] begins execution 
+T[1086] - Process[3]'s timeslice is out and moves to Expired queue [12]:  T-100 P-120
+T[1086] - Process[0] begins execution 
+T[1087] - Process[0] Page Fault Swap Required, moves to page fault queue, Page 0 swapped with 4
+T[1087] - swiched queues
+New active queue's bitmap: 0 0 0 0 0 0 0 0 0 0 0 0 1 0 
+T[1087] - Process[3] begins execution 
+T[1102] - Process[1] finishs IO and moves to Active queue [0]: P-1
+T[1102] - Process[3] got preempted and moves to Active queue [12]: T-85 P-120
+T[1102] - Process[1] begins execution 
+T[1103] - Process[1] Page Fault Swap Required, moves to page fault queue, Page 4 swapped with 6
+T[1103] - Process[3] begins execution 
+T[1120] - Process[3] Page Fault Swap Required, moves to page fault queue, Page 10 swapped with 7
+T[1259] - Process[2] Finishes PageFault queue and moves to Active queue [8]: P-88
+T[1259] - Process[2] begins execution 
+T[1260] - Process[2] Page Fault Swap Required, moves to page fault queue, Page 7 swapped with 0
+T[1287] - Process[0] Finishes PageFault queue and moves to Active queue [12]: T-88 P-122
+T[1287] - Process[0] begins execution 
+T[1288] - Process[0] Page Fault Swap Required, moves to page fault queue, Page 0 swapped with 4
+T[1303] - Process[1] Finishes PageFault queue and moves to Active queue [0]: P-1
+T[1303] - Process[1] begins execution 
+T[1304] - Process[1] Page Fault Swap Required, moves to page fault queue, Page 4 swapped with 9
+T[1320] - Process[3] Finishes PageFault queue and moves to Active queue [12]: T-69 P-120
+T[1320] - Process[3] begins execution 
+T[1364] - Process[3] terminates
+T[1460] - Process[2] Finishes PageFault queue and moves to Active queue [8]: P-88
+T[1460] - Process[2] begins execution 
+T[1488] - Process[0] Finishes PageFault queue and moves to Active queue [12]: T-88 P-122
+T[1504] - Process[1] Finishes PageFault queue and moves to Active queue [0]: P-1
+T[1504] - Process[2] finish CPU burst and moves to Wait queue
+T[1504] - Process[1] begins execution 
+T[1717] - Process[1] Page Fault Swap Required, moves to page fault queue, Page 5 swapped with 0
+T[1717] - Process[0] begins execution 
+T[1718] - Process[0] Page Fault Swap Required, moves to page fault queue, Page 0 swapped with 10
+T[1804] - Process[2] finishs IO and moves to Active queue [8]: P-88
+T[1804] - Process[2] begins execution 
+T[1917] - Process[1] Finishes PageFault queue and moves to Active queue [0]: P-1
+T[1917] - Process[2] got preempted and moves to Active queue [8]: P-88
+T[1917] - Process[1] begins execution 
+T[1918] - Process[0] Finishes PageFault queue and moves to Active queue [12]: T-88 P-122
+T[2005] - Process[1] terminates
+T[2005] - Process[2] begins execution 
+T[2105] - Process[2] Page Fault Swap Required, moves to page fault queue, Page 8 swapped with 4
+T[2105] - Process[0] begins execution 
+T[2165] - Process[0] Page Fault Swap Required, moves to page fault queue, Page 1 swapped with 5
+T[2305] - Process[2] Finishes PageFault queue and moves to Active queue [8]: P-88
+T[2305] - Process[2] begins execution 
+T[2365] - Process[0] Finishes PageFault queue and moves to Active queue [12]: T-29 P-122
+T[2393] - Process[2] terminates
+T[2393] - Process[0] begins execution 
+T[2422] - Process[0]'s timeslice is out and moves to Expired queue [12]:  T-80 P-124
+T[2422] - swiched queues
+New active queue's bitmap: 0 0 0 0 0 0 0 0 0 0 0 0 1 0 
+T[2422] - Process[0] begins execution 
+T[2502] - Process[0]'s timeslice is out and moves to Expired queue [12]:  T-65 P-127
+T[2502] - swiched queues
+New active queue's bitmap: 0 0 0 0 0 0 0 0 0 0 0 0 1 0 
+T[2502] - Process[0] begins execution 
+T[2567] - Process[0]'s timeslice is out and moves to Expired queue [13]:  T-45 P-131
+T[2567] - swiched queues
+New active queue's bitmap: 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+T[2567] - Process[0] begins execution 
+T[2612] - Process[0]'s timeslice is out and moves to Expired queue [13]:  T-25 P-135
+T[2612] - swiched queues
+New active queue's bitmap: 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+T[2612] - Process[0] begins execution 
+T[2637] - Process[0] finish CPU burst and moves to Wait queue
+T[2737] - Process[0] finishs IO. timeslice is out and moves to Expired queue [13]: T-30 P-134
+T[2737] - swiched queues
+New active queue's bitmap: 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+T[2737] - Process[0] begins execution 
+T[2750] - Process[0] Page Fault Swap Required, moves to page fault queue, Page 2 swapped with 7
+T[2950] - Process[0] Finishes PageFault queue and moves to Active queue [13]: T-18 P-134
+T[2950] - Process[0] begins execution 
+T[2968] - Process[0]'s timeslice is out and moves to Expired queue [13] : T-30 P-134
+T[2968] - swiched queues
+New active queue's bitmap: 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+T[2968] - Process[0] begins execution 
+T[2998] - Process[0]'s timeslice is out and moves to Expired queue [13] : T-30 P-134
+T[2998] - swiched queues
+New active queue's bitmap: 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+T[2998] - Process[0] begins execution 
+T[3028] - Process[0]'s timeslice is out and moves to Expired queue [13] : T-30 P-134
+T[3028] - swiched queues
+New active queue's bitmap: 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+T[3028] - Process[0] begins execution 
+T[3058] - Process[0]'s timeslice is out and moves to Expired queue [13] : T-25 P-135
+T[3058] - swiched queues
+New active queue's bitmap: 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+T[3058] - Process[0] begins execution 
+T[3083] - Process[0]'s timeslice is out and moves to Expired queue [13] : T-20 P-136
+T[3083] - swiched queues
+New active queue's bitmap: 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+T[3083] - Process[0] begins execution 
+T[3088] - Process[0] terminates
+T[3088] - All processes terminate
+
+***** Individual Statistics *****
+
+Process[3] - Turn Around Time: 1064
+             Total CPU Time: 300
+             Waiting Time: 764
+             CPU utilization %: 28.2%
+             Total Page Faults: 2
+
+Process[1] - Turn Around Time: 1805
+             Total CPU Time: 600
+             Waiting Time: 905
+             CPU utilization %: 33.2%
+             Total Page Faults: 5
+
+Process[2] - Turn Around Time: 2193
+             Total CPU Time: 600
+             Waiting Time: 1293
+             CPU utilization %: 27.4%
+             Total Page Faults: 5
+
+Process[0] - Turn Around Time: 3088
+             Total CPU Time: 650
+             Waiting Time: 2338
+             CPU utilization %: 21.0%
+             Total Page Faults: 7
+
+***** Overall Statistics *****
+
+Average Wait Time: 1325.000
+Average Turnaround Time: 2037.500
+Average CPU Utilization: 27.461%

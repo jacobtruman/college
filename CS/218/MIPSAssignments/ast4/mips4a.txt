@@ -1,0 +1,87 @@
+CSC 218, Section 03
+Homework, MIPS Asst. #4
+
+Purpose:   Become familiar with the MIPS Instruction Set, and the MIPS
+           procedure calling convention, and indexing for multiple
+           dimension arrays.
+Due:       Monday  (12/05)
+Points:    65
+
+
+Assignment:
+Write a simple assembly language procedure to transpose a matrix.  The
+provided main calls two procedures:
+
+   * Write a MIPS assembly language procedure, matrix_prt, to display
+     a two-dimensional matrix.  The numbers should be printed in a
+     two-dimensional format (see example output).  All numbers must
+     be right justified (i.e., lined up on right side).
+
+   * Write a MIPS assembly language procedure, matrix_trans, to
+     transpose a matrix.  The formula for matrix multiplication is:
+
+       for (i=0; i< y_dimension; i++)
+           for (j=0; j< x_dimension; j++)
+               M_new(j,i) = M(i,j)
+           end_for
+       end_for
+
+In assembly, multi-dimension arrays are implemented as a large single
+dimension array.  The formula for calculating two-dimensional array
+indexing is:
+
+  address of ARRAY(x,y) = [ (x * x_dimension) + y ] * data_size
+
+
+
+Submission:
+When complete, submit a copy of the source file(s) and the SPIM Log
+File via the class web page (assignment submission link) on Monday,
+December 5, 2005 before 4:00pm.   Assignments received after 4:00pm
+will not  be accepted!  Do not submit a hard-copy.
+
+
+
+
+
+Example Output:
+The following is the example output for the first two matrix
+transposition procedure.
+
+
+
+----------------------------------------
+Matrix #0
+
+
+Matrix
+
+    |  10     20     30     40  |
+    |  50     60     70     80  |
+
+
+Transposed Matrix
+
+    |  10     50  |
+    |  20     60  |
+    |  30     70  |
+    |  40     80  |
+
+
+----------------------------------------
+Matrix#1
+
+
+Matrix
+
+     |  10     20  |
+     |  30     40  |
+     |  50     60  |
+     |  70     80  |
+
+Transposed Matrix
+
+     |  10     30     50     70  |
+     |  20     40     60     80  |
+
+

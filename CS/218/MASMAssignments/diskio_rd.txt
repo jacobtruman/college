@@ -1,0 +1,245 @@
+;  CSC 218 - Example Program.
+
+;  Ths routine demonstrates the use of the
+;   system services for disk I/O operations.
+;   This example program will open a file, read the
+;   contents, and write the contents to the screen.
+
+;  This routine also provides some very simple examples
+;   regarding handling various errors on system servies.
+
+
+.model	small
+
+;--------------------------------------------------------
+
+.data
+
+; -----
+;  Constants.
+
+CR		equ	13			; ASCII carrige return
+LF		equ	10			; ASCII line feed
+END_STR		equ	"$"			; Service 09, string term
+
+BF_SIZ		equ	1000			; Buffer size for exmaple
+TRUE		equ	1
+FALSE		equ	-1
+
+; -----
+
+prompt		db	"Enter name of text file: ", END_STR
+
+fbuff		db	80			; Input buffer for file
+rd		db	0
+fname		db	80 dup (?)
+
+fhand		dw	?
+
+rdbuff		db	BF_SIZ dup (?)		; file read buffer
+curr		dw	BF_SIZ
+bf_max		dw	BF_SIZ
+done		db	FALSE
+
+err_opn		db	"Error opening the file.", CR, LF, END_STR
+err_rd		db	"Error reading from the file.", CR, LF, END_STR
+
+file_size	dd	?			; file size
+
+
+; -----
+;  Define DTA.
+
+dta		db	21 dup (?)		; Reserved
+fatt		db	?			; Attribute of file found
+ftim		dw	?			; Time stamp of file
+fdat		dw	?			; Date stamp of file
+fsiz		dd	?			; file size in bytes
+fnam		db	13 dup (?)		; file name and ext
+
+
+;--------------------------------------------------------
+
+.stack
+
+.code
+
+main	proc	far
+	mov	ax, @data
+	mov	ds, ax
+
+; -----
+;  Get a text file name from the user.
+
+	mov	ah, 09h
+	lea	dx, prompt
+	int	21h
+
+	mov	ah, 0ah
+	lea	dx, fbuff
+	int	21h
+
+; -----
+;  Verify user entered something.  If no, write error message.
+
+	cmp	rd, 0				; verify input
+	jle	err_on_open
+
+; -----
+;  Place a 0 (zero) at the end of the file name, which is
+;   required for the opne file function.
+
+	mov	al, rd
+	cbw
+	mov	si, ax
+	lea	bx, fname
+	mov	byte ptr [bx][si], 0
+
+; -----
+;  Get file size.
+
+	mov	ah, 1ah
+	lea	dx, dta
+	int	21h
+
+	mov	ah, 4eh
+	lea	dx, fname
+	int	21h
+
+	lea	si, fsiz			; <- file size
+	mov	ax, word ptr [si]
+	mov	dx, word ptr 2[si]
+
+	lea	di, file_size
+	mov	word ptr [di], ax
+	mov	word ptr 2[di], dx
+
+; -----
+;  Open a file.  Note, will open an existing file.
+;   If the file can not be found, it is an error.
+;     dx = ASCII file name (terminated with integer 0)
+;     al = file attributes (0 for normal access)
+;   Refer to the text, Chapter 13.3.8.1 for more information.
+;   Check carry flag for error.  If set, is error.
+
+	mov	ah, 3dh
+	mov	al, 0
+	lea	dx, fname
+	int	21h
+
+	jc	err_on_open
+
+; -----
+;  If no error, save the "file handle".  The file handle
+;   points to the File Control Block (FCB).  The FCB
+;   contains the file information (name, date, size, etc.)
+;   The file handle is used for all subsequent file
+;   operations (read, write, close).
+
+	mov	fhand, ax
+
+; -----
+;  Main read loop.  To improve I/O efficiency, read a bunch of
+;   characters from the file at a time.
+
+;   For this example, read 1000 characters, then write all
+;   1000 to the screen.  Keep getting more characters, 1000
+;   at a time, until there are no more characters in the file.
+
+;  Read file.
+;     bx = file handle
+;     dx = address of chartacters to write
+;     cx = number of characters to write (set above)
+;   Refer to the text, Chapter 13.3.8.4 for more information.
+;   Check for error on read (should not happen).
+
+main_loop:
+	mov	ah, 3fh				; read characters
+	mov	bx, fhand
+	mov	cx, BF_SIZ
+	lea	dx, rdbuff
+	int	21h
+
+	jc	err_on_read
+
+; -----
+; If the number of characters read from the file (in AX)
+;  is NOT equal the number of characters requested (in CX), then
+;  must have hit the end of file.  So, set "done" flag to true
+;  so it does not read again.  Also, update bf_max to the how
+;  many characters are actually in the buffer for the last read.
+
+	cmp	ax, cx
+	je	prt
+
+	mov	done, TRUE
+	mov	bf_max, ax
+
+; -----
+; Output loop.  Output characters one at a time.
+;  Shoudl not use the DOS 09h fuction, since there might
+;  be $ signs in the text file.
+
+prt:	lea	bx, rdbuff			; output characters
+	mov	cx, bf_max
+
+prt_lp:
+	mov	ah, 02h
+	mov	dl, byte ptr [bx]
+	int	21h
+
+	inc	bx
+
+	loop	prt_lp
+
+; -----
+; If not done, keep reading the file.
+
+	cmp	done, TRUE
+	jne	main_loop
+
+; -----
+;  Close the file.
+
+	mov	ah, 3eh
+	mov	bx, fhand
+	int	21h
+
+	jmp	rd_done
+
+; -----
+;  Error on open.   AX contains an error code.
+;   The specific cause of the file open error can be
+;   determined by checking the error code in the class text
+;   book (or any MS-DOS system services reference).
+;   Of course, that would need to be done before the code
+;   below overwrites AX register!    For this simple example,
+;   just print an error message and end the program.
+
+err_on_open:
+	mov	ah, 09h
+	lea	dx, err_opn
+	int	21h
+	jmp	rd_done
+
+; -----
+;  Error on read.  Should not happen, so may need to look
+;   in the AX register for error code and look-up the code
+;   in the manual.
+
+err_on_read:
+	mov	ah, 09h
+	lea	dx, err_rd
+	int	21h
+	jmp	rd_done
+
+; -----
+;  Done, so end program.
+
+rd_done:
+	mov	ah, 4ch
+	int	21h
+main	endp
+
+end	main
+

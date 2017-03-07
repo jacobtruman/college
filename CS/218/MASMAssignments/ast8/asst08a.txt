@@ -1,0 +1,149 @@
+CSC 218, Section 01, 02
+Homework,  Asst. #8
+
+Purpose:  Write a simple assembly language program to use procedures.
+          Become more familiar with program control instructions,
+          procedure handling, and stacks.
+
+Due:      Wednesday   (10/05)
+
+Points:   95
+
+
+Assignment:
+Write three simple assembly language procedures.  The first procedure
+should be the shaker sort routine (from assignment #7) to sort a list
+of numbers.  The second procedure should find the minimum, median (middle),
+and maximum values (for the sorted list).  The third procedure should
+find the sum, average, and standard deviation of the list.
+
+  * You will be provided a main procedure that calls all three procedures
+    (for each set of data).
+
+  * The first procedure, shk_sort, should sort the numbers into ascending
+    order.  You must use the shaker sort algorithm (from assignment 7).
+    You will need to convert the assignment #7 code into a procedure and
+    modify the basic routine to sort in descending order (i.e., large to
+    small).
+
+  * The second procedure, stats, should find the minimum, maximum, sum,
+    and average values.  The average should be calculated as an integer
+    value.
+
+  * The third procedure, adv_stats, should find the median and calculate
+    the variance.  Note, for an odd number of items, the median value is
+    defined as the middle value.  For an even number of values, it is the
+    integer average of the two middle values.  The median must be
+    determined after the list is sorted.  The formula for variance is as
+    follows:
+
+            [see class handout or PDF file for formula]
+
+
+    Perform the summation and division using integer values.  Due to the
+    data sizes, the sum of the squares must be performed as a double-word.
+    If you are not familiar with the mathematical notation, refer to the
+    discussion board for an explanation of the formula.
+
+
+Do not change the data types of the provided data.  You may define
+additional variables as required. 
+
+Refer to the procedures handout for more information regarding procedures.
+Refer to the debugger handouts for more information regarding controlling
+program execution to find logic errors.
+
+
+Note, a solution to assignment 7 will be posted on the class web page
+after 9/29/2005.
+
+
+
+Submission:
+When complete, submit a copy of the source file via the class web page
+(assignment submission link) on Wednesday, October 05, 2005 before 4:00pm.
+Assignments received after 4:00pm will not  be accepted!
+Do not submit a hard-copy.
+
+
+
+
+----------------------------------------------------
+Provided Data Sets:
+
+lst1  dw   10,  12,  14,  16,  18,  20,  22,  24,  26,  28
+      dw   31,  33,  35,  37,  39,  41,  43,  45,  47,  49
+      dw   30,  32,  34,  36,  38,  40,  42,  44,  46,  48
+      dw   29,  27,  25,  23,  21,  19,  17,  15,  13,  11
+len1  dw  40
+min1  dw  ?
+med1  dw  ?
+max1  dw  ?
+sum1  dw  ?
+ave1  dw  ?
+var1  dd  ?
+
+lst2  dw  -15,  15, -14,  14, -13,  13, -12,  12, -11,  11
+      dw  -10,  10,  -9,   9,  -8,   8,  -7,   7,  -6,   6
+      dw   -5,   5,  -4,   4,  -3,   3,  -2,   2,  -1,   1
+      dw  0
+len2  dw  31
+min2  dw  ?
+med2  dw  ?
+max2  dw  ?
+sum2  dw  ?
+ave2  dw  ?
+var2  dd  ?
+
+lst3  dw  123,   2, 146,  76,   0,  56, 264,  65, 155, -56
+      dw   47, 123,  -3,  40,  65, -11,  54,  28, -13,  22
+      dw   69,  26,  62,   7,  27,  27,   9, -77,  75,  14
+      dw   81,  25,  15,   2,  17,   5,  10, 129,  12, 134
+      dw  161,   2, -51,   2,   1,   9, -14,  22,  15, -31
+      dw   27,  64,  10, 172,  24, -25,  16,  62,   8,  92
+      dw   11, -83, 233,  50,   5,   1,  15,   8, 413, 415
+      dw    9, 126,  62,   7, 227,  77, -99,  77, 175,  14
+      dw   94,  24,   4,  43,  76,  34,  26,   2, -56,  63
+      dw   24,  19,  17, 183,  10
+len3  dw  95
+min3  dw  ?
+med3  dw  ?
+max3  dw  ?
+sum3  dw  ?
+ave3  dw  ?
+var3  dd  ?
+
+lst4  dw   23, 432, 246,  76, -11,  16, 164, 165, -95,  56
+      dw  -37, -23,  -3, 140,  15, 111,  54,  28, -13, 122
+      dw   35,  26,  62,   7,  27,  27,   9, -77,  75,  14
+      dw   45,  25,  15,   2, -17,  15,  10, 129,  12, 134
+      dw  161,   2, -51,   2,   2,  -9, -14,  22,  15, -31
+      dw   27,  44,  10, 172,  24, -25,  16,  62,  28,  92
+      dw   11, -83, 233,  50, -27,   1,  15,   8, 413, 415
+      dw    7, 126,  62,   7, 227, 177, -99,  77, 175,  14
+      dw  194,  24,   2,  43,  76,  34,  26,   2, -56,  63
+      dw   24, -19,  22,  83,  10, -91, -92, 129, 129, -19
+len4  dw  100
+min4  dw  ?
+med4  dw  ?
+max4  dw  ?
+sum4  dw  ?
+ave4  dw  ?
+var4  dd  ?
+
+lst5  dw   23, -12,  46, -36,  10, -16,  64, -56,  15, -32
+      dw  -49,  44, -14,  34, -67,  43, -29,  61, -65,  36
+      dw   71, -47,  10, -27,  74, -65,  61, -97,  81, -29
+      dw  -64,  41, -42,  33, -76,  34, -46,  23, -56,  63
+      dw   21, -18,  17, -43,  78, -12,  11, -10,  35, -10
+      dw  -11,  83, -33,  50,  -5,   1, -15,   8, -13,  15
+      dw   79, -25,  52, -77,  87, -67,  91, -77,  52, -24
+      dw  -79,  63, -36,  40, -35,  12, -54,  28, -13,  22
+len5  dw  80
+min5  dw  ?
+med5  dw  ?
+max5  dw  ?
+sum5  dw  ?
+ave5  dw  ?
+var5  dd  ?
+

@@ -1,0 +1,61 @@
+CSC 218, Section 01, 02
+Homework, MIPS Asst. #1
+
+Purpose:     Become familiar with RISC Architecture concepts, the
+             MIPS Architecture, and SPIM (the MIPS simulator).
+Due:         Monday  (11/21)
+Points:      25
+
+Assignment:
+Write a MIPS assembly language program to find the :
+
+  * maximum, minimum, and average for a list of numbers.
+  * maximum, minimum, and average for the even values in the
+    list of numbers.
+
+You may assume that the first number is always even.
+
+Use the below data set.  You may declare additional variables as needed.
+
+array:	.word	220, 113, 182, 339,  64, 231, 421, 348, 136, 157
+	.word	117, 171,  97, 161, 147, 537,  27, 151, 347, 154
+	.word	 32, 351, 176, 287, 910,  10, 111, 523, 232, 445
+	.word	163, 245,  71, 129, 218, 219, 122, 134,  70, 121
+	.word	315, 145, 313, 274, 118,   9,  72,  26, 230, 135
+	.word	 99, 204, 106, 107, 124, 125, 126, 229,  48, 392
+	.word	132, 133,  36, 136,  38, 441, 243,  45, 247, 249
+	.word	371, 271, 177, 228, 178, 184, 386, 186, 288, 188
+	.word	 50, 152, 354, 256,  58, 160, 161,  62,  63,  64
+	.word	199, 213, 124, 136, 140, 256, 375,  87, 115,  26
+len:	.word	100
+
+
+The output should appear as follows (with the appropriate results
+displayed):
+
+
+  ------------------------------------------------------
+ |Program to find:                                      |
+ |   * min, max, and average of a list of numbers.      |
+ |   * min, max, and average of the even values in      |
+ |     the list.                                        |
+ |                                                      |
+ |    List min =                                        |
+ |    List max =                                        |
+ |    List ave =                                        |
+ |                                                      |
+ |    Even min =                                        |
+ |    Even max =                                        |
+ |    EVen ave =                                        |
+ |                                                      |
+ |                                                      |
+ |                                                      |
+  ------------------------------------------------------
+
+
+
+Submit a hardcopy of:
+     1) source code
+     2) the PCSpim log file
+
+
