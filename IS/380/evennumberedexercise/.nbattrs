@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE attributes PUBLIC "-//NetBeans//DTD DefaultAttributes 1.0//EN" "http://www.netbeans.org/dtds/attributes-1_0.dtd">
+<attributes version="1.0">
+    <fileobject name="Circle.java">
+        <attr name="EA-OpenIDE-Connection" serialvalue="aced0005737200146a6176612e7574696c2e4c696e6b65644c6973740c29535d4a60882203000078707704000000017372002a6f72672e6f70656e6964652e6c6f61646572732e436f6e6e656374696f6e537570706f72742450616972055f8af6f04a3bd80200024c00047479706574002b4c6f72672f6f70656e6964652f636f6f6b6965732f436f6e6e656374696f6e436f6f6b696524547970653b4c000576616c75657400124c6a6176612f6c616e672f4f626a6563743b78707372002e6f72672e6e65746265616e732e6d6f64756c65732e6a6176612e4a617661436f6e6e656374696f6e732454797065a83dd01001306d7402000149000666696c746572787000000050737200436f72672e6e65746265616e732e6d6f64756c65732e6a6176612e4a617661446174614f626a6563742450657273697374656e74436f6e6e656374696f6e48616e646c65ba16f1d2dd4c1cb60200014c000e646174614e6f646548616e646c6574001f4c6f72672f6f70656e6964652f6e6f6465732f4e6f64652448616e646c653b7870737200296f72672e6f70656e6964652e6c6f61646572732e446174614e6f6465244f626a65637448616e646c655bd0f82e01811d2e0200025a0005636c6f6e654c00036f626a7400244c6f72672f6f70656e6964652f66696c6573797374656d732f46696c654f626a6563743b787000737200326f72672e6f70656e6964652e66696c6573797374656d732e416273747261637446696c654f626a656374245265706c616365896fa1bce4b5219f0200024c000866696c654e616d657400124c6a6176612f6c616e672f537472696e673b4c000666734e616d6571007e000f787074000d43796c696e6465722e6a617661740007633a2f626f6f6b78"/>
+    </fileobject>
+    <fileobject name="Exercise11_18.java">
+        <attr name="class_dependency_javax.swing.JFrame" stringvalue="Exercise11_18"/>
+    </fileobject>
+    <fileobject name="Exercise11_19.java">
+        <attr name="class_dependency_javax.swing.JFrame" stringvalue="Exercise11_19"/>
+    </fileobject>
+    <fileobject name="Exercise11_20.java">
+        <attr name="class_dependency_javax.swing.JFrame" stringvalue="Exercise11_20"/>
+    </fileobject>
+    <fileobject name="Exercise12_3.java">
+        <attr name="class_dependency_java.awt.event.ActionListener" stringvalue="MyDrawing"/>
+        <attr name="class_dependency_javax.swing.JFrame" stringvalue="Exercise12_3"/>
+        <attr name="class_dependency_javax.swing.JPanel" stringvalue="MyDrawing"/>
+    </fileobject>
+    <fileobject name="Exercise12_4.java">
+        <attr name="class_dependency_java.awt.event.MouseListener" stringvalue="DisplayCoordinatePanel"/>
+        <attr name="class_dependency_javax.swing.JFrame" stringvalue="Exercise12_4"/>
+        <attr name="class_dependency_javax.swing.JPanel" stringvalue="DisplayCoordinatePanel"/>
+    </fileobject>
+    <fileobject name="Exercise12_5.java">
+        <attr name="class_dependency_java.awt.event.MouseListener" stringvalue="MyPanel"/>
+        <attr name="class_dependency_javax.swing.JFrame" stringvalue="Exercise12_5"/>
+        <attr name="class_dependency_javax.swing.JPanel" stringvalue="MyPanel"/>
+    </fileobject>
+    <fileobject name="Exercise12_6.java">
+        <attr name="class_dependency_java.awt.event.KeyListener" stringvalue="KeyboardPanel"/>
+        <attr name="class_dependency_javax.swing.JApplet" stringvalue="Exercise12_6"/>
+        <attr name="class_dependency_javax.swing.JPanel" stringvalue="KeyboardPanel"/>
+    </fileobject>
+    <fileobject name="Exercise12_7.java">
+        <attr name="class_dependency_java.awt.event.KeyListener" stringvalue="DrawMaze"/>
+        <attr name="class_dependency_javax.swing.JPanel" stringvalue="DrawMaze"/>
+    </fileobject>
+    <fileobject name="Exercise13_5.java">
+        <attr name="class_dependency_java.awt.event.ActionListener" stringvalue="Exercise13_5"/>
+        <attr name="class_dependency_javax.swing.JFrame" stringvalue="Exercise13_5"/>
+    </fileobject>
+    <fileobject name="Exercise14_12.java">
+        <attr name="class_dependency_java.awt.event.ActionListener" stringvalue="Exercise14_12"/>
+        <attr name="class_dependency_javax.swing.JApplet" stringvalue="Exercise14_12"/>
+    </fileobject>
+    <fileobject name="Exercise14_8.java">
+        <attr name="class_dependency_java.awt.event.ActionListener" stringvalue="Exercise14_8"/>
+        <attr name="class_dependency_javax.swing.JApplet" stringvalue="Exercise14_8"/>
+    </fileobject>
+    <fileobject name="Exercise14_9.java">
+        <attr name="class_dependency_java.awt.event.ActionListener" stringvalue="Exercise14_9"/>
+        <attr name="class_dependency_javax.swing.JApplet" stringvalue="Exercise14_9"/>
+    </fileobject>
+    <fileobject name="Exercise19_1.java">
+        <attr name="class_dependency_java.lang.Thread" stringvalue="Exercise19_1.PrintChar;Exercise19_1.PrintNum"/>
+        <attr name="class_dependency_javax.swing.JFrame" stringvalue="Exercise19_1"/>
+    </fileobject>
+    <fileobject name="Exercise19_2.java">
+        <attr name="class_dependency_java.lang.Thread" stringvalue="Exercise19_2.SumThread"/>
+    </fileobject>
+    <fileobject name="Exercise19_3.java">
+        <attr name="class_dependency_java.lang.Thread" stringvalue="Exercise19_3.AddAPennyThread"/>
+    </fileobject>
+    <fileobject name="Exercise19_6.java">
+        <attr name="NetBeansAttrExecutor" serialvalue="aced00057372001e6f72672e6f70656e6964652e53657276696365547970652448616e646c6564612acc871b81080300024c0009636c6173734e616d657400124c6a6176612f6c616e672f537472696e673b4c00046e616d6571007e000178707400104170706c657420457865637574696f6e74002a6f72672e6e65746265616e732e6d6f64756c65732e6170706c65742e4170706c65744578656375746f7278"/>
+        <attr name="class_dependency_java.lang.Thread" stringvalue="Exercise19_6.Thread2;Exercise19_6.Thread1"/>
+    </fileobject>
+    <fileobject name="Exercise19_7.java">
+        <attr name="class_dependency_java.lang.Thread" stringvalue="Exercise19_7.Thread1;Exercise19_7.Thread2"/>
+    </fileobject>
+    <fileobject name="Exercise19_8.java">
+        <attr name="class_dependency_java.lang.Thread" stringvalue="Exercise19_8.Consumer;Exercise19_8.Producer"/>
+    </fileobject>
+    <fileobject name="Exercise19_9.java">
+        <attr name="class_dependency_java.lang.Thread" stringvalue="Exercise19_9.Thread1;Exercise19_9.Thread2"/>
+    </fileobject>
+    <fileobject name="Exercise22_1.java">
+        <attr name="class_dependency_javax.swing.JApplet" stringvalue="Exercise22_1"/>
+    </fileobject>
+    <fileobject name="Exercise22_2.java">
+        <attr name="class_dependency_javax.swing.JApplet" stringvalue="Exercise22_2"/>
+    </fileobject>
+    <fileobject name="Exercise22_3.java">
+        <attr name="class_dependency_javax.swing.JApplet" stringvalue="Exercise22_3"/>
+    </fileobject>
+    <fileobject name="Exercise22_4.java">
+        <attr name="class_dependency_CalculationPanel" stringvalue="RationalPanel;IntPanel"/>
+        <attr name="class_dependency_java.awt.event.ActionListener" stringvalue="CalculationPanel;Exercise22_4"/>
+        <attr name="class_dependency_javax.swing.JApplet" stringvalue="Exercise22_4"/>
+        <attr name="class_dependency_javax.swing.JPanel" stringvalue="CalculationPanel"/>
+    </fileobject>
+    <fileobject name="Exercise22_7.java">
+        <attr name="class_dependency_javax.swing.JApplet" stringvalue="Exercise22_7"/>
+    </fileobject>
+    <fileobject name="Exercise22_9.java">
+        <attr name="class_dependency_javax.swing.JApplet" stringvalue="Exercise22_9"/>
+    </fileobject>
+    <fileobject name="Exercise23_1.java">
+        <attr name="class_dependency_java.awt.event.ActionListener" stringvalue="Exercise23_1"/>
+        <attr name="class_dependency_javax.swing.JApplet" stringvalue="Exercise23_1"/>
+    </fileobject>
+    <fileobject name="Exercise23_2.java">
+        <attr name="class_dependency_java.awt.event.ActionListener" stringvalue="Exercise23_2"/>
+        <attr name="class_dependency_javax.swing.JApplet" stringvalue="Exercise23_2"/>
+    </fileobject>
+    <fileobject name="Exercise23_3.java">
+        <attr name="class_dependency_javax.swing.JApplet" stringvalue="Exercise23_3"/>
+        <attr name="class_dependency_javax.swing.JPanel" stringvalue="Exercise23_3.DisplayCanvas;Exercise23_3.MyIcon"/>
+    </fileobject>
+    <fileobject name="Exercise23_4.java">
+        <attr name="class_dependency_javax.swing.AbstractAction" stringvalue="Exercise23_4.MyAction"/>
+        <attr name="class_dependency_javax.swing.JApplet" stringvalue="Exercise23_4"/>
+    </fileobject>
+    <fileobject name="Exercise23_5.java">
+        <attr name="class_dependency_javax.swing.JApplet" stringvalue="Exercise23_5"/>
+    </fileobject>
+    <fileobject name="Exercise23_7.java">
+        <attr name="class_dependency_java.awt.event.ActionListener" stringvalue="Exercise23_7"/>
+        <attr name="class_dependency_javax.swing.JFrame" stringvalue="Exercise23_7"/>
+    </fileobject>
+    <fileobject name="Exercise23_8.java">
+        <attr name="class_dependency_java.awt.event.ActionListener" stringvalue="Exercise23_8"/>
+        <attr name="class_dependency_javax.swing.JFrame" stringvalue="Exercise23_8"/>
+    </fileobject>
+    <fileobject name="Exercise23_9.java">
+        <attr name="class_dependency_java.awt.event.ActionListener" stringvalue="Exercise23_9"/>
+        <attr name="class_dependency_java.awt.event.MouseListener" stringvalue="Exercise23_9.Cell"/>
+        <attr name="class_dependency_javax.swing.JApplet" stringvalue="Exercise23_9"/>
+        <attr name="class_dependency_javax.swing.JPanel" stringvalue="Exercise23_9.Cell"/>
+    </fileobject>
+    <fileobject name="Exercise24_1.java">
+        <attr name="class_dependency_javax.swing.JApplet" stringvalue="Exercise24_1"/>
+    </fileobject>
+    <fileobject name="Exercise24_10.java">
+        <attr name="class_dependency_javax.swing.JApplet" stringvalue="Exercise24_10"/>
+    </fileobject>
+    <fileobject name="Exercise24_11.java">
+        <attr name="class_dependency_javax.swing.JApplet" stringvalue="Exercise24_11"/>
+    </fileobject>
+    <fileobject name="Exercise24_12.java">
+        <attr name="class_dependency_javax.swing.JApplet" stringvalue="Exercise24_12"/>
+    </fileobject>
+    <fileobject name="Exercise24_13ChartController.java">
+        <attr name="class_dependency_java.awt.event.ActionListener" stringvalue="Exercise24_13ChartController"/>
+        <attr name="class_dependency_javax.swing.JPanel" stringvalue="Exercise24_13ChartController"/>
+    </fileobject>
+    <fileobject name="Exercise24_14.java">
+        <attr name="class_dependency_javax.swing.JApplet" stringvalue="Exercise24_14"/>
+    </fileobject>
+    <fileobject name="Exercise24_15.java">
+        <attr name="class_dependency_javax.swing.JApplet" stringvalue="Exercise24_15"/>
+    </fileobject>
+    <fileobject name="Exercise24_16.java">
+        <attr name="class_dependency_javax.swing.JApplet" stringvalue="Exercise24_16"/>
+    </fileobject>
+    <fileobject name="Exercise24_3.java">
+        <attr name="class_dependency_javax.swing.JApplet" stringvalue="Exercise24_3"/>
+        <attr name="class_dependency_javax.swing.SpinnerNumberModel" stringvalue="ReverseSpinnerNumberModel"/>
+    </fileobject>
+    <fileobject name="Exercise24_4.java">
+        <attr name="class_dependency_javax.swing.JApplet" stringvalue="Exercise24_4"/>
+    </fileobject>
+    <fileobject name="Exercise24_5.java">
+        <attr name="class_dependency_javax.swing.JApplet" stringvalue="Exercise24_5"/>
+    </fileobject>
+    <fileobject name="Exercise24_6.java">
+        <attr name="class_dependency_javax.swing.JApplet" stringvalue="Exercise24_6"/>
+    </fileobject>
+    <fileobject name="Exercise24_8CellRenderer.java">
+        <attr name="class_dependency_javax.swing.ListCellRenderer" stringvalue="Exercise24_8CellRenderer"/>
+    </fileobject>
+    <fileobject name="Exercise24_9.java">
+        <attr name="class_dependency_javax.swing.JApplet" stringvalue="Exercise24_9"/>
+    </fileobject>
+    <fileobject name="Exercise25_2.java">
+        <attr name="class_dependency_javax.swing.JApplet" stringvalue="Exercise25_2"/>
+    </fileobject>
+    <fileobject name="Exercise25_3.java">
+        <attr name="class_dependency_javax.swing.JApplet" stringvalue="Exercise25_3"/>
+        <attr name="class_dependency_javax.swing.JPanel" stringvalue="DBConnectionPanel"/>
+    </fileobject>
+    <fileobject name="Exercise25_4.java">
+        <attr name="class_dependency_javax.swing.JApplet" stringvalue="Exercise25_4"/>
+        <attr name="class_dependency_javax.swing.JDialog" stringvalue="DBConnectionDialog"/>
+    </fileobject>
+    <fileobject name="Exercise25_6.java">
+        <attr name="class_dependency_javax.swing.JApplet" stringvalue="Exercise25_6"/>
+        <attr name="class_dependency_javax.swing.table.DefaultTableCellRenderer" stringvalue="MyImageCellRenderer"/>
+    </fileobject>
+    <fileobject name="Exercise26_1.java">
+        <attr name="class_dependency_javax.servlet.http.HttpServlet" stringvalue="Exercise26_1"/>
+    </fileobject>
+    <fileobject name="Exercise26_10.java">
+        <attr name="class_dependency_javax.servlet.http.HttpServlet" stringvalue="Exercise26_10"/>
+    </fileobject>
+    <fileobject name="Exercise26_11.java">
+        <attr name="class_dependency_javax.servlet.http.HttpServlet" stringvalue="Exercise26_11"/>
+    </fileobject>
+    <fileobject name="Exercise26_2.java">
+        <attr name="class_dependency_javax.servlet.http.HttpServlet" stringvalue="Exercise26_2"/>
+    </fileobject>
+    <fileobject name="Exercise26_3a.java">
+        <attr name="class_dependency_javax.servlet.http.HttpServlet" stringvalue="Exercise26_3a"/>
+    </fileobject>
+    <fileobject name="Exercise26_4.java">
+        <attr name="class_dependency_javax.servlet.http.HttpServlet" stringvalue="Exercise26_4"/>
+    </fileobject>
+    <fileobject name="Exercise26_5.java">
+        <attr name="class_dependency_javax.servlet.http.HttpServlet" stringvalue="Exercise26_5"/>
+    </fileobject>
+    <fileobject name="Exercise26_7.java">
+        <attr name="class_dependency_javax.servlet.http.HttpServlet" stringvalue="Exercise26_7"/>
+    </fileobject>
+    <fileobject name="Exercise28_10Client.java">
+        <attr name="class_dependency_java.lang.Thread" stringvalue="Exercise28_10Client.ReceiveThread;Exercise28_10Client.SendThread"/>
+        <attr name="class_dependency_javax.swing.JFrame" stringvalue="Exercise28_10Client"/>
+    </fileobject>
+    <fileobject name="Exercise28_2Server.java">
+        <attr name="class_dependency_java.lang.Thread" stringvalue="Exercise28_2Server.ThreadHandler"/>
+        <attr name="class_dependency_javax.swing.JFrame" stringvalue="Exercise28_2Server"/>
+    </fileobject>
+    <fileobject name="Exercise28_3Client.java">
+        <attr name="class_dependency_java.awt.event.ActionListener" stringvalue="Exercise28_3Client"/>
+        <attr name="class_dependency_javax.swing.JFrame" stringvalue="Exercise28_3Client"/>
+    </fileobject>
+    <fileobject name="Exercise28_3Server.java">
+        <attr name="class_dependency_java.lang.Thread" stringvalue="Exercise28_3Server.HandleAClient"/>
+        <attr name="class_dependency_javax.swing.JFrame" stringvalue="Exercise28_3Server"/>
+    </fileobject>
+    <fileobject name="Exercise28_5.java">
+        <attr name="class_dependency_java.awt.event.MouseListener" stringvalue="Exercise28_5"/>
+        <attr name="class_dependency_java.awt.event.MouseMotionListener" stringvalue="Exercise28_5"/>
+        <attr name="class_dependency_java.lang.Runnable" stringvalue="Exercise28_5.TickerImagePanel;Exercise28_5.TickerPanel"/>
+        <attr name="class_dependency_javax.swing.JApplet" stringvalue="Exercise28_5"/>
+        <attr name="class_dependency_javax.swing.JPanel" stringvalue="Exercise28_5.TickerImagePanel;Exercise28_5.TickerPanel"/>
+    </fileobject>
+    <fileobject name="Exercise28_6Server.java">
+        <attr name="class_dependency_java.lang.Thread" stringvalue="Exercise28_6Server.RegistrationThread"/>
+    </fileobject>
+    <fileobject name="Exercise28_8.java">
+        <attr name="class_dependency_java.awt.event.ActionListener" stringvalue="Exercise28_8"/>
+        <attr name="class_dependency_javax.swing.JApplet" stringvalue="Exercise28_8"/>
+    </fileobject>
+    <fileobject name="Exercise28_9.java">
+        <attr name="class_dependency_java.awt.event.ActionListener" stringvalue="Exercise28_9"/>
+        <attr name="class_dependency_javax.swing.JApplet" stringvalue="Exercise28_9"/>
+        <attr name="class_dependency_javax.swing.event.HyperlinkListener" stringvalue="Exercise28_9"/>
+    </fileobject>
+    <fileobject name="GeometricObject.java">
+        <attr name="EA-OpenIDE-Connection" serialvalue="aced0005737200146a6176612e7574696c2e4c696e6b65644c6973740c29535d4a60882203000078707704000000017372002a6f72672e6f70656e6964652e6c6f61646572732e436f6e6e656374696f6e537570706f72742450616972055f8af6f04a3bd80200024c00047479706574002b4c6f72672f6f70656e6964652f636f6f6b6965732f436f6e6e656374696f6e436f6f6b696524547970653b4c000576616c75657400124c6a6176612f6c616e672f4f626a6563743b78707372002e6f72672e6e65746265616e732e6d6f64756c65732e6a6176612e4a617661436f6e6e656374696f6e732454797065a83dd01001306d7402000149000666696c746572787000000050737200436f72672e6e65746265616e732e6d6f64756c65732e6a6176612e4a617661446174614f626a6563742450657273697374656e74436f6e6e656374696f6e48616e646c65ba16f1d2dd4c1cb60200014c000e646174614e6f646548616e646c6574001f4c6f72672f6f70656e6964652f6e6f6465732f4e6f64652448616e646c653b7870737200296f72672e6f70656e6964652e6c6f61646572732e446174614e6f6465244f626a65637448616e646c655bd0f82e01811d2e0200025a0005636c6f6e654c00036f626a7400244c6f72672f6f70656e6964652f66696c6573797374656d732f46696c654f626a6563743b787000737200326f72672e6f70656e6964652e66696c6573797374656d732e416273747261637446696c654f626a656374245265706c616365896fa1bce4b5219f0200024c000866696c654e616d657400124c6a6176612f6c616e672f537472696e673b4c000666734e616d6571007e000f787074000e52656374616e676c652e6a617661740007633a2f626f6f6b78"/>
+    </fileobject>
+    <fileobject name="StillClock.java">
+        <attr name="EA-OpenIDE-Connection" serialvalue="aced0005737200146a6176612e7574696c2e4c696e6b65644c6973740c29535d4a60882203000078707704000000017372002a6f72672e6f70656e6964652e6c6f61646572732e436f6e6e656374696f6e537570706f72742450616972055f8af6f04a3bd80200024c00047479706574002b4c6f72672f6f70656e6964652f636f6f6b6965732f436f6e6e656374696f6e436f6f6b696524547970653b4c000576616c75657400124c6a6176612f6c616e672f4f626a6563743b78707372002e6f72672e6e65746265616e732e6d6f64756c65732e6a6176612e4a617661436f6e6e656374696f6e732454797065a83dd01001306d7402000149000666696c746572787000000050737200436f72672e6e65746265616e732e6d6f64756c65732e6a6176612e4a617661446174614f626a6563742450657273697374656e74436f6e6e656374696f6e48616e646c65ba16f1d2dd4c1cb60200014c000e646174614e6f646548616e646c6574001f4c6f72672f6f70656e6964652f6e6f6465732f4e6f64652448616e646c653b7870737200296f72672e6f70656e6964652e6c6f61646572732e446174614e6f6465244f626a65637448616e646c655bd0f82e01811d2e0200025a0005636c6f6e654c00036f626a7400244c6f72672f6f70656e6964652f66696c6573797374656d732f46696c654f626a6563743b787000737200326f72672e6f70656e6964652e66696c6573797374656d732e416273747261637446696c654f626a656374245265706c616365896fa1bce4b5219f0200024c000866696c654e616d657400124c6a6176612f6c616e672f537472696e673b4c000666734e616d6571007e000f7870740012457865726369736531395f31302e6a617661740014433a2f35654578657263697365416476616e636578"/>
+    </fileobject>
+</attributes>

@@ -1,0 +1,311 @@
+Option Explicit
+
+Private Enum EditState
+    Editing
+    NotEditing
+End Enum
+
+
+
+Private Sub cmdAdd_Click()
+
+    Call EditState(Editing)
+    adoInventory.Recordset.AddNew
+    txtPartNo.SetFocus
+    
+End Sub
+
+Private Sub cmdCancelEdit_Click()
+
+On Error GoTo TrapError:
+    
+    With adoInventory.Recordset
+    
+        .CancelUpdate
+        .MoveFirst
+        
+    End With
+    Call EditState(NotEditing)
+    
+'TrapError simply allows the ADO Data Control to proceed to the first record without
+'encountering the run-time error that WILL occur on an ADODC event when a field is blank!
+
+TrapError:
+    
+End Sub
+
+Private Sub cmdDelete_Click()
+
+    Dim response As Integer
+    
+    response = MsgBox("Do you want to delete the current record?", vbQuestion + vbYesNo, _
+                "Delete Record?")
+    
+    'check for value of response variable
+    
+    With adoInventory.Recordset
+    
+        If response = vbYes Then
+            Call EditState(NotEditing)
+            .Delete
+            .MoveNext
+            If .EOF Then
+                .MoveLast
+            End If
+        Else
+            Exit Sub
+    End If
+   End With
+   Call RecData(adoInventory.Recordset)
+    
+End Sub
+
+Private Sub cmdEdit_Click()
+
+    Call EditState(Editing)
+    
+End Sub
+
+Private Sub cmdExit_Click()
+
+    Unload Me
+    
+End Sub
+
+Private Sub cmdFind_Click()
+
+    Dim partnumber As Integer
+    Dim inputval As String
+     
+    'get a value for the part number via an inputbox
+    inputval = InputBox("Enter part number please.")
+    
+    'check for numeric input for the part number
+    
+    If Not ((IsNumeric(CInt(inputval)) And (Len(inputval) <= 4))) Then
+        MsgBox "Need a 4-digit part/stock number please."
+        Exit Sub
+    End If
+    
+    'move to the first record before starting search
+    'AND
+    'set up the search string for the recordset's find method
+    With adoInventory.Recordset
+        .MoveFirst
+        .Find "fldPartNo = " & "'" & CInt(inputval) & "'"
+        
+        If .EOF Then
+            MsgBox "Record not found."
+            .MoveFirst
+            
+        End If
+    End With
+    Call RecData(adoInventory.Recordset)
+    
+End Sub
+
+Private Sub cmdFirst_Click()
+
+    adoInventory.Recordset.MoveFirst
+    Call RecData(adoInventory.Recordset)
+    cmdNext.Enabled = True
+    cmdPrevious.Enabled = False
+    
+End Sub
+
+Private Sub cmdLast_Click()
+
+    adoInventory.Recordset.MoveLast
+    Call RecData(adoInventory.Recordset)
+    cmdPrevious.Enabled = True
+    cmdNext.Enabled = False
+    
+End Sub
+
+Private Sub cmdNext_Click()
+
+    With adoInventory.Recordset
+    
+        If (.RecordCount = .AbsolutePosition) Then
+            .MoveLast
+            cmdNext.Enabled = False
+            MsgBox "You are at the last record."
+            
+        Else
+            .MoveNext
+            Call RecData(adoInventory.Recordset)
+            cmdPrevious.Enabled = True
+        End If
+    
+    End With
+    
+    
+End Sub
+
+Private Sub cmdPrevious_Click()
+
+    With adoInventory.Recordset
+    
+        If .AbsolutePosition = 1 Then
+            .MoveFirst
+            cmdPrevious.Enabled = False
+            MsgBox "You are at the first record."
+        Else
+            .MovePrevious
+            Call RecData(adoInventory.Recordset)
+            cmdNext.Enabled = True
+        End If
+        
+    End With
+    
+End Sub
+
+
+Private Sub EditState(State As EditState)
+    Dim ctlCurrent As Control
+    
+    If State = Editing Then
+        
+        ' Examine each control on the form
+        For Each ctlCurrent In Controls
+            ' Lock only the text boxes.
+            If TypeOf ctlCurrent Is TextBox Then
+                ctlCurrent.Locked = False
+            End If
+        Next
+        
+        cmdFirst.Enabled = False
+        cmdNext.Enabled = False
+        cmdPrevious.Enabled = False
+        cmdLast.Enabled = False
+        
+        cmdEdit.Enabled = False
+        cmdAdd.Enabled = False
+        cmdUpdate.Enabled = True
+        cmdCancelEdit.Enabled = True
+        cmdDelete.Enabled = False
+        'cmdFind.Enabled = False
+    Else
+        
+        For Each ctlCurrent In Controls
+            If TypeOf ctlCurrent Is TextBox Then
+                ctlCurrent.Locked = True
+            End If
+        Next
+        
+        cmdFirst.Enabled = True
+        cmdNext.Enabled = True
+        cmdPrevious.Enabled = True
+        cmdLast.Enabled = True
+        
+        cmdEdit.Enabled = True
+        cmdAdd.Enabled = True
+        cmdUpdate.Enabled = False
+        cmdCancelEdit.Enabled = False
+        cmdDelete.Enabled = True
+        'cmdFind.Enabled = True
+    End If
+
+End Sub
+
+Private Sub cmdUpdate_Click()
+
+On Error GoTo TrapError:
+
+    Dim cntl As Control
+    Dim blankfield As Boolean
+    
+    blankfield = False
+    For Each cntl In Controls
+        
+        If TypeOf cntl Is TextBox Then
+            If cntl.Text = vbNullString Or cntl.Text = "" Then
+                blankfield = True
+            End If
+        End If
+    Next
+    
+    If blankfield Then
+        MsgBox "ALL fields must be filled out for update.  Click the Cancel Edit/Update button."
+        Exit Sub
+    Else
+        With adoInventory.Recordset
+            .Update
+            .MoveFirst
+        End With
+        Call EditState(NotEditing)
+        Call RecData(adoInventory.Recordset)
+    End If
+    
+TrapError:
+    
+    
+End Sub
+
+Private Sub Form_Load()
+
+    Call EditState(NotEditing)
+    Call RecData(adoInventory.Recordset)
+              
+End Sub
+
+Public Function NumbersOnly(key As Integer) As Boolean
+
+    Select Case key
+        
+        Case Is < vbKeySpace
+            NumbersOnly = True
+        Case vbKey0 To vbKey9, 46
+            NumbersOnly = True
+        Case Else
+            NumbersOnly = False
+    End Select
+    
+End Function
+
+Public Function PriceOnly(key As Integer) As Boolean
+
+    Select Case key
+        
+        Case Is < vbKeySpace
+            PriceOnly = True
+        Case vbKey0 To vbKey9, 46
+            PriceOnly = True
+        Case Else
+            PriceOnly = False
+    End Select
+
+End Function
+Private Sub txtPartNo_KeyPress(KeyAscii As Integer)
+
+    If Not NumbersOnly(KeyAscii) Then
+        MsgBox "Numbers only for the part number."
+        KeyAscii = 0
+    End If
+    
+End Sub
+
+Private Sub txtPrice_KeyPress(KeyAscii As Integer)
+
+    If Not PriceOnly(KeyAscii) Then
+        MsgBox "Numbers only for the part number."
+        KeyAscii = 0
+    End If
+    
+End Sub
+
+Public Sub RecData(rs As Recordset)
+
+    lblAbsPosition.Caption = rs.AbsolutePosition
+    lblRecordCount.Caption = rs.RecordCount
+    
+End Sub
+
+Private Sub txtQuantity_KeyPress(KeyAscii As Integer)
+
+    If Not NumbersOnly(KeyAscii) Then
+        MsgBox "Numbers only for the quantity."
+        KeyAscii = 0
+    End If
+    
+End Sub

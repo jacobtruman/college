@@ -1,0 +1,64 @@
+Ch 7
+
+1. What is one of the biggest advantages of a LAN?
+	a. The games you can play on them.
+	b. Their ability to share resources in an economical and efficient manner.
+	c. Their speed on the internet.
+	d. TCP/IP security measures.
+	
+2. Which of the following is NOT a topology mentioned in the book?
+	a. bus/tree
+	b. star-wired bus
+	c. wireless
+	d. semi-wireless
+
+3. The _________________ is an electronic device that performs necessary signal conversions and protocol operations that allow the workstation to send and receive data on the network.
+	a. Network Interconnecting Card (NIC)
+	b. Tap
+	c. Network Interface Card (NIC)
+	d. Print Server
+
+4. What is the most popular contention-based protocol?
+	a. CSMA/CD
+	b. Token Ring
+	c. TCP/IP
+	d. Netboui
+
+5. What occurs when 2 or more workstations transmit their data at the same moment?
+	a. Blue Screen of Death
+	b. Network reboot
+	c. Nothing
+	d. A collision
+
+
+Ch 8
+
+1. What is the main difference between a hub and a switch?
+	a. There is no difference.
+	b. Hubs are faster than switches.
+	c. A hub broadcasts incoming data on all outgoing ports, where a switch filters traffic as a brige does.
+	d. Hubs are common meeting place for internet packets, switches turn the power off and on.
+	
+2. To be hot-swapable means:
+	a. the power must be on to swap out parts.
+	b. the device must be hot to be able to switch it out.
+	c. you do not have to power down the device to swap out parts.
+	d. this is a made up term with no meaning.
+
+3. What is the purpose of a VLAN?
+	a. VLANs allow you to be able to have multiple "networks" within the same network equipment.
+	b. VLANs are just like LANs, but they are cooler.
+	c. to provide network connections in V-formation.
+	d. to allow 2 computers to share one wire.
+
+4. Which device generally runs faster?
+	a. Router
+	b. Switch
+	c. Ferarri
+	d. Firewall
+
+5. What is a firewall?
+	a. A system that allows traffic in, but not out.
+	b. A system of checks and balances that keeps the governing components from performing illegal actions.
+	c. A system that supports an access control policy between 2 networks.
+	d. A wall that has been covered with gasoline and lit on fire.

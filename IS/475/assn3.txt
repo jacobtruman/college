@@ -1,0 +1,173 @@
+David Lewis
+Wednesday, March 29, 2006
+MIS 475
+Assignment #3
+
+r[#1]
+CREATE TABLE EMP_1
+(
+emp_num char(3),
+emp_lname varchar(15),
+emp_fname varchar(15),
+emp_initial char(1),
+emp_hiredate date,
+job_code char(3),
+FOREIGN KEY(job_code) REFERENCES job
+ON DELETE SET NULL
+);
+
+r[#2]
+INSERT INTO EMP_1
+VALUES
+(
+'101', 'News', 'John', 'G', '08-Nov-98', '502'
+);
+
+INSERT INTO EMP_1
+VALUES
+(
+'102', 'Senior', 'David', 'H', '12-Jul-87', '501'
+);
+
+r[#5]
+UPDATE EMP_1
+SET job_code = '501'
+WHERE emp_num = '106';
+
+r[#6]
+DELETE FROM EMP_1
+WHERE emp_fname = 'William' AND emp_lname = 'Smithfield' AND emp_hiredate = '22-Jun-02' AND job_code = '500';
+
+r[#10]
+UPDATE EMP_2
+SET proj_num = '18'
+WHERE job_code = '500';
+
+r[#11]
+UPDATE EMP_2
+SET proj_num = '25'
+WHERE job_code = '502';
+
+r[#12]
+UPDATE EMP_2
+SET proj_num = '14'
+WHERE job_code = '501' AND emp_hiredate < '01-Jan-92';
+
+r[#15]
+SELECT *
+FROM EMP_2
+WHERE emp_lname LIKE 'Smith%';
+
+r[#16]
+SELECT PROJECT.proj_name, PROJECT.proj_value, PROJECT.proj_balance, EMPLOYEE.emp_lname, EMPLOYEE.emp_fname, EMPLOYEE.emp_initial, EMPLOYEE.job_code, JOB.job_description, JOB.job_chg_hour
+FROM EMPLOYEE, JOB, PROJECT
+WHERE EMPLOYEE.job_code = '500' OR EMPLOYEE.job_code = '501' AND JOB.job_chg_hour < 100;
+
+r[#18]
+SELECT AVG(emp_pct)
+FROM EMP_2;
+
+r[#19]
+SELECT *
+FROM EMP_2
+ORDER BY emp_pct;
+
+r[#20]
+SELECT DISTINCT proj_num
+FROM EMP_2;
+
+r[#21]
+SELECT (assign_chg_hr * assign_hours) as 'assign_charge'
+FROM ASSIGNMENT;
+
+r[#22]
+SELECT emp_num, sum(assign_hours) as 'SumOfASSIGN_HOURS', sum(assign_charge) as 'SumOfASSIGN_CHARGE'
+FROM ASSIGNMENT
+GROUP BY emp_num;
+
+r[#23]
+SELECT proj_num, sum(assign_hours) as 'SumOfASSIGN_HOURS', sum(assign_charge) as 'SumOfASSIGN_CHARGE'
+FROM ASSIGNMENT
+GROUP BY proj_num;
+
+r[#24]
+SELECT sum(assign_hours) as 'SumOfSumOfASSIGN_HOURS', sum(assign_charge) as 'SumOfSumOfASSIGN_CHARGE'
+FROM ASSIGNMENT;
+
+r[#25]
+SELECT sum(assign_hours) as 'SumOfSumOfASSIGN_HOURS', sum(assign_charge) as 'SumOfSumOfASSIGN_CHARGE'
+FROM ASSIGNMENT;
+
+-=-
+
+[#1]
+SELECT emp_fname, emp_lname
+FROM EMPLOYEE
+WHERE job_code = 500 OR job_code = 505 OR job_code = 508;
+
+[#2]
+SELECT emp_fname, emp_lname
+FROM EMPLOYEE
+WHERE job_code is null;
+
+[#3]
+SELECT emp_num
+FROM ASSIGNMENT
+WHERE proj_num = (SELECT proj_num FROM PROJECT WHERE proj_name = 'Starflight');
+
+[#4]
+SELECT proj_name
+FROM PROJECT
+WHERE proj_name = (SELECT emp_num FROM EMPLOYEE WHERE emp_hiredate >= '01-Jan-90' AND emp_num = '103');
+? or ?
+WHERE proj_name = (SELECT man_num FROM MANAGER WHERE man_hiredate >= '01-Jan-90');
+
+[#5]
+SELECT COUNT(emp_num)
+FROM ASSIGNMENT
+WHERE proj_num = '25';
+
+[#6]
+SELECT sum(proj_value)
+FROM PROJECT;
+
+[#7]
+SELECT max(assign_chg_hr) as 'blah1', min(assign_chg_hr) as 'blah2', avg(assign_chg_hr) as 'blah3'
+FROM ASSIGNMENT
+GROUP BY assign_job;
+
+[#8]
+SELECT assign_job, count(emp_num)
+FROM ASSIGNMENT
+GROUP BY assign_job;
+
+[#9]
+SELECT proj_num, count(emp_num)
+FROM ASSIGNMENT
+WHERE proj_num = '18' OR proj_num = '25'
+GROUP BY proj_num;
+
+[#10]
+SELECT proj_name, proj_balance
+FROM PROJECT
+WHERE proj_balance = (SELECT max(proj_balance) FROM PROJECT);
+
+[#11]
+SELECT proj_num, avg(assign_charge)
+FROM ASSIGNMENT
+WHERE assign_date >= '23-Mar-04'
+GROUP BY proj_num;
+
+[#12]
+SELECT emp_num, emp_lname, emp_fname
+FROM EMPLOYEE
+ORDER BY emp_lname;
+
+SELECT emp_num, assign_chg_hr
+FROM ASSIGNMENT
+WHERE assign_chg_hr = (SELECT max(assign_chg_hr) FROM ASSIGNMENT);
+
+[#13]
+SELECT DISTINCT EMPLOYEE.emp_num, EMPLOYEE.emp_lname, EMPLOYEE.emp_fname
+FROM EMPLOYEE, ASSIGNMENT
+WHERE EMPLOYEE.job_code = '503' AND ASSIGNMENT.proj_num = '18';

@@ -1,0 +1,92 @@
+Friend WithEvents OleDbDataAdapter As System.Data.OleDb.OleDbDataAdapter
+    Friend WithEvents OleDbSelectCommand As System.Data.OleDb.OleDbCommand
+    Friend WithEvents OleDbInsertCommand As System.Data.OleDb.OleDbCommand
+    Friend WithEvents OleDbUpdateCommand As System.Data.OleDb.OleDbCommand
+    Friend WithEvents OleDbDeleteCommand As System.Data.OleDb.OleDbCommand
+    Friend WithEvents OleDbConnection As System.Data.OleDb.OleDbConnection
+
+
+Me.OleDbDataAdapter = New System.Data.OleDb.OleDbDataAdapter
+        Me.OleDbDeleteCommand = New System.Data.OleDb.OleDbCommand
+        Me.OleDbConnection = New System.Data.OleDb.OleDbConnection
+        Me.OleDbInsertCommand = New System.Data.OleDb.OleDbCommand
+        Me.OleDbSelectCommand = New System.Data.OleDb.OleDbCommand
+        Me.OleDbUpdateCommand = New System.Data.OleDb.OleDbCommand
+
+
+
+'
+        'OleDbDataAdapter
+        '
+        Me.OleDbDataAdapter.DeleteCommand = Me.OleDbDeleteCommand
+        Me.OleDbDataAdapter.InsertCommand = Me.OleDbInsertCommand
+        Me.OleDbDataAdapter.SelectCommand = Me.OleDbSelectCommand
+        Me.OleDbDataAdapter.TableMappings.AddRange(New System.Data.Common.DataTableMapping() {New System.Data.Common.DataTableMapping("Table", "User", New System.Data.Common.DataColumnMapping() {New System.Data.Common.DataColumnMapping("Username", "Username"), New System.Data.Common.DataColumnMapping("Password", "Password"), New System.Data.Common.DataColumnMapping("SSN", "SSN"), New System.Data.Common.DataColumnMapping("Permission", "Permission")})})
+        Me.OleDbDataAdapter.UpdateCommand = Me.OleDbUpdateCommand
+        '
+        'OleDbDeleteCommand
+        '
+        Me.OleDbDeleteCommand.CommandText = "DELETE FROM [User] WHERE SSN = ''"
+        Me.OleDbDeleteCommand.Connection = Me.OleDbConnection
+        Me.OleDbDeleteCommand.Parameters.Add(New System.Data.OleDb.OleDbParameter("Original_Username", System.Data.OleDb.OleDbType.VarWChar, 50, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Username", System.Data.DataRowVersion.Original, Nothing))
+        Me.OleDbDeleteCommand.Parameters.Add(New System.Data.OleDb.OleDbParameter("Original_Password", System.Data.OleDb.OleDbType.VarWChar, 50, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Password", System.Data.DataRowVersion.Original, Nothing))
+        Me.OleDbDeleteCommand.Parameters.Add(New System.Data.OleDb.OleDbParameter("Original_Password1", System.Data.OleDb.OleDbType.VarWChar, 50, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Password", System.Data.DataRowVersion.Original, Nothing))
+        Me.OleDbDeleteCommand.Parameters.Add(New System.Data.OleDb.OleDbParameter("Original_Permission", System.Data.OleDb.OleDbType.VarWChar, 50, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Permission", System.Data.DataRowVersion.Original, Nothing))
+        Me.OleDbDeleteCommand.Parameters.Add(New System.Data.OleDb.OleDbParameter("Original_Permission1", System.Data.OleDb.OleDbType.VarWChar, 50, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Permission", System.Data.DataRowVersion.Original, Nothing))
+        '
+        'OleDbConnection
+        '
+        Me.OleDbConnection.ConnectionString = "Jet OLEDB:Global Partial Bulk Ops=2;Jet OLEDB:Registry Path=;Jet OLEDB:Database L" & _
+        "ocking Mode=1;Data Source=""COBAdvisingAppts.mdb"";Jet OLEDB:Engine Type=" & _
+        "5;Provider=""Microsoft.Jet.OLEDB.4.0"";Jet OLEDB:System database=;Jet OLEDB:SFP=Fa" & _
+        "lse;persist security info=False;Extended Properties=;Mode=Share Deny None;Jet OL" & _
+        "EDB:Encrypt Database=False;Jet OLEDB:Create System Database=False;Jet OLEDB:Don'" & _
+        "t Copy Locale on Compact=False;Jet OLEDB:Compact Without Replica Repair=False;Us" & _
+        "er ID=Admin;Jet OLEDB:Global Bulk Transactions=1"
+        '
+        'OleDbInsertCommand
+        '
+        Me.OleDbInsertCommand.CommandText = "INSERT INTO [User] (Username, [Password], Permission) VALUES (?, ?, ?)"
+        Me.OleDbInsertCommand.Connection = Me.OleDbConnection
+        Me.OleDbInsertCommand.Parameters.Add(New System.Data.OleDb.OleDbParameter("Username", System.Data.OleDb.OleDbType.VarWChar, 50, "Username"))
+        Me.OleDbInsertCommand.Parameters.Add(New System.Data.OleDb.OleDbParameter("Password", System.Data.OleDb.OleDbType.VarWChar, 50, "Password"))
+        Me.OleDbInsertCommand.Parameters.Add(New System.Data.OleDb.OleDbParameter("Permission", System.Data.OleDb.OleDbType.VarWChar, 50, "Permission"))
+        '
+        'OleDbSelectCommand
+        '
+        Me.OleDbSelectCommand.CommandText = "SELECT Username, SSN, LNum FROM [Student] WHERE SSN = '123456789'"
+        Me.OleDbSelectCommand.Connection = Me.OleDbConnection
+        '
+        'OleDbUpdateCommand
+        '
+        Me.OleDbUpdateCommand.CommandText = "UPDATE [User] SET Username = ? WHERE SSN = ''"
+        Me.OleDbUpdateCommand.Connection = Me.OleDbConnection
+        Me.OleDbUpdateCommand.Parameters.Add(New System.Data.OleDb.OleDbParameter("Username", System.Data.OleDb.OleDbType.VarWChar, 50, "Username"))
+        Me.OleDbUpdateCommand.Parameters.Add(New System.Data.OleDb.OleDbParameter("Password", System.Data.OleDb.OleDbType.VarWChar, 50, "Password"))
+        Me.OleDbUpdateCommand.Parameters.Add(New System.Data.OleDb.OleDbParameter("Permission", System.Data.OleDb.OleDbType.VarWChar, 50, "Permission"))
+        Me.OleDbUpdateCommand.Parameters.Add(New System.Data.OleDb.OleDbParameter("Original_Username", System.Data.OleDb.OleDbType.VarWChar, 50, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Username", System.Data.DataRowVersion.Original, Nothing))
+        Me.OleDbUpdateCommand.Parameters.Add(New System.Data.OleDb.OleDbParameter("Original_Password", System.Data.OleDb.OleDbType.VarWChar, 50, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Password", System.Data.DataRowVersion.Original, Nothing))
+        Me.OleDbUpdateCommand.Parameters.Add(New System.Data.OleDb.OleDbParameter("Original_Password1", System.Data.OleDb.OleDbType.VarWChar, 50, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Password", System.Data.DataRowVersion.Original, Nothing))
+        Me.OleDbUpdateCommand.Parameters.Add(New System.Data.OleDb.OleDbParameter("Original_Permission", System.Data.OleDb.OleDbType.VarWChar, 50, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Permission", System.Data.DataRowVersion.Original, Nothing))
+        Me.OleDbUpdateCommand.Parameters.Add(New System.Data.OleDb.OleDbParameter("Original_Permission1", System.Data.OleDb.OleDbType.VarWChar, 50, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Permission", System.Data.DataRowVersion.Original, Nothing))
+
+
+
+
+
+    Private Sub frmProfile_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        Dim ds As New DataSet
+        Dim UserReader As System.Data.OleDb.OleDbDataReader
+        OleDbConnection.Open()
+        UserReader = OleDbDataAdapter.SelectCommand.ExecuteReader()
+
+        Dim usrFields() As Object = {txtFName, txtID, txtLName}
+
+        Dim UserRead As Integer = 0
+        While UserReader.Read()
+            For UserRead = 0 To UserReader.FieldCount - 1
+                usrFields(UserRead).Text = UserReader(UserRead)
+            Next
+        End While
+        OleDbConnection.Close()
+    End Sub

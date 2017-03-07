@@ -1,0 +1,5 @@
+create db - at least 5 fields - at leat 2 numeric.
+
+use command buttons to navigate database.
+
+Edit, new rec, lock boxes when not in edit, cancel edit or new rec, delete, search.

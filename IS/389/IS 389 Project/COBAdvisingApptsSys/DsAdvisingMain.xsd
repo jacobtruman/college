@@ -1,0 +1,66 @@
+<?xml version="1.0" standalone="yes"?>
+<xs:schema id="DsAdvisingMain" targetNamespace="http://www.tempuri.org/DsAdvisingMain.xsd" xmlns:mstns="http://www.tempuri.org/DsAdvisingMain.xsd" xmlns="http://www.tempuri.org/DsAdvisingMain.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:element name="DsAdvisingMain" msdata:IsDataSet="true" msdata:Locale="zh-CN">
+    <xs:complexType>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element name="Appointment">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="AComments" type="xs:string" minOccurs="0" />
+              <xs:element name="Advisor" type="xs:string" />
+              <xs:element name="Appointment" type="xs:dateTime" />
+              <xs:element name="ApptType" type="xs:string" minOccurs="0" />
+              <xs:element name="SComments" type="xs:string" minOccurs="0" />
+              <xs:element name="Student" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Message">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="MessageID" type="xs:string" />
+              <xs:element name="MsgText" type="xs:string" minOccurs="0" />
+              <xs:element name="MsgType" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Student">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="LNum" type="xs:string" minOccurs="0" />
+              <xs:element name="SSN" type="xs:string" minOccurs="0" />
+              <xs:element name="Username" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="User">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Username" type="xs:string" />
+              <xs:element name="Password" type="xs:string" minOccurs="0" />
+              <xs:element name="Permission" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Appointment" />
+      <xs:field xpath="mstns:Advisor" />
+      <xs:field xpath="mstns:Appointment" />
+      <xs:field xpath="mstns:Student" />
+    </xs:unique>
+    <xs:unique name="Message_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Message" />
+      <xs:field xpath="mstns:MessageID" />
+    </xs:unique>
+    <xs:unique name="Student_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Student" />
+      <xs:field xpath="mstns:Username" />
+    </xs:unique>
+    <xs:unique name="User_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:User" />
+      <xs:field xpath="mstns:Username" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

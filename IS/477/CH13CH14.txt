@@ -1,0 +1,64 @@
+Ch13
+
+1. When a vulnerability to an OS is found, usually the company that created/supports that OS will issue a _________________ to close that vulnerability.
+	a. New OS
+	b. Patch <--
+	c. Search Warrent
+	d. License Amendment
+	
+2. What defines the network resources that a user or set of users can use?
+	a. The network admin
+	b. Usage Rights
+	c. User Rights
+	d. Access Rights <--
+	
+3. What does it mean to audit a computer?
+	a. When the IRS comes in to make sure that taxes have properly been paid on behalf of a computer
+	b. When a survey is taken of the components of the computer
+	c. Monitoring all transactions within a system <--
+	d. When a survey is taken of the software on the computer
+	
+4. A common way to secure data is _________________
+	a. encryption <--
+	b. to save it on a removable hard drive and remove it when not in use
+	c. to save it in a hidden directoy
+	d. decryption
+	
+5. What layers is SSL between?
+	a. Application and Physical
+	b. Physical and transport
+	c. Application and transport <--
+	d. Transport and physical
+
+
+Ch14
+
+1. What does RMON stand for?
+	a. Remote Network Monitoring <--
+	b. Really Good Network Monitoring
+	c. Recursive Network Monitoring
+	d. Real-Time Network Monitoring
+	
+2. What is SNMP used for?
+	a. Manage Internet Components
+	b. Manage Wide area network and telecommunications systems
+	c. All of the above <--
+	d. None of the above
+	
+3. What is a sniffer?
+	a. A device that determines the scent of something
+	b. Monitors a network <--
+	c. Software that "sniffs" out viruses
+	d. This is a made-up term
+	
+4. Which is not one of the four "Usable Statistics" a network administrator generates?
+	a. reliability
+	b. availability
+	c. accessibility <--
+	d. Mean Time To Repair (MTTR)
+	
+5. What is the point of creating a baseline?
+	a. It keeps the bases in a line
+	b. It is a mark to measure progress from
+	c. It is the main line that the network connects through
+	d. It helps determine current network capacities <--

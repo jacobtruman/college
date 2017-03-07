@@ -1,0 +1,25 @@
+12345,Ice Cream,2.99,Frozen
+12346,Snickers,0.99,Candy
+12347,Gum,.59,Candy
+12348,Cereal,3.99,Breakfast
+12349,Apple,3.99,Produce
+12350,Orange,2.99,Produce
+12351,Grape,1.35,Produce
+12352,Milk,2.35,Dairy
+12353,Sour Cream,1.10,Dairy
+12354,Popcicles,5.35,Frozen
+12355,Windex,2.59,Cleaning
+12356,Dish Soap,0.79,Cleaning
+12357,Car,2.50,Toys
+12358,Ball,0.50,Toys
+12359,Hand Soap,1.35,Hygene
+12360,Shampoo,3.75,Hygene
+12361,Tuna,0.67,Canned
+12362,Speghetti Sauce,3.95,Canned
+12363,Munster Cheese,4.95,Deli
+12364,Sandwich,3.25,Deli
+12365,Pop Tarts,2.85,Breakfast
+12366,Cough Medicine,4.89,Pharmacy
+12367,Bandaids,3.24,Pharmacy
+12368,T-bone Steak,6.95,Meat
+12369,Prime Rib,7.95,Meat

@@ -1,0 +1,74 @@
+CH5
+
+1. ______________________ gives each incoming source signal a turn to be transmitted, proceeding through the sources in round-robin fashion
+
+	a. Time Division Multiplexing (TDM)
+	b. Synchronous Time Division Multiplexing (Sync TDM)
+	c. Frequency Division Multiplexing (FDM)
+	d. Code Division Multiplexing (CDM)
+	
+2. Who created the T-1 service?
+
+	a. At&t
+	b. Bell South
+	c. Sprint
+	d. Dr. Chang
+	
+3. In T-1 Multiplexing, the frames of the T-1 multiplexor's output stream are divided into ________________________________
+
+	a. 8 separate digitized voice/data channels of 256 kbps each.
+	b. 64 separate digitized voice/data channels of 24 kbps each.
+	c. 256 separate digitized voice/data channels of 8 kbps each.
+	d. 24 separate digitized voice/data channels of 64 kbps each.
+	
+4. The inability of a single fiber-optic line to meet users' needs is called ___________________
+
+	a. Data Overflow
+	b. Fiber Exhaust
+	c. Line Shortage
+	d. Excess Loss
+	
+5. The Lambda is what the wavelength of each ____________________ is called.
+
+	a. T-1 Signal
+	b. Multiplexing Method
+	c. Differently Colored Laser
+	d. Modem Signal
+
+
+CH6
+
+1. Which type of noise is unlike the others?
+
+	a. White Noise
+	b. Thermal Noise
+	c. Digital Noise
+	d. Gaussian Noise
+	
+2. As a signal travels through a medium, its loss of strength is referred to as ________________
+
+	a. Delay Distortion
+	b. Attenuation
+	c. Simple Parity
+	d. Longitudinal Parity
+	
+3. When an error is detected by the receiver, what action is taken?
+
+	a. Error control
+	b. Stop-and-wait ARQ
+	c. Sliding Window Protocol
+	d. All of the above
+	
+4. What does the Sliding Window Protocol do?
+
+	a. Opens a sliding window and then closes it
+	b. Waits for data and then sends a response upon receipt
+	c. Sends RR packets and waits for a response
+	d. Allows a station to transmit a number of data packets at one time before receiving an acknowledgment.
+	
+5. In a process called __________________________, redundant information must be present so that the receiver knows which bit or bits are in error.
+
+	a. Cyclic Redundancy Check
+	b. Forward Error Correction
+	c. Reverse Error Correction
+	d. Error Control

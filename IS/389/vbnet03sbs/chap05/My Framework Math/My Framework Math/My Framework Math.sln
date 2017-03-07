@@ -1,0 +1,21 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "My Framework Math", "My Framework Math.vbproj", "{E95EE463-5A7C-47E5-92FC-4BE1AF3F0523}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{E95EE463-5A7C-47E5-92FC-4BE1AF3F0523}.Debug.ActiveCfg = Debug|.NET
+		{E95EE463-5A7C-47E5-92FC-4BE1AF3F0523}.Debug.Build.0 = Debug|.NET
+		{E95EE463-5A7C-47E5-92FC-4BE1AF3F0523}.Release.ActiveCfg = Release|.NET
+		{E95EE463-5A7C-47E5-92FC-4BE1AF3F0523}.Release.Build.0 = Release|.NET
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

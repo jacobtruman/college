@@ -1,0 +1,29 @@
+<?xml version="1.0" standalone="yes"?>
+<xs:schema id="patients" targetNamespace="http://www.tempuri.org/patients.xsd" xmlns:mstns="http://www.tempuri.org/patients.xsd" xmlns="http://www.tempuri.org/patients.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:element name="patients" msdata:IsDataSet="true">
+    <xs:complexType>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element name="patient">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="pat_address" type="xs:string" minOccurs="0" />
+              <xs:element name="pat_city" type="xs:string" minOccurs="0" />
+              <xs:element name="pat_dob" type="xs:string" minOccurs="0" />
+              <xs:element name="pat_email" type="xs:string" minOccurs="0" />
+              <xs:element name="pat_fname" type="xs:string" minOccurs="0" />
+              <xs:element name="pat_lname" type="xs:string" minOccurs="0" />
+              <xs:element name="pat_phone" type="xs:string" minOccurs="0" />
+              <xs:element name="pat_ssn" type="xs:int" />
+              <xs:element name="pat_state" type="xs:string" minOccurs="0" />
+              <xs:element name="pat_zip" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:patient" />
+      <xs:field xpath="mstns:pat_ssn" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

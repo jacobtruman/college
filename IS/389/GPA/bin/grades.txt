@@ -1,0 +1,8 @@
+1234,Assignment 1,70
+1235,Assignment 1,75
+1234,Assignment 2,20
+1235,Assignment 2,10
+1234,Test 1,80
+1235,Test 1,10
+1234,Test 2,100
+1235,Test 2,50

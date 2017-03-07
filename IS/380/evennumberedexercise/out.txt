@@ -1,0 +1,5 @@
+Enter an integer: You entered the integer 5
+Enter a double value: You entered the double value 23.55
+Enter a string: You entered the string Good
+Enter a character: You entered the character M
+Enter a boolean: 

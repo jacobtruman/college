@@ -1,0 +1,64 @@
+Ch9
+
+1. Which of the following is a function of a network operating system?
+	a. Manage one or more network printers
+	b. Manage locally connected Users
+	c. Manage remotely connected Users
+	d. All of the above <----
+	
+2. NetWare was devolped by what company?
+	a. Microsoft
+	b. Sprint
+	c. Novell <----
+	d. Steve Jobs
+	
+3. _______________________ are software modules that support various network functions and utilities.
+	a. NetWare Loadable Modules (NLMs) <----
+	b. NetWare Directory Services (NDS)
+	c. NetWare Software Modules (NSMs)
+	d. Microsoft Loadable Modules (MLMs)
+	
+4. What is NetWare's pair of communications protocols that support network layer and transport layer functions?
+	a. Netboui/Netbios suite
+	b. TCP/IP Protocol suite
+	c. IPX/SPX protocol suite <----
+	d. NLM/NDS protocol suite
+	
+5. _______________________ stores information about all the objects and resources in a network and makes this information available to users, network administrators, and application programs.
+	a. MASM
+	b. Active Directory <----
+	c. SPIM
+	d. Windows 2000
+	
+
+Ch10
+
+1. What is a MAN, in networking terms?
+	a. A male that works on the LAN or WAN
+	b. Mini Area Network
+	c. Metropolitan Area Network <----
+	d. Massive Area Network
+	
+2. MANs cover more area than a _______ and less area than a _______
+	a. LAN, WAN <----
+	b. WAN, LAN
+	c. T-1 Line, DSL line
+	d. DSL line, T-1 Line
+	
+3. Which of the following is NOT one of the three types of communications networks?
+	a. Circuit Switched
+	b. Packet switched
+	c. broadcast
+	d. broadband <----
+	
+4. What is Dijkstra's Least-cost algorithm used for?
+	a. To determine the lowest priced network equipment to use.
+	b. To determine the least-cost route through a network. <----
+	c. To determine the lowest cost for an internet connection.
+	d. To determine the fastes connection in a network.
+	
+5. The number of times a packet is copied from one node to another is the _____________.
+	a. Node count
+	b. Copy count
+	c. Hop count <----
+	d. Computer count

@@ -1,0 +1,214 @@
+
+Private Sub cmdExport_Click()
+    Dim fnum As Integer
+    Dim file_name As String
+    Dim database_name As String
+    Dim db As Database
+    Dim rs As Recordset
+    Dim num_fields As Integer
+    Dim field_width() As Integer
+    Dim field_value As String
+    Dim i As Integer
+    Dim num_processed As Integer
+    
+        On Error GoTo MiscError
+    
+        ' Open the output file.
+        fnum = FreeFile
+        file_name = txtFileName.Text
+        Open file_name For Output As fnum
+    
+        ' Open the database.
+        Set db = OpenDatabase(txtDatabaseName.Text)
+    
+        ' Open the recordset.
+        Set rs = db.OpenRecordset( _
+            "SELECT * FROM Books ORDER BY Title")
+    
+        ' Start with the names of the fields.
+        num_fields = rs.Fields.Count
+        ReDim field_width(0 To num_fields - 1)
+        For i = 0 To num_fields - 1
+            ' We're only working with Text here. Other
+            ' types are different. For example, an
+            ' integer may take 2 bytes to store but 6
+            ' characters to display.
+            field_width(i) = rs.Fields(i).Size
+            If field_width(i) < Len(rs.Fields(i).Name) Then
+                field_width(i) = Len(rs.Fields(i).Name)
+            End If
+            field_width(i) = field_width(i) + 1
+            Print #fnum, rs.Fields(i).Name;
+            Print #fnum, Space$(field_width(i) - _
+                Len(rs.Fields(i).Name));
+        Next i
+        Print #fnum, ""
+    
+        ' Process the records.
+        Do While Not rs.EOF
+            num_processed = num_processed + 1
+            For i = 0 To num_fields - 1
+                field_value = rs.Fields(i).Value
+                Print #fnum, field_value & _
+                    Space$(field_width(i) - _
+                    Len(field_value));
+            Next i
+            Print #fnum, ""
+            rs.MoveNext
+        Loop
+    
+        ' Close the file and database.
+        rs.Close
+        db.Close
+        Close fnum
+        MsgBox "Processed " & _
+            Format$(num_processed) & " records."
+    
+        Exit Sub
+    
+MiscError:
+        MsgBox "Error " & Err.Number & _
+            vbCrLf & Err.Description
+End Sub
+
+
+Dim db_file As String
+Dim conn As ADODB.Connection
+Dim rs As ADODB.Recordset
+
+    ' Get the data.
+    db_file = App.Path
+    If Right$(db_file, 1) <> "\" Then db_file = db_file & _
+        "\"
+    db_file = db_file & "books.mdb"
+
+    ' Open a connection.
+    Set conn = New ADODB.Connection
+    conn.ConnectionString = _
+        "Provider=Microsoft.Jet.OLEDB.4.0;" & _
+        "Data Source=" & db_file & ";" & _
+        "Persist Security Info=False"
+    conn.Open
+
+    ' Open the Recordset.
+    Set rs = conn.Execute("SELECT * FROM Books", , _
+        adCmdText)
+
+    ' Connect the Recordset to the DataReport.
+    Set rptBooks.DataSource = rs
+    rptBooks.WindowState = vbMaximized
+    rptBooks.Show vbModal
+
+    rs.Close
+    conn.Close
+  
+// On Shit
+  
+        lblCreate.Visible = True
+        Dim rstHolderA As ADODB.Recordset
+        Dim rstHolderB As ADODB.Recordset
+        Dim rstOutput As ADODB.Recordset
+        Dim searchValue As String
+        ' find in perscription lines, save perscription #, select distinct patient mail information
+        searchValue = Combo1.Text
+        If searchValue = "Select A Medication" Then
+                GoTo Myerror:
+        End If
+        lblCreate.Caption = searchValue + " List Created."
+        
+        
+        ' ("select presc_num from perscription where med_name = searchValue", )
+        ' rstHolderB = "select * from patient where "
+        ' rstHolderA = "select * from
+        ' rstOutput = select pat_fname,
+Myerror:
+    '    lblCreate.Caption = "Not A Valid Choice"
+
+//////
+
+    query = "SELECT COUNT (*) FROM Passwords " & _
+        "WHERE UserName='" & user_name & "'" & _
+        "  AND Password='" & Password & "'"
+
+    "fname + lname' As CombinedTitle," & _
+
+
+---------------------------------------------------------------------------------------------
+    ' patient table
+    With Adodc2
+        .ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" & _
+            App.Path & "\medDB.mdb;Persist Security Info=False"
+
+        .RecordSource = "select * from patient"
+    End With
+    
+    ' prescriptions
+    With Adodc3
+        .ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" & _
+            App.Path & "\medDB.mdb;Persist Security Info=False"
+
+        .RecordSource = "select * from prescriptions"
+    End With
+        
+    ' lines
+    With Adodc4
+        .ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" & _
+            App.Path & "\medDB.mdb;Persist Security Info=False"
+
+        .RecordSource = "select * from presclines"
+    End With
+
+    ' set the Flex Grid data source to be the ADO data control.
+    Set MSHFlexGrid1.DataSource = Adodc1
+    Set MSHFlexGrid2.DataSource = Adodc2
+    Set MSHFlexGrid3.DataSource = Adodc3
+    Set MSHFlexGrid4.DataSource = Adodc4
+    
+    Set rstMedications = Adodc1.Recordset
+    Set rstPatients = Adodc2.Recordset
+    Set rstPerscriptions = Adodc3.Recordset
+    Set rstLines = Adodc4.Recordset
+
+
+--------------------------------------------------------------------------------------------------
+Dim db_file As String
+Dim conn As ADODB.Connection
+Dim rs As ADODB.Recordset
+Dim rs2 As ADODB.Recordset
+
+    ' Get the data.
+    db_file = App.Path
+    If Right$(db_file, 1) <> "\" Then db_file = db_file & _
+        "\"
+    db_file = db_file & "medDB.mdb"
+
+    ' Open a connection.
+    Set conn = New ADODB.Connection
+    conn.ConnectionString = _
+        "Provider=Microsoft.Jet.OLEDB.4.0;" & _
+        "Data Source=" & db_file & ";" & _
+        "Persist Security Info=False"
+    conn.Open
+    
+    Dim searchValue As String
+        ' find in perscription lines, save perscription #, select distinct patient mail information
+    searchValue = Combo1.Text
+    ' Open the Recordset.
+    Set rs = conn.Execute("SELECT * FROM presclines")
+        
+    Set rs = New ADODB.Recordset
+    rs.Open _
+        "SELECT * FROM presclines WHERE med_name = 'LIPITOR'", _
+        conn, adOpenDynamic, adLockBatchOptimistic
+    
+    Set rs2 = conn.Execute("SELECT * FROM prescriptions")
+    Set rs2 = New ADODB.Recordset
+    ' bad
+    rs2.Open _
+        "SELECT pat_ssn FROM prescriptions WHERE presc_num = '1'", _
+        conn, adOpenDynamic, adLockBatchOptimistic
+    Set MSHFlexGrid3.DataSource = rs2
+      
+    rs.Close
+    conn.Close
+

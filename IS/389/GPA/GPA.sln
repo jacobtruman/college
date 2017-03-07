@@ -1,0 +1,21 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "GPA", "GPA.vbproj", "{71EC0B67-826C-414F-92C1-9FB86E0E80EA}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{71EC0B67-826C-414F-92C1-9FB86E0E80EA}.Debug.ActiveCfg = Debug|.NET
+		{71EC0B67-826C-414F-92C1-9FB86E0E80EA}.Debug.Build.0 = Debug|.NET
+		{71EC0B67-826C-414F-92C1-9FB86E0E80EA}.Release.ActiveCfg = Release|.NET
+		{71EC0B67-826C-414F-92C1-9FB86E0E80EA}.Release.Build.0 = Release|.NET
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

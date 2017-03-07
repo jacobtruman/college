@@ -1,0 +1,64 @@
+Ch11
+
+1. Who created the ARPANET?
+	a. An organization in search of extra terrestrial life.
+	b. The Advanced Research Projects Agency (ARPA) <--
+	c. The FBI
+	d. Harvord University
+	
+2. In 1983, the Department of Defense broke the ARPANET into 2 similar networks, ARPANET and _________________.
+	a. DEFNET
+	b. Department of Defense Network
+	c. AIM
+	d. MILNET <--
+	
+3. ______________________ provides a connectionless data transfer service over heterogeneous networks by passing and routing IP datagrams.
+	a. User Datagram Protocol
+	b. Network Address Translation
+	c. Internet Protocol <--
+	d. Internet Datagram Protocol
+	
+4. What is the primary function of Transmission Control Protocol (TCP)?
+	a. To fill in the holes created by IP.
+	b. To turn an unreliable network into a reliable.
+	c. To create a network that is free from lost and duplicate Packets.
+	d. All of the above. <--
+	
+5. What does DHCP do?
+	a. Translates HTML code into a web page.
+	b. Obtains an IP address from the DHCP server. <--
+	c. Transfers files from one computer to another.
+	d. Routes the computers requests to the correct server.
+
+
+Ch12
+
+1. Which of the following is NOT a DSL format used today?
+	a. ADSL
+	b. CDSL
+	c. DSL Heavy <--
+	d. DSL Lite
+	
+2. What is the difference between symmetric and asymmetric connections?
+	a. symmetric transfers data the same speeds in both directions, asymmetric has a higher download than upload speed. <--
+	b. symmetric uses a cable that is the same color wires in the cable, asymmetric does not.
+	c. asymmetric transfers data the same speeds in both directions, symmetric has a higher download than upload speed.
+	d. asymmetric uses a cable that is the same color wires in the cable, symmetric does not.
+	
+3. How does ATM send data?
+	a. Little notes on Dollar Bills
+	b. In IP packets.
+	c. Through a mainframe that converts the packets into HTML compatible code.
+	d. In small 53-byte packets called cells. <--
+	
+4. What is the purpose of burst rate?
+	a. None, this is a made up term.
+	b. To determine the amount of data that can be sent in one packet.
+	c. To allow the customer to exceed the committed information rate by a fixed amount for brief moments of time. <--
+	d. To allow specially encrypted "burst" packets to be sent over an insecure line.
+	
+5. The basic telephone system, or ____________________________, has been in existence since the early 1900s.
+	a. AT&T
+	b. Sprint
+	c. plain old telephone service (POTS) <--
+	d. PCS

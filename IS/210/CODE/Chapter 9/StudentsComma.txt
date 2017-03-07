@@ -1,0 +1,5 @@
+1,"Salvage","Jeff","Computer Science","Senior",4
+2,"Cunningham","John","Basket Weaving","Freshman",1
+3,"Pepito","Suzanne","Industrial Engineering","Junior",3.8
+4,"Wartell","Adam","MIS","Senior",3.92
+5,"Fletcher","Irwin","Film","Senior",3.99
